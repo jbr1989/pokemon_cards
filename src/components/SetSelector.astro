@@ -1,0 +1,36 @@
+---
+interface Props {
+  sets: Array<{id: string, name: string, releaseDate: string}>;
+  selectedSetId: string;
+}
+
+const { sets, selectedSetId } = Astro.props;
+---
+
+<div class="set-selector">
+  <label for="set">Select a Set:</label>
+  <select id="set" name="set">
+    {sets.map((set) => (
+      <option value={set.id} selected={set.id === selectedSetId}>
+        {set.name} ({set.releaseDate})
+      </option>
+    ))}
+  </select>
+</div>
+
+<style>
+  .set-selector {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  select {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+    margin-left: 1rem;
+  }
+</style>

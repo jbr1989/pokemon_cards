@@ -1,0 +1,17 @@
+---
+
+interface Props {
+  card: Array<{id: string, image: string, localId: string, name: string}>
+}
+
+const { card } = Astro.props;
+
+---
+
+  <div class="card">
+    <img 
+      src={card?.image + '/low.webp'} 
+      alt={card?.name}
+      loading="lazy"
+    />
+  </div>

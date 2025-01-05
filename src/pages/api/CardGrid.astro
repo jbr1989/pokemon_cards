@@ -1,0 +1,28 @@
+---
+import TCGdex from '@tcgdex/sdk'
+import CardGridItem from '../../components/CardGridItem.astro';
+
+const language = Astro.url.searchParams.get('language') || 'en';
+const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
+
+const tcgdex = new TCGdex(language);
+const selectedSet = await tcgdex.fetch('sets', selectedSetId);
+
+const cards = selectedSet?.cards;
+
+---
+
+  { (cards?.length > 0) ? 
+    cards?.map((card) => (<CardGridItem card={card} />)) 
+  
+  : 
+  
+    <div class="card">
+      <img 
+        src="/img/card-not-found.png"  
+        alt="Card not found"
+        loading="lazy"
+      />
+    </div>
+  
+  }

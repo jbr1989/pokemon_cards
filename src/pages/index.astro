@@ -1,11 +1,110 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import SetSelector from '../components/SetSelector.astro';
+import CardGrid from '../components/CardGrid.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import TCGdex from '@tcgdex/sdk'
+import LanguageSelector from '../components/LanguageSelector.astro';
+
+// Fetch all sets
+const language = 'en';
+
+const tcgdex = new TCGdex(language);
+
+const sets = await tcgdex.fetch('sets');
+// console.log(sets);
+// sets.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+
+// Get the selected set from URL params or use the latest set
+const selectedSetId = Astro.url.searchParams.get('set') || sets[0].id;
+// console.log(selectedSetId);
+
+// const selectedSet = await tcgdex.fetch('sets', selectedSetId);
+// console.log(selectedSet.cards);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Pokémon TCG Card Browser">
+  <main>
+    <h1>Pokémon TCG Card Browser</h1>
+    <LanguageSelector selectedLanguage="en" />
+    <SetSelector sets={sets} selectedSetId={selectedSetId} />
+    <div id="loading" class="loading hidden">Loading cards...</div>
+    <CardGrid language={language} setId={selectedSetId} />
+  </main>
 </Layout>
+
+<script>
+  const languageSelector = document.querySelector('#language') as HTMLSelectElement;
+  const setSelector = document.querySelector('#set') as HTMLSelectElement;
+
+  const cardsGrid = document.querySelector('.cards-grid');
+  const loading = document.querySelector('#loading');
+
+  async function loadCards(language: string, setId: string) {
+    if (!cardsGrid || !loading) return;
+    
+    loading.classList.remove('hidden');
+    cardsGrid.classList.add('hidden');
+
+    try {
+
+      const response = await fetch(`/api/CardGrid?language=${language}&set=${setId}`);
+      cardsGrid.innerHTML = await response.text();
+
+      // const response = await fetch(`https://api.tcgdex.net/v2/${language}/sets/${setId}`);
+      // const selectedSet = await response.json();
+      // const cards = selectedSet.cards;
+      
+      // cardsGrid.innerHTML = cards.map((card: any) => `
+      //   <div class="card">
+      //     <img 
+      //       src="${card.image}/low.webp" 
+      //       alt="${card.name}"
+      //       loading="lazy"
+      //     />
+      //   </div>
+      // `).join('');
+    } catch (error) {
+      console.error('Failed to load cards:', error);
+    } finally {
+      loading.classList.add('hidden');
+      cardsGrid.classList.remove('hidden');
+    }
+  }
+
+  languageSelector?.addEventListener('change', (e) => {
+    loadCards(languageSelector?.value, setSelector .value);
+  });
+
+  setSelector?.addEventListener('change', (e) => {
+    loadCards(languageSelector?.value, setSelector .value);
+  });
+
+</script>
+
+<style is:global>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1400px;
+    color: white;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>

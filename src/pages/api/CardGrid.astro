@@ -5,6 +5,8 @@ import CardGridItem from '../../components/CardGridItem.astro';
 const language = Astro.url.searchParams.get('language') || 'en';
 const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 
+console.log(selectedSetId);
+
 const tcgdex = new TCGdex(language);
 const selectedSet = await tcgdex.fetch('sets', selectedSetId);
 

@@ -1,7 +1,8 @@
 ---
+import type { PokeCardMini } from '../models/PokeCardMini';
 
 interface Props {
-  card: Array<{id: string, image: string, localId: string, name: string}>
+  card: PokeCardMini | null;
 }
 
 const { card } = Astro.props;
@@ -10,8 +11,9 @@ const { card } = Astro.props;
 
   <div class="card">
     <img 
-      src={card?.image + '/low.webp'} 
-      alt={card?.name}
+      src={( card ? card?.image + '/low.webp' : "/img/card-not-found.png")}
+      alt={( card ? card?.name : "Card not found")}
+      title={( card ? card?.name : "Card not found")}
       loading="lazy"
     />
   </div>

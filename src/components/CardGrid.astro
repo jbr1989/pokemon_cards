@@ -1,39 +1,34 @@
 ---
-import TCGdex from '@tcgdex/sdk'
 import CardGridItem from './CardGridItem.astro';
+import { PokeCardMiniHandler } from '../handlers/PokeCardMiniHandler';
 
 interface Props {
   language: string ,
   setId: string,
-  // cards: Array<{id: string, image: string, localId: string, name: string}>;
 }
 
 const { language, setId } = Astro.props;
 
-const tcgdex = new TCGdex(language);
-const selectedSet = await tcgdex.fetch('sets', setId);
-
-const cards = selectedSet?.cards;
+const cards = await PokeCardMiniHandler.getAll(language, setId);
 
 ---
 
-  <div class="cards-grid">
-    { (cards?.length > 0) ? 
-      cards?.map((card) => (<CardGridItem card={card} />)) 
-    
-    : 
-    
-      <div class="card">
-        <img 
-          src="/img/card-not-found.png" 
-          alt="Card not found"
-          loading="lazy"
-        />
-      </div>
-    
-    }
-  </div>
+<div class="cards-grid">
+  { (cards && cards?.length > 0) ?
+        cards.map((item) => ( 
+          <CardGridItem card={item} /> 
+        ))
+  : (
+    <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
+      <h2>No cards found</h2>
+      <p>Please select a different set.</p>
+    </div>
+  )}
+</div>
+  
 
+
+  
 <style is:inline>
   .cards-grid {
     display: grid;

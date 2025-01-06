@@ -1,19 +1,28 @@
 ---
+import { PokeSerieHandler } from '../handlers/PokeSerieHandler';
+
 interface Props {
-  sets: Array<{id: string, name: string, releaseDate: string}>;
+  language: string;
   selectedSetId: string;
 }
 
-const { sets, selectedSetId } = Astro.props;
+const { language, selectedSetId } = Astro.props;
+
+const series = await PokeSerieHandler.getAll(language, true);
+
 ---
 
 <div class="set-selector">
   <label for="set">Select a Set:</label>
   <select id="set" name="set">
-    {sets.map((set) => (
-      <option value={set.id} selected={set.id === selectedSetId}>
-        {set.name} ({set.releaseDate})
-      </option>
+    {series?.map((serie) => (
+      <optgroup label={serie.name}>
+        {serie.sets.map((set) => (
+          <option value={set.id} selected={set.id === selectedSetId}>
+            {set.name} ({set.cardCount.total})
+          </option>
+        ))}
+      </optgroup>
     ))}
   </select>
 </div>

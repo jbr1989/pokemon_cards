@@ -1,39 +1,26 @@
-import TCGdex from '@tcgdex/sdk'
-import { PokeCardMini } from '../models/PokeCardMini';
+import { TCGdexAdapter } from '../adapters/TCGdex';
+import type { PokeCardMini } from '../models/PokeCardMini';
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class PokeCardMiniHandler {
 
-    static async getAll(language = 'en', setId = 'base1'): Promise<Array<PokeCardMini> | null> {
-        const tcgdex = new TCGdex(language);
-        const selectedSet = await tcgdex.fetch('sets', setId);
+    static async getAll(language = 'en', setId = 'base1'): Promise<{ cards: Array<PokeCardMini> | null, error: string | null }> {
 
-        // console.log(selectedSet);
+        let error = null;
 
-        if (!selectedSet) return null;
+        let cards = await TCGdexAdapter.PokeCardMini_GetAll(language, setId);
+        // console.log(`CARDS ${language}`, cards?.length)
 
-        let cards: Array<PokeCardMini> = [];
-
-        for (const card of selectedSet.cards) {
-            cards.push(new PokeCardMini(card.id, card.localId, card.name, card.image));
+        if (cards?.length===0 && language!=='en') {
+            // console.log("CARGANDO version inglesa");
+            cards = await TCGdexAdapter.PokeCardMini_GetAll('en', setId);
+            // console.log("CARDS ENGLISH", cards?.length)
+            if (cards?.length!==0) error = "No se encontraron cartas. Cargando versión inglesa...";
         }
 
-        return cards;
+        console.log("ERROR 1", error);
+
+        return {cards, error};
     }
-
-    // static async getById(language = 'en', setId = 'base1', cardLocalId: string): Promise<PokeCardList | null> {
-    //     const tcgdex = new TCGdex(language);
-    //     const selectedSet = await tcgdex.fetch('sets', setId, cardLocalId);
-
-    //     if (!selectedSet) return null;
-
-    //     for (const card of selectedSet.cards) {
-    //         if (card.id === cardId) {
-    //             return new PokeCardList(card.id, card.localId, card.name, card.image);
-    //         }
-    //     }
-        
-    //     return null;
-    // }
 
 }

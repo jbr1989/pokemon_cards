@@ -34,7 +34,7 @@ const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
   const languageSelector = document.querySelector('#language') as HTMLSelectElement;
   const setSelector = document.querySelector('#set') as HTMLSelectElement;
 
-  const cardsGrid = document.querySelector('.cards-grid');
+  const cardsGrid = document.querySelector('#cards-grid');
   const loading = document.querySelector('#loading');
 
   async function loadCards(language: string, setId: string) {

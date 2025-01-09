@@ -9,22 +9,27 @@ interface Props {
 
 const { language, setId } = Astro.props;
 
-const cards = await PokeCardMiniHandler.getAll(language, setId);
+const { cards, error } = await PokeCardMiniHandler.getAll(language, setId);
 
 ---
 
-<div class="cards-grid">
-  { (cards && cards?.length > 0) ?
-        cards.map((item) => ( 
-          <CardGridItem card={item} /> 
-        ))
-  : (
-    <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
-      <h2>No cards found</h2>
-      <p>Please select a different set.</p>
-    </div>
-  )}
+<div id="cards-grid">
+  {error && <p>{error}</p>}
+
+  <div class="cards-grid">
+    { (cards && cards?.length > 0) ?
+          cards.map((item) => ( 
+            <CardGridItem card={item} /> 
+          ))
+    : (
+      <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
+        <h2>No cards found</h2>
+        <p>Please select a different set.</p>
+      </div>
+    )}
+  </div>
 </div>
+
   
 
 

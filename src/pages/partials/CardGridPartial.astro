@@ -1,0 +1,11 @@
+---
+import CardGrid from '../../components/CardGrid.astro';
+
+export const partial = true;
+
+const language = Astro.url.searchParams.get('language') || 'en';
+const setId = Astro.url.searchParams.get('set') || 'base1';
+
+---
+
+<CardGrid language={language} setId={setId} />

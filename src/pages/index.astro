@@ -7,7 +7,7 @@ import TCGdex from '@tcgdex/sdk'
 import LanguageSelector from '../components/LanguageSelector.astro';
 
 // Fetch all sets
-const language = 'en';
+const language = 'es';
 
 const tcgdex = new TCGdex(language);
 
@@ -16,6 +16,7 @@ const sets = await tcgdex.fetch('sets');
 // sets.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
 
 // Get the selected set from URL params or use the latest set
+
 const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 // console.log(selectedSetId);
 ---
@@ -23,7 +24,7 @@ const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 <Layout title="Pokémon TCG Card Browser">
   <main>
     <h1>Pokémon TCG Card Browser</h1>
-    <LanguageSelector selectedLanguage="es" />
+    <LanguageSelector selectedLanguage={language} />
     <SetSelector language={language} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>
     <CardGrid language={language} setId={selectedSetId} />
@@ -45,7 +46,7 @@ const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 
     try {
 
-      const response = await fetch(`/api/CardGrid?language=${language}&set=${setId}`);
+      const response = await fetch(`/partials/CardGridPartial?language=${language}&set=${setId}`);
       cardsGrid.innerHTML = await response.text();
 
     } catch (error) {

@@ -23,7 +23,6 @@ const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 
 <Layout title="Pokémon TCG Card Browser">
   <main>
-    <h1>Pokémon TCG Card Browser</h1>
     <LanguageSelector selectedLanguage={language} />
     <SetSelector language={language} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>

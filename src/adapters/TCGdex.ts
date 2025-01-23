@@ -1,5 +1,6 @@
 import TCGdex from "@tcgdex/sdk";
 import { PokeCardMini } from "../models/PokeCardMini";
+import { PokeCard } from "../models/PokeCard";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TCGdexAdapter {
@@ -18,6 +19,32 @@ export class TCGdexAdapter {
         }
 
         return cards;
+    }
+
+    static async PokeCard_Get(language = 'en', cardId: string): Promise<PokeCard | null> {
+
+        const tcgdex = new TCGdex(language);
+        const card = await tcgdex.fetch('cards', cardId);
+
+        if (!card) return null;
+
+        return new PokeCard(
+            card.id,
+            card.localId,
+            card.name, 
+            card.image,
+            card.category,
+            card.illustrator,
+            card.rarity,
+            {
+                normal: card.variants?.normal,
+                reverse: card.variants?.reverse,
+                holo: card.variants?.holo,
+                firstEdition: card.variants?.firstEdition,
+                wPromo: card.variants?.wPromo,
+            }
+        );
+
     }
 
 

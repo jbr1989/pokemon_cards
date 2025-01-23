@@ -10,10 +10,13 @@ const { card } = Astro.props;
 ---
 
   <div class="card">
-    <img 
-      src={( card && card.image!=null ? card?.image + '/low.webp' : "/img/card-not-found.jpg")}
-      alt={( card ? card?.name : "Card not found")}
-      title={( card ? card?.name : "Card not found")}
-      loading="lazy"
-    />
+    <a href={`/card?id=${card?.id}`}>
+      <img 
+        src={( card && card.image!=null ? card?.image + '/low.webp' : "/img/card-not-found.jpg")}
+        alt={( card ? card?.name : "Card not found")}
+        title={( card ? card?.name : "Card not found")}
+        loading="lazy"
+        transition:name={`${card?.id}-image`}
+      />
+    </a>
   </div>

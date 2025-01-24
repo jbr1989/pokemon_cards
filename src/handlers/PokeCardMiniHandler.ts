@@ -18,7 +18,7 @@ export class PokeCardMiniHandler {
             if (cards?.length!==0) error = "No se encontraron cartas. Cargando versión inglesa...";
         }
 
-        console.log("ERROR 1", error);
+        // console.log("ERROR 1", error);
 
         return {cards, error};
     }

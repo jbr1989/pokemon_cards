@@ -1,8 +1,7 @@
 ---
 import CardGridItem from './CardGridItem.astro';
-import { PokeCardMiniHandler } from '../handlers/PokeCardMiniHandler';
-import Error from './Error.astro';
-import ErrorMessage from './ErrorMessage.astro';
+import { PokeCardMiniHandler } from '../../handlers/PokeCardMiniHandler';
+import ErrorMessage from '../ErrorMessage.astro';
 
 interface Props {
   language: string ,
@@ -13,7 +12,7 @@ const { language, setId } = Astro.props;
 
 const { cards, error } = await PokeCardMiniHandler.getAll(language, setId);
 
-console.log(cards);
+// console.log(cards);
 
 ---
 

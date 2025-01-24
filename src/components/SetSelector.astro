@@ -2,18 +2,33 @@
 import { PokeSerieHandler } from '../handlers/PokeSerieHandler';
 
 interface Props {
-  language: string;
+  selectedLanguage: string;
   selectedSetId: string;
 }
 
-const { language, selectedSetId } = Astro.props;
+const { selectedLanguage, selectedSetId } = Astro.props;
 
-const series = await PokeSerieHandler.getAll(language, true);
+const languages = [
+  { id: 'en', name: 'English' },
+  { id: 'es', name: 'Español' },
+  { id: 'ja', name: '日本語' }
+];
+
+const series = await PokeSerieHandler.getAll(selectedLanguage, true);
 
 ---
 
 <div class="set-selector">
   <label for="set">Select a Set:</label>
+
+  <select id="language" name="language">
+    {languages.map((language) => (
+      <option value={language.id} selected={language.id === selectedLanguage}>
+        {language.name}
+      </option>
+    ))}
+  </select>
+
   <select id="set" name="set">
     {series?.map((serie) => (
       <optgroup label={serie.name}>
@@ -25,6 +40,7 @@ const series = await PokeSerieHandler.getAll(language, true);
       </optgroup>
     ))}
   </select>
+  
 </div>
 
 <style>

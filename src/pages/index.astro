@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SetSelector from '../components/SetSelector.astro';
-import CardGrid from '../components/CardGrid.astro';
+import CardGrid from '../components/card/CardGrid.astro';
 
 import TCGdex from '@tcgdex/sdk'
 import LanguageSelector from '../components/LanguageSelector.astro';
@@ -23,8 +23,7 @@ const selectedSetId = Astro.url.searchParams.get('set') || 'base1';
 
 <Layout title="Pokémon TCG Card Browser">
   <main>
-    <LanguageSelector selectedLanguage={language} />
-    <SetSelector language={language} selectedSetId={selectedSetId} />
+    <SetSelector selectedLanguage={language} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>
     <CardGrid language={language} setId={selectedSetId} />
   </main>

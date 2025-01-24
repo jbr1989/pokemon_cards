@@ -12,6 +12,7 @@
     "@astrojs/tailwind": "^5.1.5",
     "@astrojs/vercel": "^8.0.2",
     "@auth/core": "^0.37.4",
+    "@libsql/client": "^0.14.0",
     "@tcgdex/sdk": "2.6.0-beta.3",
     "astro": "^5.1.8",
     "auth-astro": "^4.2.0",

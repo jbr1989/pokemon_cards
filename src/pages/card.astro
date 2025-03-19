@@ -1,120 +1,178 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
-import { PokeCardHandler } from '../handlers/PokeCardHandler';
-import ErrorMessage from '../components/ErrorMessage.astro';
+import { PokeCardHandler } from "../handlers/PokeCardHandler";
+import ErrorMessage from "../components/ErrorMessage.astro";
 
 // Fetch all sets
-const language = 'es';
+const language = "es";
 
-const selectedCardId = Astro.url.searchParams.get('id') || 'base1-1';
-const { card, error } = await PokeCardHandler.get(language, selectedCardId);
+const selectedCardId = Astro.url.searchParams.get("id") || "base1-1";
+const { card, error } = await PokeCardHandler.get({
+  language: language,
+  cardId: selectedCardId,
+});
 
 console.log(card);
-
 ---
 
 <Layout title={card?.name}>
-    <main>
-        <h1>{card?.name}</h1>
+  <main>
+    <h1>{card?.name}</h1>
 
-        <ErrorMessage error={error} />
+    <ErrorMessage error={error} />
 
-        <div class="card-variants">
-            {card?.variants.normal && <div class="card-variant disabled"><img src="/img/icon/pokeball.svg" alt="Normal" title="Normal" loading="lazy" />Normal</div>}
-            {card?.variants.holo && <div class="card-variant disabled"><div class="holo-image"><img src="/img/icon/pokeball.svg" alt="Holo" title="Holo" loading="lazy" /><div class="holo-overlay"></div></div>Holo</div>}
-            {card?.variants.reverse && <div class="card-variant disabled"><img src="/img/icon/pokeball.svg" alt="Reverse" title="Reverse" class="reverse" loading="lazy" />Reverse</div>}
-            {card?.variants.firstEdition && <div class="card-variant disabled"><img src="/img/icon/1st.webp" alt="First Edition" title="First Edition" loading="lazy" style="background-color:white;" />1st</div> }
-            <!-- {card?.variants.wPromo && <img src="/img/w-promo.png" alt="W Promo" title="W Promo" loading="lazy" />} -->
-        </div>
+    <div class="card-variants">
+      {
+        card?.variants.normal && (
+          <div class="card-variant disabled">
+            <img
+              src="/img/icon/pokeball.svg"
+              alt="Normal"
+              title="Normal"
+              loading="lazy"
+            />
+            Normal
+          </div>
+        )
+      }
+      {
+        card?.variants.holo && (
+          <div class="card-variant disabled">
+            <div class="holo-image">
+              <img
+                src="/img/icon/pokeball.svg"
+                alt="Holo"
+                title="Holo"
+                loading="lazy"
+              />
+              <div class="holo-overlay" />
+            </div>
+            Holo
+          </div>
+        )
+      }
+      {
+        card?.variants.reverse && (
+          <div class="card-variant disabled">
+            <img
+              src="/img/icon/reverse.webp"
+              alt="Reverse"
+              title="Reverse"
+              class="reverse"
+              loading="lazy"
+            />
+            Reverse
+          </div>
+        )
+      }
+      {
+        card?.variants.firstEdition && (
+          <div class="card-variant disabled">
+            <img
+              src="/img/icon/1st.webp"
+              alt="First Edition"
+              title="First Edition"
+              loading="lazy"
+              style="background-color:white;"
+            />
+            1st
+          </div>
+        )
+      }
+      <!-- {card?.variants.wPromo && <img src="/img/w-promo.png" alt="W Promo" title="W Promo" loading="lazy" />} -->
+    </div>
 
-        <div class="card-image">
-            <img src={card?.image+ '/high.webp'} alt={card?.name} title={card?.name} loading="lazy" transition:name={`${card?.id}-image`} />
-        </div>
-        
-    </main>
+    <div class="card-image">
+      <img
+        src={card?.image + "/high.webp"}
+        alt={card?.name}
+        title={card?.name}
+        loading="lazy"
+        transition:name={`${card?.id}-image`}
+      />
+    </div>
+  </main>
 </Layout>
 
 <script>
-    document.querySelectorAll('.card-variant').forEach(variant => {
-        variant.addEventListener('click', () => {
-            variant.classList.toggle('disabled');
-        });
+  document.querySelectorAll(".card-variant").forEach((variant) => {
+    variant.addEventListener("click", () => {
+      variant.classList.toggle("disabled");
     });
+  });
 </script>
 
 <style>
+  .disabled {
+    filter: grayscale(100%) opacity(50%);
+  }
 
-    .disabled {
-        filter: grayscale(100%) opacity(50%);
+  .card-image {
+    padding: 15px;
+    display: grid;
+    justify-content: center;
+  }
+
+  .card-variants {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .card-variants img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+  }
+
+  .holo-image {
+    position: relative;
+    border-radius: 50%; /* Opcional si la imagen no tiene fondo */
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+
+  .holo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 0, 128, 0.4),
+      rgba(255, 128, 0, 0.4),
+      rgba(255, 255, 0, 0.4),
+      rgba(128, 255, 0, 0.4),
+      rgba(0, 255, 128, 0.4),
+      rgba(0, 255, 255, 0.4),
+      rgba(0, 128, 255, 0.4),
+      rgba(128, 0, 255, 0.4),
+      rgba(255, 0, 128, 0.4)
+    );
+    background-size: 400% 400%;
+    /* animation: holo-move 3s infinite; */
+    mix-blend-mode: screen; /* Combina los colores con la imagen */
+    pointer-events: none; /* Evita que interfiera con clics */
+  }
+
+  @keyframes holo-move {
+    0% {
+      background-position: 0% 50%;
     }
-
-    .card-image {
-        padding:15px;
-        display:grid;
-        justify-content: center;
+    50% {
+      background-position: 100% 50%;
     }
-
-    .card-variants {
-        display: flex;
-        justify-content: center;
-        text-align:center;
-        gap: 1rem;
-        margin-top: 1rem;
+    100% {
+      background-position: 0% 50%;
     }
+  }
 
-    .card-variants img {
-        display:block;
-        width: 64px;
-        height: 64px;
-        cursor: pointer;
-    }
-
-    .holo-image {
-        position: relative;
-        border-radius: 50%; /* Opcional si la imagen no tiene fondo */
-        overflow: hidden;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-    }
-
-    .holo-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, 
-            rgba(255, 0, 128, 0.4), 
-            rgba(255, 128, 0, 0.4), 
-            rgba(255, 255, 0, 0.4), 
-            rgba(128, 255, 0, 0.4), 
-            rgba(0, 255, 128, 0.4), 
-            rgba(0, 255, 255, 0.4), 
-            rgba(0, 128, 255, 0.4), 
-            rgba(128, 0, 255, 0.4), 
-            rgba(255, 0, 128, 0.4));
-        background-size: 400% 400%;
-        /* animation: holo-move 3s infinite; */
-        mix-blend-mode: screen; /* Combina los colores con la imagen */
-        pointer-events: none; /* Evita que interfiera con clics */
-    }
-
-
-    @keyframes holo-move {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
-    }
-
-    .reverse {
-  filter: invert(100%);
-}
-
-
+  .reverse {
+    filter: invert(100%);
+  }
 </style>

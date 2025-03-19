@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+:root {
+	--color-gradient-black-1: #000000;
+	--color-gradient-bg-purple-2: #2f0a4a;
+}

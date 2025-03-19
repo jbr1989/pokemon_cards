@@ -1,254 +1,32 @@
 ---
-import { getSession } from 'auth-astro/server';
-
-const session = await getSession(Astro.request);
-
-console.log(session);
+import Login from "./login/login.astro";
+// import Nav from './Nav.astro';
 ---
 
-<header>
-    <div class="header">
-        <a href="/">
-            <h1 id="inicio">Pokémon TFG Card Browser</h1>
-        </a>
+<header class="w-full bg-white border-gray-200 dark:bg-gray-900">
+  <a href="/">
+    <h1 id="inicio">Pokémon TFG Card Browser</h1>
+  </a>
 
-        <div id="login-container">
-            {
-                session ? (
-                    <img src={session.user?.image} alt="Avatar" class="avatar">
-                    <button id="logout">Cerrar sesión</button>
-                ) : (
-                    <button id="login">Iniciar sesión</button>
-                )
-            }
-        
-            <nav class="nav">
-                <ul class="ul-nav">
-                    <li><a href="/">Inicio</a></li>
-                </ul>
-            </nav>
-        </div>
+  <!-- <Nav /> -->
 
-        <div class="container-bnt-menu">
-        <div class="btn-menu">
-            <span class="linea-menu" id="linea1"></span>
-            <span class="linea-menu" id="linea2"></span>
-            <span class="linea-menu" id="linea3"></span>
-        </div>
-        </div>
-    
-        
-
-        <div class="menu-drop"></div>
-    </div>
+  <Login />
 </header>
 
+<style>
+  header {
+    color: white;
+    max-width: 1355px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+  }
 
-<script>
-    const { signIn, signOut } = await import("auth-astro/client")
-
-    const loginButton = document.querySelector("#login") as HTMLButtonElement;
-    if (loginButton!=null) loginButton.onclick = () => signIn("github")
-
-    const logoutButton = document.querySelector("#logout") as HTMLButtonElement;
-    if (logoutButton!=null) logoutButton.onclick = () => signOut()
-
-</script>
-
-<script>
-    const $menu = document.querySelector(".nav");
-    const $menuDrop = document.querySelector(".menu-drop");
-    const $btnmenu = document.querySelector(".btn-menu");
-    const $linea1 = document.querySelector("#linea1");
-    const $linea2 = document.querySelector("#linea2");
-    const $linea3 = document.querySelector("#linea3");
-    $btnmenu.addEventListener("click", () => {
-      $linea1.classList.toggle("activelinea1__bars-menu");
-      $linea2.classList.toggle("activelinea2__bars-menu");
-      $linea3.classList.toggle("activelinea3__bars-menu");
-      $menu.classList.toggle("menu-activado");
-      $menuDrop.classList.toggle("activa-menu-drop");
-    });
-
-    $menuDrop.addEventListener("click", () => {
-      $linea1.classList.toggle("activelinea1__bars-menu");
-      $linea2.classList.toggle("activelinea2__bars-menu");
-      $linea3.classList.toggle("activelinea3__bars-menu");
-      $menu.classList.toggle("menu-activado");
-      $menuDrop.classList.toggle("activa-menu-drop");
-    });
-  </script>
-
-
-  
-  <style>
-    
-
-    .header {
-        color:white;
-        max-width: 1355px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        overflow: hidden;
-    }
-
-    .header h1 {
-      display: inline-block;
-      position: relative;
-      z-index: 20;
-      margin:0;
-    }
-
-    #login-container img{
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .nav {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #f6f6f9;
-    }
-
-    .ul-nav {
-      position: relative;
-      display: flex;
-      margin:0;
-      padding:0;
-    }
-  
-    .ul-nav a {
-      text-decoration: none;
-      color: #f6f6f9;
-      
-    }
-
-    .li-nav {
-      position: relative;
-      list-style: none;
-      color: #f6f6f9;
-      transition: 0.3s;
-      margin: 0 10px;
-      padding: 4px 2px;
-      text-align: center;
-    }
-
-    .li-nav::before {
-      content: "";
-      position: absolute;
-      height: 2px;
-      width: 0%;
-      background-color: #01be96;
-      bottom: -3px;
-    }
-
-    .li-nav:hover::before {
-      width: 100%;
-      transition: 0.4s;
-    }
-
-    .li-nav:hover {
-      color: #01be96;
-    }
-  
-    .container-bnt-menu {
-      display: none;
-    }
-  
-    .menu-drop {
-      display: none;
-    }
-    /* resposive */
-  
-    @media (max-width: 720px) {
-      .menu-drop {
-        display: block;
-      }
-      .container-bnt-menu {
-        display: block;
-      }
-      .container-bnt-menu {
-        position: relative;
-        padding: 0px 20px;
-        z-index: 9999;
-      }
-      .linea-menu {
-        display: block;
-        position: relative;
-        height: 2px;
-        width: 40px;
-        background-color: #f6f6f9;
-        top: -5px;
-        margin-top: 10px;
-        cursor: pointer;
-        transform-origin: 0px 100%;
-        transition: all 0.4s;
-      }
-      .activelinea1__bars-menu {
-        transform: rotate(40deg) translate(-2px, 1px);
-      }
-      .activelinea2__bars-menu {
-        opacity: 0;
-        margin-left: -30px;
-      }
-      .activelinea3__bars-menu {
-        transform: rotate(-40deg) translate(-2px, 1px);
-      }
-      .nav {
-        position: fixed;
-        flex-direction: column;
-        background: #111111;
-        width: auto;
-        height: 100vh;
-        right: -300px;
-        top: 80px;
-        transition: right 0.4s ease-in-out;
-        z-index: 100;
-      }
-  
-      .li-nav {
-        padding: 30px 80px;
-        text-align: left;
-        width: 100%;
-        margin: 0;
-        
-      }
-      .li-nav:hover {
-        background-color: #01be96;
-        color : #000
-      }
-      .li-nav:hover::before {
-        content: "";
-        width: 0;
-        height: 0;
-      }
-  
-      .menu-activado {
-        right: 0px;
-        transition: right 0.4s ease-in-out;
-      }
-      .menu-drop {
-        top: 0;
-        left: 0;
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 20;
-        display: none;
-      }
-      .activa-menu-drop {
-        display: block;
-        transition: 0.5s display;
-      }
-      .ul-nav {
-        flex-direction: column;
-        width: 100%;
-      }
-    }
-  </style>
+  header h1 {
+    display: inline-block;
+    position: relative;
+    z-index: 20;
+    margin: 0;
+  }
+</style>

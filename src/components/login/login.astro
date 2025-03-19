@@ -1,0 +1,44 @@
+---
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+
+// console.log(session);
+---
+
+<div id="login-container">
+  {
+    session ? (
+      <img id="logout" src={session.user?.image} alt="Avatar" class="avatar" />
+    ) : (
+      <img id="login" src="img/icon/user-x.svg" alt="Login" class="avatar" />
+    )
+  }
+</div>
+
+<script>
+  const { signIn, signOut } = await import("auth-astro/client");
+
+  const loginButton = document.querySelector("#login") as HTMLButtonElement;
+  if (loginButton != null) loginButton.onclick = () => signIn("github");
+
+  const logoutButton = document.querySelector("#logout") as HTMLButtonElement;
+  if (logoutButton != null) logoutButton.onclick = () => signOut();
+</script>
+
+<style>
+  #login-container {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+  }
+
+  #login-container img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #fff;
+  }
+</style>

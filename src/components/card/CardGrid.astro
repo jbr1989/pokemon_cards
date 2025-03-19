@@ -1,48 +1,60 @@
 ---
-import CardGridItem from './CardGridItem.astro';
-import { PokeCardMiniHandler } from '../../handlers/PokeCardMiniHandler';
-import ErrorMessage from '../ErrorMessage.astro';
+import CardGridItem from "./CardGridItem.astro";
+import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
+import ErrorMessage from "../ErrorMessage.astro";
 
 interface Props {
-  language: string ,
-  setId: string,
+  language: string;
+  setId: string;
 }
 
 const { language, setId } = Astro.props;
 
-const { cards, error } = await PokeCardMiniHandler.getAll(language, setId);
+const { cards, error } = await PokeCardMiniHandler.getAll({
+  setId: setId,
+  language: language,
+});
 
 // console.log(cards);
-
 ---
 
-<div id="cards-grid">
+<div id="cards-div">
   <ErrorMessage error={error} />
 
-  <div class="cards-grid">
-    { (cards && cards?.length > 0) ?
-          cards.map((item) => ( 
-            <CardGridItem card={item} /> 
-          ))
-    : (
-      <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
-        <h2>No cards found</h2>
-        <p>Please select a different set.</p>
-      </div>
-    )}
+  <div class="cards-grid container">
+    {
+      cards && cards?.length > 0 ? (
+        cards.map((item) => <CardGridItem card={item} />)
+      ) : (
+        <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
+          <h2>No cards found</h2>
+          <p>Please select a different set.</p>
+        </div>
+      )
+    }
   </div>
 </div>
 
 <style is:inline>
+  #cards-div {
+    background: linear-gradient(
+      180deg,
+      var(--color-gradient-black-1) 0%,
+      var(--color-gradient-bg-purple-2) 100%
+    );
+  }
+
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
     padding: 1rem;
   }
 
   .card {
-    transition: transform 0.2s;
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
   }
 
   .card:hover {
@@ -53,5 +65,40 @@ const { cards, error } = await PokeCardMiniHandler.getAll(language, setId);
     width: 100%;
     height: auto;
     border-radius: 0.5rem;
+    aspect-ratio: 1 / 1.4;
+    image-rendering: optimizeQuality;
   }
 </style>
+
+<script is:inline>
+  const cards = document.querySelectorAll(".cardEffect");
+  console.log(cards);
+
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (evt) => {
+      mouseHoverCard(card, evt);
+    });
+    card.addEventListener("mouseleave", () => {
+      mouseLeaveCard(card);
+    });
+  });
+
+  function mouseHoverCard(card, evt) {
+    const height = card.clientHeight;
+    const width = card.clientWidth;
+
+    const { layerX, layerY } = evt;
+
+    const yRotation = ((layerX - width / 2) / width) * -20;
+    const xRotation = ((layerY - height / 2) / height) * 20;
+
+    const string = `perspective(500px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.05)`;
+
+    card.style.transform = string;
+  }
+
+  function mouseLeaveCard(card) {
+    card.style.transform =
+      "perspective(500px) rotateX(0deg) rotateY(0deg) scale(1)";
+  }
+</script>

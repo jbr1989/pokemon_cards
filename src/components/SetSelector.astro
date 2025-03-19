@@ -1,5 +1,5 @@
 ---
-import { PokeSerieHandler } from '../handlers/PokeSerieHandler';
+import { PokeSerieHandler } from "../handlers/PokeSerieHandler";
 
 interface Props {
   selectedLanguage: string;
@@ -9,53 +9,63 @@ interface Props {
 const { selectedLanguage, selectedSetId } = Astro.props;
 
 const languages = [
-  { id: 'en', name: 'English' },
-  { id: 'es', name: 'Español' },
-  { id: 'ja', name: '日本語' }
+  { id: "en", name: "English" },
+  { id: "es", name: "Español" },
+  { id: "ja", name: "日本語" },
 ];
 
-const series = await PokeSerieHandler.getAll(selectedLanguage, true);
-
+const series = await PokeSerieHandler.getAll({
+  language: selectedLanguage,
+  getSets: true,
+});
 ---
 
 <div class="set-selector">
   <label for="set">Select a Set:</label>
 
   <select id="language" name="language">
-    {languages.map((language) => (
-      <option value={language.id} selected={language.id === selectedLanguage}>
-        {language.name}
-      </option>
-    ))}
+    {
+      languages.map((language) => (
+        <option value={language.id} selected={language.id === selectedLanguage}>
+          {language.name}
+        </option>
+      ))
+    }
   </select>
 
   <select id="set" name="set">
-    {series?.map((serie) => (
-      <optgroup label={serie.name}>
-        {serie.sets.map((set) => (
-          <option value={set.id} selected={set.id === selectedSetId}>
-            {set.name} ({set.cardCount.total})
-          </option>
-        ))}
-      </optgroup>
-    ))}
+    {
+      series?.map((serie) => (
+        <optgroup label={serie.name}>
+          {serie.sets.map((set) => (
+            <option value={set.id} selected={set.id === selectedSetId}>
+              {set.name} ({set.cardCount.total})
+            </option>
+          ))}
+        </optgroup>
+      ))
+    }
   </select>
-  
 </div>
 
 <style>
   .set-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 2rem;
     text-align: center;
   }
 
   select {
     padding: 0.5rem 1rem;
+    max-width: calc(100% - 1rem);
     font-size: 1rem;
     border-radius: 0.5rem;
     background: #2a2a2a;
     color: white;
     border: 1px solid #444;
-    margin-left: 1rem;
   }
 </style>

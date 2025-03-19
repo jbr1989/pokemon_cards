@@ -1,103 +1,101 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import Header from '../components/Header.astro';
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Header from "../components/Header.astro";
 
 interface Props {
-	title: string;
+  title: string | undefined;
 }
 
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Pokemon TCG Card Browser" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<meta name="theme-color" content="#13151a" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<link rel="manifest" href="/manifest.webmanifest" />
-		<link rel="apple-touch-icon" href="/pwa-192x192.png" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<ClientRouter />
-	</head>
-	<body>
-		<Header />
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Pokemon TCG Card Browser" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#13151a" />
+    <title>{title}</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <ClientRouter />
+  </head>
+  <body>
+    <Header />
+    <slot />
+  </body>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		overflow-x: hidden;
-	}
-	body {
-		margin: 0;
-		padding: 0;
-		min-height: 100vh;
-		overscroll-behavior-y: none;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background: #13151a;
+    overflow-x: hidden;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overscroll-behavior-y: none;
+  }
 
-	main {
-		margin: auto;
-		padding: 0;
-		width: 100%;
-		max-width: 1400px;
-		color: white;
-	}
+  main {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    color: white;
+  }
 
-	h1 {
-		font-size: 2.5rem;
-		font-weight: 700;
-		text-align: center;
-		margin-bottom: 2rem;
-	}
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-	.loading {
-		text-align: center;
-		font-size: 1.2rem;
-		padding: 2rem;
-	}
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 
-	.hidden {
-		display: none;
-	}
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+  }
 
-	/* Mobile optimizations */
-	@media (max-width: 768px) {
-		html {
-			-webkit-tap-highlight-color: transparent;
-		}
-		
-		select {
-			font-size: 16px !important; /* Prevents zoom on iOS */
-		}
-	}
+  .hidden {
+    display: none;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    select {
+      font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+  }
 </style>

@@ -1,15 +1,18 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import vercel from '@astrojs/vercel';
+import vercel from "@astrojs/vercel";
 
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from "@tailwindcss/vite";
 
-import auth from 'auth-astro';
+import auth from "auth-astro";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
-  adapter: vercel(),
-  integrations: [tailwind(), auth()]
+	output: "server",
+	adapter: vercel(),
+	integrations: [auth()],
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

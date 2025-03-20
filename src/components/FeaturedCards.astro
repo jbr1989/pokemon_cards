@@ -1,0 +1,72 @@
+---
+// import Link from "next/link";
+// import Image from "next/image";
+// import { Card, CardContent } from "./ui/card";
+
+// Sample data for featured cards
+const featuredCards = [
+  {
+    id: "base-set-unlimited/charizard-4-holo",
+    name: "Charizard",
+    number: "4",
+    set: "Base Set",
+    image: "https://cdn.pokemonprice.com/cards/base1-4-charizard.webp?w=1200",
+    price: "$399.99",
+  },
+  {
+    id: "evolving-skies/umbreon-vmax-215",
+    name: "Umbreon VMAX (Moonbreon)",
+    number: "215",
+    set: "Evolving Skies",
+    image:
+      "https://cdn.pokemonprice.com/cards/swsh7-215-umbreon-vmax.webp?w=1200",
+    price: "$249.99",
+  },
+  {
+    id: "base-set-unlimited/blastoise-2-holo",
+    name: "Blastoise",
+    number: "2",
+    set: "Base Set",
+    image: "https://cdn.pokemonprice.com/cards/base1-2-blastoise.webp?w=1200",
+    price: "$179.99",
+  },
+  {
+    id: "hidden-fates/charizard-gx-sv49",
+    name: "Charizard GX",
+    number: "SV49",
+    set: "Hidden Fates",
+    image:
+      "https://cdn.pokemonprice.com/cards/sm115-sv49-charizard-gx.webp?w=1200",
+    price: "$299.99",
+  },
+];
+---
+
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
+  {
+    featuredCards.map((card) => (
+      <a key={card.id} href={`/${card.id}`} className="w-full">
+        <div class="pokemon-card h-full bg-zinc-900 border-zinc-800 overflow-hidden">
+          <div class="relative aspect-[2/3] w-full overflow-hidden">
+            <img
+              src={card.image}
+              alt={card.name}
+              fill
+              className="object-contain p-2"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            />
+          </div>
+          <div class="p-4">
+            <h3 class="text-sm font-semibold text-white truncate">
+              {card.name}
+            </h3>
+            <p class="text-xs text-zinc-400">
+              {card.set} · #{card.number}
+            </p>
+            <p class="card-price text-sm">{card.price}</p>
+          </div>
+        </div>
+      </a>
+    ))
+  }
+</div>

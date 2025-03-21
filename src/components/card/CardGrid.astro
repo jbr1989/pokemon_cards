@@ -24,7 +24,7 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
   <div class="cards-grid container">
     {
       cards && cards?.length > 0 ? (
-        cards.map((item) => <CardGridItem card={item} />)
+        cards.map((item) => <CardGridItem setId={setId} card={item} />)
       ) : (
         <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
           <h2>No cards found</h2>

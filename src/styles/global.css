@@ -68,6 +68,13 @@ h1 {
 	margin-bottom: 2rem;
 }
 
+h2 {
+	color: white;
+	font-size: 2rem;
+	font-weight: 700;
+	text-align: center;
+}
+
 .loading {
 	text-align: center;
 	font-size: 1.2rem;
@@ -142,4 +149,9 @@ h1 {
 	@apply absolute inset-0 bg-cover bg-center opacity-20;
 	background-image: url("https://ext.same-assets.com/1494737340/2086781534.png");
 	z-index: -1;
+}
+
+.bg-zinc-800 {
+	--tw-bg-opacity: 1;
+	background-color: rgb(39 39 42 / var(--tw-bg-opacity, 1));
 }

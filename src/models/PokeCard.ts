@@ -2,7 +2,10 @@ export class PokeCard {
 	id: string;
 	localId: string;
 	name: string;
-	image: string | null;
+	image: {
+		low: string | null;
+		high: string | null;
+	};
 	category: string | null;
 	illustrator: string | null;
 	rarity: string | null;
@@ -18,7 +21,10 @@ export class PokeCard {
 		id: string,
 		localId: string,
 		name: string,
-		image: string | undefined,
+		image: {
+			low: string | undefined;
+			high: string | undefined;
+		},
 		category: string | undefined,
 		illustrator: string | undefined,
 		rarity: string | undefined,
@@ -33,7 +39,10 @@ export class PokeCard {
 		this.id = id;
 		this.localId = localId;
 		this.name = name;
-		this.image = image || null;
+		this.image = {
+			low: image.low || null,
+			high: image.high || null,
+		};
 		this.category = category || null;
 		this.illustrator = illustrator || null;
 		this.rarity = rarity || null;

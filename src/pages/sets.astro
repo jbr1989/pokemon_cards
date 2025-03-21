@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import { PokeSetHandler } from "../handlers/PokeSetHandler";
+import SetGrid from "../components/set/SetGrid.astro";
+
+const language = "es";
+const sets = await PokeSetHandler.getAll({ language });
+---
+
+<Layout title="Pokémon TCG Card Browser">
+  <SetGrid sets={sets} />
+</Layout>

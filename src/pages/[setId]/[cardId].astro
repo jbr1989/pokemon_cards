@@ -1,16 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 
-import { PokeCardHandler } from "../handlers/PokeCardHandler";
-import ErrorMessage from "../components/ErrorMessage.astro";
+import { PokeCardHandler } from "../../handlers/PokeCardHandler";
+import ErrorMessage from "../../components/ErrorMessage.astro";
 
 // Fetch all sets
 const language = "es";
 
-const selectedCardId = Astro.url.searchParams.get("id") || "base1-1";
+const { setId, cardId } = Astro.params;
+
+console.log(setId, cardId);
+
 const { card, error } = await PokeCardHandler.get({
   language: language,
-  cardId: selectedCardId,
+  cardId: cardId,
 });
 
 console.log(card);

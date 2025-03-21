@@ -9,47 +9,63 @@ export class TCGdexAdapter implements ApiInterface {
 		setId = "base1",
 		language = "en",
 	): Promise<Array<PokeCardMini> | null> {
-		const tcgdex = new TCGdex(language);
-		const selectedSet = await tcgdex.fetch("sets", setId);
+		try {
+			const tcgdex = new TCGdex(language);
+			const selectedSet = await tcgdex.fetch("sets", setId);
 
-		// console.log("SELECTED SET", selectedSet);
+			// console.log("SELECTED SET", selectedSet);
 
-		const cards: Array<PokeCardMini> = [];
-		if (!selectedSet) return cards;
+			const cards: Array<PokeCardMini> = [];
+			if (!selectedSet) return cards;
 
-		for (const card of selectedSet.cards) {
-			cards.push(
-				new PokeCardMini(card.id, card.localId, card.name, card.image),
-			);
+			for (const card of selectedSet.cards) {
+				cards.push(
+					new PokeCardMini(card.id, card.localId, card.name, {
+						low: card.image ? `${card.image}/low.webp` : "",
+						high: card.image ? `${card.image}/high.webp` : "",
+					}),
+				);
+			}
+
+			return cards;
+		} catch (error) {
+			console.error("Error fetching cards from TCGdex:", error);
+			return [];
 		}
-
-		return cards;
 	}
 
 	async PokeCard_Get(
 		cardId: string,
 		language = "en",
 	): Promise<PokeCard | null> {
-		const tcgdex = new TCGdex(language);
-		const card = await tcgdex.fetch("cards", cardId);
+		try {
+			const tcgdex = new TCGdex(language);
+			const card = await tcgdex.fetch("cards", cardId);
 
-		if (!card) return null;
+			if (!card) return null;
 
-		return new PokeCard(
-			card.id,
-			card.localId,
-			card.name,
-			card.image,
-			card.category,
-			card.illustrator,
-			card.rarity,
-			{
-				normal: card.variants?.normal,
-				reverse: card.variants?.reverse,
-				holo: card.variants?.holo,
-				firstEdition: card.variants?.firstEdition,
-				wPromo: card.variants?.wPromo,
-			},
-		);
+			return new PokeCard(
+				card.id,
+				card.localId,
+				card.name,
+				{
+					low: card.image ? `${card.image}/low.webp` : "",
+					high: card.image ? `${card.image}/high.webp` : "",
+				},
+				card.category,
+				card.illustrator,
+				card.rarity,
+				{
+					normal: card.variants?.normal,
+					reverse: card.variants?.reverse,
+					holo: card.variants?.holo,
+					firstEdition: card.variants?.firstEdition,
+					wPromo: card.variants?.wPromo,
+				},
+			);
+		} catch (error) {
+			console.error("Error fetching card from TCGdex:", error);
+			return null;
+		}
 	}
 }

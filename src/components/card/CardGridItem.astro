@@ -2,17 +2,18 @@
 import type { PokeCardMini } from "../../models/PokeCardMini";
 
 interface Props {
+  setId: string;
   card: PokeCardMini | null;
 }
 
-const { card } = Astro.props;
+const { setId, card } = Astro.props;
 ---
 
 <div class="card cardEffect">
-  <a href={`/card?id=${card?.id}`}>
+  <a href={`/${setId}/${card?.id}`}>
     <img
-      src={card && card.image != null
-        ? card?.image + "/low.webp"
+      src={card && card.image.low != null
+        ? card.image.low
         : "/img/card-not-found.jpg"}
       alt={card ? card?.name : "Card not found"}
       title={card ? card?.name : "Card not found"}

@@ -28,8 +28,8 @@ export class PokeSerieHandler {
 						new PokeSetMini(
 							set.id,
 							set.name,
-							set.logo,
-							set.symbol,
+							set.logo ? `${set.logo}.webp` : "",
+							set.symbol ? `${set.symbol}.webp` : "",
 							set.cardCount,
 						),
 					);

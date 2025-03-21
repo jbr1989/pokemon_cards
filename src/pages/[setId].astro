@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import CardGrid from "../components/card/CardGrid.astro";
+import { PokeSetHandler } from "../handlers/PokeSetHandler";
+
+const language = "es";
+const { setId } = Astro.params;
+
+const set = await PokeSetHandler.get({
+  language: language,
+  setId: setId,
+});
+---
+
+<Layout title="Pokémon TCG Card Browser">
+  <img
+    src={set?.logo}
+    alt={set?.name}
+    style="max-width: 400px;margin:0 auto;"
+  />
+  <div class="flex justify-center items-center gap-2">
+    <h2>{set?.name}</h2>
+    <img class="inline-block w-8 h-8" src={set?.symbol} alt={set?.name} />
+  </div>
+
+  <CardGrid language={language} setId={setId} />
+</Layout>

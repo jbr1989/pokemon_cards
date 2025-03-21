@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SetSelector from "../components/SetSelector.astro";
+import CardGrid from "../components/card/CardGrid.astro";
+
+// Fetch all sets
+const language = "es";
+
+// Get the selected set from URL params or use the latest set
+
+const selectedSetId = Astro.url.searchParams.get("set") || "base1";
+// console.log(selectedSetId);
+---
+
+<Layout title="Pokémon TCG Card Browser">
+  <main>
+    <SetSelector selectedLanguage={language} selectedSetId={selectedSetId} />
+    <div id="loading" class="loading hidden">Loading cards...</div>
+    <CardGrid language={language} setId={selectedSetId} />
+  </main>
+</Layout>
+
+<script>
+  let languageSelector: HTMLSelectElement | null = null;
+  let setSelector: HTMLSelectElement | null = null;
+
+  let cardsGrid = null;
+  let loading = null;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    languageSelector = document.querySelector("#language");
+    setSelector = document.querySelector("#set");
+
+    cardsGrid = document.querySelector("#cards-grid");
+    loading = document.querySelector("#loading");
+
+    languageSelector?.addEventListener("change", (e) => {
+      loadCards(languageSelector?.value, setSelector.value);
+    });
+
+    setSelector?.addEventListener("change", (e) => {
+      loadCards(languageSelector?.value, setSelector.value);
+    });
+  });
+
+  async function loadCards(language: string, setId: string) {
+    if (!cardsGrid || !loading) return;
+
+    loading.classList.remove("hidden");
+    cardsGrid.classList.add("hidden");
+
+    try {
+      const response = await fetch(
+        `/partials/CardGridPartial?language=${language}&set=${setId}`
+      );
+      cardsGrid.innerHTML = await response.text();
+    } catch (error) {
+      console.error("Failed to load cards:", error);
+    } finally {
+      loading.classList.add("hidden");
+      cardsGrid.classList.remove("hidden");
+    }
+  }
+</script>

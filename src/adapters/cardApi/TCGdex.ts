@@ -2,6 +2,7 @@ import TCGdex from "@tcgdex/sdk";
 import { PokeCardMini } from "../../models/PokeCardMini";
 import { PokeCard } from "../../models/PokeCard";
 import type { ApiInterface } from "./ApiInterface";
+import { PokeSetMini } from "../../models/PokeSetMini";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TCGdexAdapter implements ApiInterface {
@@ -62,6 +63,13 @@ export class TCGdexAdapter implements ApiInterface {
 					firstEdition: card.variants?.firstEdition,
 					wPromo: card.variants?.wPromo,
 				},
+				new PokeSetMini(
+					card.set.id,
+					card.set.name,
+					card.set.logo,
+					card.set.symbol,
+					card.set.cardCount,
+				),
 			);
 		} catch (error) {
 			console.error("Error fetching card from TCGdex:", error);

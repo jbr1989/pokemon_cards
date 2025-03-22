@@ -1,3 +1,5 @@
+import type { PokeSetMini } from "./PokeSetMini";
+
 export class PokeCard {
 	id: string;
 	localId: string;
@@ -16,6 +18,7 @@ export class PokeCard {
 		firstEdition: boolean | null;
 		wPromo: boolean | null;
 	};
+	set: PokeSetMini | null;
 
 	constructor(
 		id: string,
@@ -35,6 +38,7 @@ export class PokeCard {
 			firstEdition: boolean | undefined;
 			wPromo: boolean | undefined;
 		},
+		set: PokeSetMini | null,
 	) {
 		this.id = id;
 		this.localId = localId;
@@ -53,5 +57,6 @@ export class PokeCard {
 			firstEdition: variants.firstEdition || null,
 			wPromo: variants.wPromo || null,
 		};
+		this.set = set || null;
 	}
 }

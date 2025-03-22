@@ -43,12 +43,15 @@ export class TCGdexAdapter implements ApiInterface {
 			const tcgdex = new TCGdex(language);
 			const card = await tcgdex.fetch("cards", cardId);
 
+			//console.log("CARD", card);
+
 			if (!card) return null;
 
 			return new PokeCard(
 				card.id,
 				card.localId,
 				card.name,
+				card.description || "",
 				{
 					low: card.image ? `${card.image}/low.webp` : "",
 					high: card.image ? `${card.image}/high.webp` : "",
@@ -74,6 +77,42 @@ export class TCGdexAdapter implements ApiInterface {
 		} catch (error) {
 			console.error("Error fetching card from TCGdex:", error);
 			return null;
+		}
+	}
+
+	async PokeCardMini_Find(
+		name = "",
+		language = "en",
+	): Promise<Array<PokeCardMini> | null> {
+		try {
+			const url = `https://api.tcgdex.net/v2/${language}/cards?name=${name}`;
+
+			const response = await fetch(url);
+			const data = await response.json();
+
+			console.log("DATA", data);
+
+			// const tcgdex = new TCGdex(language);
+			// const selectedSet = await tcgdex.fetch("sets", setId);
+
+			// // console.log("SELECTED SET", selectedSet);
+
+			const cards: Array<PokeCardMini> = [];
+			if (data == null || data.length === 0) return cards;
+
+			for (const card of data) {
+				cards.push(
+					new PokeCardMini(card.id, card.localId, card.name, {
+						low: card.image ? `${card.image}/low.webp` : "",
+						high: card.image ? `${card.image}/high.webp` : "",
+					}),
+				);
+			}
+
+			return cards;
+		} catch (error) {
+			console.error("Error fetching cards from TCGdex:", error);
+			return [];
 		}
 	}
 }

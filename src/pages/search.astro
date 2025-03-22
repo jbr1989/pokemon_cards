@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SetSelector from "../components/SetSelector.astro";
+import CardGrid from "../components/card/CardGrid.astro";
+import { PokeCardHandler } from "../handlers/PokeCardHandler";
+
+// Fetch all sets
+const language = "es";
+
+const nameQuery = Astro.url.searchParams.get("name") || "";
+
+const { cards, error } = await PokeCardHandler.find({
+  language,
+  name: nameQuery,
+});
+
+console.log("CARDS", cards);
+---
+
+<Layout title="Pokémon TCG Card Browser" description="Search for a card">
+  <h2>Search for {nameQuery}</h2>
+
+  <CardGrid cards={cards} error={error} setId={null} />
+</Layout>

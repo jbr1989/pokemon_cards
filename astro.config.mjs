@@ -7,11 +7,14 @@ import tailwindcss from "@tailwindcss/vite";
 
 import auth from "auth-astro";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
 	output: "server",
+	site: "https://pokecards.jbr1989.es",
 	adapter: vercel(),
-	integrations: [auth()],
+	integrations: [auth(), sitemap()],
 	vite: {
 		plugins: [tailwindcss()],
 	},

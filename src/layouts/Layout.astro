@@ -21,11 +21,14 @@ const { title, description = "Pokemon TCG Card Browser" } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/img/icon/pokecards_icon.webp" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="robots" content="index, follow" />
+
     <ClientRouter />
   </head>
   <body>

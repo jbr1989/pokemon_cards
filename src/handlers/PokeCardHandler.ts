@@ -1,9 +1,27 @@
 import { TCGdexAdapter } from "../adapters/cardApi/TCGdex";
 import type { PokeCard } from "../models/PokeCard";
+import type { PokeCardMini } from "../models/PokeCardMini";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class PokeCardHandler {
 	public static adapter = new TCGdexAdapter();
+
+	static async getAll({
+		name = "",
+		language = "en",
+	}: {
+		name?: string;
+		language?: string;
+	}): Promise<{ cards: PokeCardMini[] | null; error: string | null }> {
+		const error = null;
+
+		const cards = await PokeCardHandler.adapter.PokeCardMini_GetAll(
+			name,
+			language,
+		);
+
+		return { cards, error };
+	}
 
 	static async get({
 		cardId = "base1-1",
@@ -26,5 +44,22 @@ export class PokeCardHandler {
 		}
 
 		return { card, error };
+	}
+
+	static async find({
+		name = "",
+		language = "en",
+	}: {
+		name?: string;
+		language?: string;
+	}): Promise<{ cards: PokeCardMini[] | null; error: string | null }> {
+		const error = null;
+
+		const cards = await PokeCardHandler.adapter.PokeCardMini_Find(
+			name,
+			language,
+		);
+
+		return { cards, error };
 	}
 }

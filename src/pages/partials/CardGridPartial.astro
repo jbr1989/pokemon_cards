@@ -1,10 +1,16 @@
 ---
 import CardGrid from "../../components/card/CardGrid.astro";
+import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
 
 export const partial = true;
 
 const language = Astro.url.searchParams.get("language") || "en";
 const setId = Astro.url.searchParams.get("set") || "base1";
+
+const { cards, error } = await PokeCardMiniHandler.getAll({
+  setId: setId,
+  language: language,
+});
 ---
 
-<CardGrid language={language} setId={setId} />
+<CardGrid setId={setId} cards={cards} error={error} />

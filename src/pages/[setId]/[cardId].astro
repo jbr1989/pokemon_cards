@@ -18,9 +18,12 @@ const { card, error } = await PokeCardHandler.get({
 });
 
 console.log(card);
+
+const description =
+  card?.description || `${card?.name} - ${card?.set?.name} ${card?.localId} `;
 ---
 
-<Layout title={card?.name}>
+<Layout title={card?.name} description={description}>
   <main>
     <PathBanner card={card} />
 

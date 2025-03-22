@@ -1,21 +1,15 @@
 ---
 import CardGridItem from "./CardGridItem.astro";
-import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
 import ErrorMessage from "../ErrorMessage.astro";
+import type { PokeCardMini } from "../../models/PokeCardMini";
 
 interface Props {
-  language: string;
-  setId: string;
+  cards: PokeCardMini[] | null;
+  error: string | null;
+  setId: string | null;
 }
 
-const { language, setId } = Astro.props;
-
-const { cards, error } = await PokeCardMiniHandler.getAll({
-  setId: setId,
-  language: language,
-});
-
-// console.log(cards);
+const { setId, cards, error } = Astro.props;
 ---
 
 <div id="cards-div">

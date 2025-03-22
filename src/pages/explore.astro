@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SetSelector from "../components/SetSelector.astro";
 import CardGrid from "../components/card/CardGrid.astro";
+import { PokeCardMiniHandler } from "../handlers/PokeCardMiniHandler";
 
 // Fetch all sets
 const language = "es";
@@ -9,14 +10,20 @@ const language = "es";
 // Get the selected set from URL params or use the latest set
 
 const selectedSetId = Astro.url.searchParams.get("set") || "base1";
+
+const { cards, error } = await PokeCardMiniHandler.getAll({
+  setId: selectedSetId,
+  language: language,
+});
+
 // console.log(selectedSetId);
 ---
 
-<Layout title="Pokémon TCG Card Browser">
+<Layout title="Pokémon TCG Card Browser" description="Explore all cards">
   <main>
     <SetSelector selectedLanguage={language} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>
-    <CardGrid language={language} setId={selectedSetId} />
+    <CardGrid setId={selectedSetId} cards={cards} error={error} />
   </main>
 </Layout>
 
@@ -24,41 +31,43 @@ const selectedSetId = Astro.url.searchParams.get("set") || "base1";
   let languageSelector: HTMLSelectElement | null = null;
   let setSelector: HTMLSelectElement | null = null;
 
-  let cardsGrid = null;
-  let loading = null;
+  let cardsDiv: HTMLDivElement | null = null;
+  let loading: HTMLDivElement | null = null;
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     languageSelector = document.querySelector("#language");
     setSelector = document.querySelector("#set");
 
-    cardsGrid = document.querySelector("#cards-grid");
+    cardsDiv = document.querySelector("#cards-div");
     loading = document.querySelector("#loading");
 
     languageSelector?.addEventListener("change", (e) => {
-      loadCards(languageSelector?.value, setSelector.value);
+      loadCards(languageSelector?.value || null, setSelector?.value || null);
     });
 
     setSelector?.addEventListener("change", (e) => {
-      loadCards(languageSelector?.value, setSelector.value);
+      loadCards(languageSelector?.value || null, setSelector?.value || null);
     });
   });
 
-  async function loadCards(language: string, setId: string) {
-    if (!cardsGrid || !loading) return;
+  async function loadCards(language: string | null, setId: string | null) {
+    console.log(cardsDiv, loading);
+
+    if (!cardsDiv || !loading) return;
 
     loading.classList.remove("hidden");
-    cardsGrid.classList.add("hidden");
+    cardsDiv.classList.add("hidden");
 
     try {
       const response = await fetch(
         `/partials/CardGridPartial?language=${language}&set=${setId}`
       );
-      cardsGrid.innerHTML = await response.text();
+      cardsDiv.innerHTML = await response.text();
     } catch (error) {
       console.error("Failed to load cards:", error);
     } finally {
       loading.classList.add("hidden");
-      cardsGrid.classList.remove("hidden");
+      cardsDiv.classList.remove("hidden");
     }
   }
 </script>

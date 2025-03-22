@@ -3,17 +3,30 @@ import Layout from "../layouts/Layout.astro";
 
 import CardGrid from "../components/card/CardGrid.astro";
 import { PokeSetHandler } from "../handlers/PokeSetHandler";
+import { PokeCardMiniHandler } from "../handlers/PokeCardMiniHandler";
 
-const language = "es";
 const { setId } = Astro.params;
+
+console.log("SET ID", setId);
+
+const language = "en";
 
 const set = await PokeSetHandler.get({
   language: language,
   setId: setId,
 });
+
+console.log(set);
+
+const { cards, error } = await PokeCardMiniHandler.getAll({
+  setId: setId,
+  language: language,
+});
+
+console.log("CARDS", cards);
 ---
 
-<Layout title="Pokémon TCG Card Browser">
+<Layout title="Pokémon TCG Card Browser" description="Set {set?.name}">
   <img
     src={set?.logo}
     alt={set?.name}
@@ -24,5 +37,5 @@ const set = await PokeSetHandler.get({
     <img class="inline-block w-8 h-8" src={set?.symbol} alt={set?.name} />
   </div>
 
-  <CardGrid language={language} setId={setId} />
+  <CardGrid setId={set.setId} cards={cards} error={error} />
 </Layout>

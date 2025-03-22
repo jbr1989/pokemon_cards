@@ -4,6 +4,7 @@ export class PokeCard {
 	id: string;
 	localId: string;
 	name: string;
+	description: string;
 	image: {
 		low: string | null;
 		high: string | null;
@@ -24,6 +25,7 @@ export class PokeCard {
 		id: string,
 		localId: string,
 		name: string,
+		description: string,
 		image: {
 			low: string | undefined;
 			high: string | undefined;
@@ -43,6 +45,7 @@ export class PokeCard {
 		this.id = id;
 		this.localId = localId;
 		this.name = name;
+		this.description = description;
 		this.image = {
 			low: image.low || null,
 			high: image.high || null,

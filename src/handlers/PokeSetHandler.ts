@@ -49,7 +49,7 @@ export class PokeSetHandler {
 			);
 		}
 
-		console.log(pokeSets);
+		// console.log(pokeSets);
 
 		return pokeSets;
 	}

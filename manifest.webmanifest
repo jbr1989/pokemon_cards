@@ -1,0 +1,46 @@
+{
+  "name": "PokéCards",
+  "short_name": "PokéCards",
+  "description": "Pokémon Cards Browser",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f39fa",
+  "icons": [
+    {
+      "src": "/img/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["pokemon", "tcg", "cards", "browser"],
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Inicio",
+      "url": "/"
+    },
+    {
+      "name": "Explorar",
+      "url": "/explore"
+    }
+  ]
+  //   "screenshots": [
+  //     {
+  //       "src": "/screenshots/screen1.png",
+  //       "sizes": "1280x720",
+  //       "type": "image/png"
+  //     }
+  //   ]
+}

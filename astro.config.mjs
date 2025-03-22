@@ -11,9 +11,13 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-	output: "server",
 	site: "https://pokecards.jbr1989.es",
-	adapter: vercel(),
+	output: "server",
+	adapter: vercel({
+		webAnalytics: {
+			enabled: true,
+		},
+	}),
 	integrations: [auth(), sitemap()],
 	vite: {
 		plugins: [tailwindcss()],

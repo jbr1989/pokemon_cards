@@ -5,25 +5,35 @@ import CardGrid from "../../components/card/CardGrid.astro";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
 import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
 
+const language = "en";
+
+export async function getStaticPaths() {
+  const sets = await PokeSetHandler.getAll({
+    language: "en",
+  });
+
+  return sets?.map((set) => ({
+    params: { setId: set.id },
+  }));
+}
+
 const { setId } = Astro.params;
 
 // console.log("SET ID", setId);
-
-const language = "en";
 
 const set = await PokeSetHandler.get({
   language: language,
   setId: setId,
 });
 
-console.log(set);
+// console.log(set);
 
 const { cards, error } = await PokeCardMiniHandler.getAll({
   setId: setId,
   language: language,
 });
 
-console.log("CARDS", cards);
+// console.log("CARDS", cards);
 ---
 
 <Layout title="Pokémon TCG Card Browser" description="Set {set?.name}">

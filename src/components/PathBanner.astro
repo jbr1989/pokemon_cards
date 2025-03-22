@@ -1,0 +1,59 @@
+---
+const { card } = Astro.props;
+---
+
+<div
+  class="px-8 max-w-screen-2xl mx-auto max-sm:px-4 py-5 flex gap-2 items-center font-manrope"
+>
+  <a
+    href="/sets"
+    class="font-medium text-zinc-500 text-sm cursor-pointer hover:text-yellowish"
+  >
+    All Sets
+  </a>
+  <span
+    ><svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g opacity="0.5">
+        <path
+          d="M6 12.5L9.46967 9.03033C9.71967 8.78033 9.84467 8.65533 9.84467 8.5C9.84467 8.34467 9.71967 8.21967 9.46967 7.96967L6 4.5"
+          stroke="white"
+          stroke-width="1.3"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </g>
+    </svg></span
+  >
+  <a
+    href={`/${card.set?.id}`}
+    class="font-medium text-zinc-500 text-sm cursor-pointer hover:text-yellowish"
+  >
+    {card.set?.name}
+  </a>
+  <span
+    ><svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g opacity="0.5">
+        <path
+          d="M6 12.5L9.46967 9.03033C9.71967 8.78033 9.84467 8.65533 9.84467 8.5C9.84467 8.34467 9.71967 8.21967 9.46967 7.96967L6 4.5"
+          stroke="white"
+          stroke-width="1.3"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </g>
+    </svg></span
+  >
+  <span class="font-semibold text-white text-sm">
+    {card.localId} - {card.name}
+  </span>
+</div>

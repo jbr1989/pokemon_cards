@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-
 import { PokeCardHandler } from "../../handlers/PokeCardHandler";
+
+import PathBanner from "../../components/PathBanner.astro";
 import ErrorMessage from "../../components/ErrorMessage.astro";
 
 // Fetch all sets
@@ -21,6 +22,8 @@ console.log(card);
 
 <Layout title={card?.name}>
   <main>
+    <PathBanner card={card} />
+
     <h1>{card?.name}</h1>
 
     <ErrorMessage error={error} />

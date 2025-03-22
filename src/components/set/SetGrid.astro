@@ -10,7 +10,7 @@ const { sets } = Astro.props;
   {
     sets && sets.length > 0 ? (
       sets.map((set: PokeSet) => (
-        <a href={`/${set.id}`} class="w-full">
+        <a href={`/set/${set.id}`} class="w-full">
           <div class="rounded-lg flex flex-col items-center">
             <div
               id="card"

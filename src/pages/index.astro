@@ -21,9 +21,11 @@ const selectedSetId = Astro.url.searchParams.get("set") || "base1";
       <!-- Header with Logo -->
       <div class="space-y-2">
         <img
-          src="/img/icon/pokecards_icon.webp"
-          class="mx-auto h-12 sm:h-16"
+          src="/img/pwa-192x192.png"
+          class="mx-auto"
           alt="PokéCards"
+          width="192"
+          height="192"
         />
 
         <h1 class="text-white text-2xl sm:text-3xl font-bold">PokéCards</h1>
@@ -32,14 +34,7 @@ const selectedSetId = Astro.url.searchParams.get("set") || "base1";
     <div class="mx-auto px-4 w-full max-w-md py-6">
       <div class="w-full relative">
         <div class="max-w-md mx-auto">
-          <!-- Input and search container -->
-          <label
-            for="global-search"
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >
-            Search
-          </label>
-          <div class="relative">
+          <form class="relative" action="/search" method="get">
             <!-- Search Icon -->
             <div
               class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -62,30 +57,22 @@ const selectedSetId = Astro.url.searchParams.get("set") || "base1";
 
             <!-- Input Field -->
             <input
-              wire:model.live="keyword"
-              wire:keydown.enter="search"
               type="search"
+              name="name"
               id="global-search"
               class="block w-full py-2 ps-10 pr-24 text-sm text-gray-100 rounded-lg bg-[#2C2C2C] focus:ring-yellow-300 focus:border-yellow-300 transition duration-200"
               placeholder="Find a card..."
               required=""
             />
 
-            <!-- Dropdown Suggestions -->
-            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
-
             <!-- Search Button -->
             <button
               type="button"
-              class="absolute end-1.5 top-1/2 -translate-y-1/2 font-medium rounded-md text-black text-xs px-3 py-1 transition duration-200 bg-yellowish hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-300"
-              wire:loading.attr="disabled"
+              class="absolute end-1.5 top-1/2 -translate-y-1/2 font-medium rounded-md text-black text-xs px-3 py-1 transition duration-200 bg-yellowish bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-500"
             >
               Search
             </button>
-
-            <!-- Clear Button -->
-            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
-          </div>
+          </form>
         </div>
       </div>
     </div>

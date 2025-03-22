@@ -1,0 +1,25 @@
+# robots.txt para Mi Aplicación Astro
+# https://www.robotstxt.org/
+
+# Permitir a todos los robots de búsqueda
+User-agent: *
+Allow: /
+
+# Rutas restringidas
+# Disallow: /admin/
+# Disallow: /privado/
+# Disallow: /api/
+# Disallow: /borrador/
+# Disallow: /test/
+
+# Archivos específicos a no indexar
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /404
+
+
+# Tiempo de espera entre solicitudes (en segundos)
+Crawl-delay: 10
+
+# Ubicación del sitemap
+# Sitemap: https://tudominio.com/sitemap.xml

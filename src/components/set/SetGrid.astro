@@ -28,9 +28,9 @@ const { sets } = Astro.props;
 
               <div class="w-full flex-1 flex justify-center items-end gap-2">
                 <img
-                  class="w-8 h-8 inline-block"
+                  class="w-auto max-h-8 inline-block"
                   src={set.symbol || ""}
-                  alt={set.name}
+                  alt="symbol"
                 />
                 <h3 class="font-manrope font-bold text-sm text-white leading-8">
                   {set.name}

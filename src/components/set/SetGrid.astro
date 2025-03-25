@@ -11,31 +11,23 @@ const { sets } = Astro.props;
     sets && sets.length > 0 ? (
       sets.map((set: PokeSet) => (
         <a href={`/set/${set.id}`} class="w-full">
-          <div class="rounded-lg flex flex-col items-center">
-            <div
-              id="card"
-              class="grid grid-cols-1 relative w-[250px] h-[150px] group rounded-lg overflow-hidden"
-              style={`background-image: url(${set.logo || ""}); background-size: cover; background-position: center;padding: 10px 10px 50px 10px;`}
-            >
-              <div class="w-full h-auto text-center">
-                {/* <img
-                  class="rounded-lg max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
-                  src={set.logo || ""}
-                  alt={set.name}
-                  loading="lazy"
-                /> */}
-              </div>
+          <div class="set grid grid-cols-1 relative w-[250px] h-[150px] group rounded-lg overflow-hidden">
+            <img
+              class="set-img rounded-lg w-full max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
+              src={set.logo || ""}
+              alt={set.name}
+              loading="lazy"
+            />
 
-              <div class="w-full flex-1 flex justify-center items-end gap-2">
-                <img
-                  class="w-auto max-h-8 inline-block"
-                  src={set.symbol || ""}
-                  alt="symbol"
-                />
-                <h3 class="font-manrope font-bold text-sm text-white leading-8">
-                  {set.name}
-                </h3>
-              </div>
+            <div class="set-title w-full grid grid-cols-2 justify-center items-end gap-2">
+              <img
+                class="w-auto max-h-8 inline-block"
+                src={set.symbol || ""}
+                alt="symbol"
+              />
+              <h3 class="font-manrope font-bold text-sm text-white leading-8">
+                {set.name}
+              </h3>
             </div>
           </div>
 
@@ -74,3 +66,29 @@ const { sets } = Astro.props;
     )
   }
 </div>
+
+<style>
+  .set {
+    border: 2px solid #333;
+    grid-template-rows: auto 4em;
+  }
+  .set-img {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 0;
+    color: transparent;
+  }
+
+  .set-title {
+    background-color: #222;
+    padding: 10px;
+    grid-template-columns: 40px 1fr;
+    align-content: center;
+    text-align: center;
+  }
+
+  .set h3 {
+    line-height: 1.2;
+  }
+</style>

@@ -23,7 +23,10 @@ const description =
   card?.description || `${card?.name} - ${card?.set?.name} ${card?.localId} `;
 ---
 
-<Layout title={card?.name} description={description}>
+<Layout
+  title=`${card?.localId} ${card?.name} - ${card?.set?.name}`
+  description={description}
+>
   <main>
     <PathBanner card={card} />
 

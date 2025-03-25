@@ -48,6 +48,8 @@ import SetGrid from "./SetGrid.astro";
 
 const language = "es";
 const sets = await PokeSetHandler.getAll({ language });
+
+sets?.reverse();
 ---
 
 <SetGrid sets={sets} />

@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import SetSelector from "../components/SetSelector.astro";
 import CardGrid from "../components/card/CardGrid.astro";
 import { PokeCardHandler } from "../handlers/PokeCardHandler";
 
@@ -17,7 +16,10 @@ const { cards, error } = await PokeCardHandler.find({
 console.log("CARDS", cards);
 ---
 
-<Layout title="Pokémon TCG Card Browser" description="Search for a card">
+<Layout
+  title={`Search ${nameQuery} - Pokémon TCG Card Browser`}
+  description={`Search for ${nameQuery} in the website`}
+>
   <h2>Search for {nameQuery}</h2>
 
   <CardGrid cards={cards} error={error} setId={null} />

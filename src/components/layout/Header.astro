@@ -1,0 +1,39 @@
+---
+import Login from "../../components/login/login.astro";
+import Nav from "./Nav.astro";
+import Search from "./Search.astro";
+---
+
+<header class="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
+  <div class="container flex h-16 items-center justify-between px-4 md:px-6">
+    <div class="flex items-center gap-4">
+      <a href="/" class="flex items-center gap-4">
+        <img
+          src="/img/icon/pokecards_icon.webp"
+          alt="PokeCards"
+          class="h-9 w-9 inline"
+        />
+        <h1 id="inicio">PokéCards</h1>
+      </a>
+      <Nav />
+    </div>
+    <div class="flex items-center gap-4">
+      <Search />
+
+      <Login />
+    </div>
+  </div>
+</header>
+
+<style>
+  header {
+    color: white;
+  }
+
+  header h1 {
+    display: inline-block;
+    position: relative;
+    z-index: 20;
+    margin: 0;
+  }
+</style>

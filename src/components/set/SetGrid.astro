@@ -5,19 +5,21 @@ const { sets } = Astro.props;
 ---
 
 <div
-  class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full"
+  class="set-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full"
 >
   {
     sets && sets.length > 0 ? (
       sets.map((set: PokeSet) => (
-        <a href={`/set/${set.id}`} class="w-full">
-          <div class="set grid grid-cols-1 relative w-[250px] h-[150px] group rounded-lg overflow-hidden">
+        <a href={`/set/${set.id}`}>
+          <div class="set grid grid-cols-1 relative group rounded-lg overflow-hidden">
+            {/* <div class="set-img-container"> */}
             <img
-              class="set-img rounded-lg w-full max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
+              class="set-img rounded-lg w-full  max-w-full h-[150px] object-contain transition-transform duration-300 group-hover:scale-110"
               src={set.logo || ""}
               alt={set.name}
               loading="lazy"
             />
+            {/* </div> */}
 
             <div class="set-title w-full grid grid-cols-2 justify-center items-end gap-2">
               <img
@@ -68,9 +70,21 @@ const { sets } = Astro.props;
 </div>
 
 <style>
+  .set-grid a {
+    align-self: stretch;
+  }
   .set {
     border: 2px solid #333;
     grid-template-rows: auto 4em;
+    height: 100%;
+  }
+
+  .set > * {
+    align-self: stretch;
+  }
+
+  .set-img-container {
+    height: 100%;
   }
   .set-img {
     background-size: contain;

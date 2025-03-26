@@ -22,4 +22,4 @@ Disallow: /404
 Crawl-delay: 10
 
 # Ubicación del sitemap
-Sitemap: https://pokecards.jbr1989.es/sitemap-index.xml
+Sitemap: https://pokecards.jbr1989.es/sitemap.xml

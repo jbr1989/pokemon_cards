@@ -4,7 +4,8 @@ import CardGrid from "../components/card/CardGrid.astro";
 import { PokeCardHandler } from "../handlers/PokeCardHandler";
 
 // Fetch all sets
-const language = "es";
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
 
 const nameQuery = Astro.url.searchParams.get("name") || "";
 

@@ -46,7 +46,9 @@ import SetGrid from "./SetGrid.astro";
 //   },
 // ];
 
-const language = "es";
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
+
 const sets = await PokeSetHandler.getAll({ language });
 
 sets?.reverse();

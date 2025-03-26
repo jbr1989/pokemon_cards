@@ -5,7 +5,8 @@ import { PokeCardHandler } from "../handlers/PokeCardHandler";
 import ErrorMessage from "../components/ErrorMessage.astro";
 
 // Fetch all sets
-const language = "es";
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
 
 const selectedCardId = Astro.url.searchParams.get("id") || "base1-1";
 const { card, error } = await PokeCardHandler.get({

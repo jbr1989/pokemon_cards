@@ -6,7 +6,8 @@ import PathBanner from "../../components/PathBanner.astro";
 import ErrorMessage from "../../components/ErrorMessage.astro";
 
 // Fetch all sets
-const language = "es";
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
 
 const { setId, cardId } = Astro.params;
 

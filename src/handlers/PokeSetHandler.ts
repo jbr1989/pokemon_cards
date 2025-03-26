@@ -10,11 +10,13 @@ export class PokeSetHandler {
 		language?: string;
 		getSets?: boolean;
 	}): Promise<Array<PokeSetMini> | null> {
+		console.log("LANGUAGE", language);
+
 		const tcgdex = new TCGdex(language);
 		const sets = await tcgdex.fetch("sets"); // Obtener todas las series (SerieMini)
 
 		// console.log("SETS:", sets?.length);
-		// console.log(sets);
+		console.log("SETS", sets);
 
 		if (!sets) return null;
 
@@ -63,6 +65,8 @@ export class PokeSetHandler {
 	}): Promise<PokeSet | null> {
 		const tcgdex = new TCGdex(language);
 		const set = await tcgdex.fetch("sets", setId);
+
+		console.log("SET", set);
 
 		if (set == null) return null;
 

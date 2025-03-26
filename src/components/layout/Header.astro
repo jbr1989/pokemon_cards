@@ -2,6 +2,11 @@
 import Login from "../../components/login/login.astro";
 import Nav from "./Nav.astro";
 import Search from "./Search.astro";
+
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
+
+console.log("LANGUAGE", language);
 ---
 
 <header class="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950">
@@ -19,6 +24,8 @@ import Search from "./Search.astro";
     </div>
     <div class="flex items-center gap-4">
       <Search />
+
+      <span>{language.toUpperCase()}</span>
 
       <Login />
     </div>

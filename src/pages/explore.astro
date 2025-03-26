@@ -5,7 +5,8 @@ import CardGrid from "../components/card/CardGrid.astro";
 import { PokeCardMiniHandler } from "../handlers/PokeCardMiniHandler";
 
 // Fetch all sets
-const language = "es";
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
 
 // Get the selected set from URL params or use the latest set
 
@@ -21,7 +22,7 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
 
 <Layout title="Pokémon TCG Card Browser" description="Explore all cards">
   <main>
-    <SetSelector selectedLanguage={language} selectedSetId={selectedSetId} />
+    <SetSelector selectedLanguage={lang} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>
     <CardGrid setId={selectedSetId} cards={cards} error={error} />
   </main>

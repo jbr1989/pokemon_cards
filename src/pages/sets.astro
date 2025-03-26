@@ -11,10 +11,7 @@ const language = lang.toString() || "en";
 const sets: PokeSetMini[] | null = await PokeSetHandler.getAll({ language });
 ---
 
-<Layout
-  title="All Sets -Pokémon TCG Card Browser"
-  description="Browse the all Pokémon card sets."
->
+<Layout title="All Sets" description="Browse the all Pokémon card sets.">
   <section class="py-12 md:py-16 bg-zinc-800">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-start gap-4">

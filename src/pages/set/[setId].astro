@@ -37,7 +37,7 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
 // console.log("CARDS", cards);
 ---
 
-<Layout title="Pokémon TCG Card Browser" description="Set {set?.name}">
+<Layout title=`Set ${set?.name}` description=`Set ${set?.name}`>
   <img
     src={set?.logo}
     alt={set?.name}

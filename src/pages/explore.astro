@@ -20,7 +20,7 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
 // console.log(selectedSetId);
 ---
 
-<Layout title="Pokémon TCG Card Browser" description="Explore all cards">
+<Layout title="Explore all cards" description="Explore all cards">
   <main>
     <SetSelector selectedLanguage={lang} selectedSetId={selectedSetId} />
     <div id="loading" class="loading hidden">Loading cards...</div>

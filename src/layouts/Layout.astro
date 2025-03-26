@@ -8,7 +8,11 @@ interface Props {
   description: string | undefined;
 }
 
-const { title, description = "Pokemon TCG Card Browser" } = Astro.props;
+const { title, description = "PokéCards" } = Astro.props;
+
+let titulo = title;
+if (titulo?.length > 0) titulo += " - ";
+titulo += "PokéCards";
 ---
 
 <!doctype html>
@@ -18,7 +22,7 @@ const { title, description = "Pokemon TCG Card Browser" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/img/icon/pokecards_icon.webp" />
     <meta name="theme-color" content="#13151a" />
-    <title>{title}</title>
+    <title>{titulo}</title>
     <meta name="description" content={description} />
 
     <link rel="apple-touch-icon" href="/img/icon/pokecards_icon.webp" />

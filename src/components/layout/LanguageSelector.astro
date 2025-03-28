@@ -1,0 +1,46 @@
+---
+const { lang } = Astro.locals;
+const language = lang.toString() || "es";
+---
+
+<div class="relative inline-block dropdown">
+  <span class="bg-zinc-900 text-white px-4 py-2 rounded-md"
+    >{language.toUpperCase()}</span
+  >
+  <ul
+    class="absolute hidden bg-zinc-800 text-white rounded-md mt-2 w-24 shadow-md"
+  >
+    <li>
+      <a
+        href="javascript:setLanguage('es')"
+        class="block px-4 py-2 hover:bg-zinc-700">Español</a
+      >
+    </li>
+    <li>
+      <a
+        href="javascript:setLanguage('en')"
+        class="block px-4 py-2 hover:bg-zinc-700">English</a
+      >
+    </li>
+    <li>
+      <a
+        href="javascript:setLanguage('ja')"
+        class="block px-4 py-2 hover:bg-zinc-700">日本語</a
+      >
+    </li>
+  </ul>
+</div>
+
+<style>
+  .dropdown:hover ul,
+  .dropdown ul:hover {
+    display: block;
+  }
+</style>
+
+<script is:inline>
+  function setLanguage(lang = "es") {
+    document.cookie = `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    document.location.reload();
+  }
+</script>

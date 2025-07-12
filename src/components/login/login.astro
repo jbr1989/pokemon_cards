@@ -15,9 +15,16 @@ const session = await getSession(Astro.request);
         alt={session.user?.name?.substring(0, 1).toUpperCase()}
         class="avatar"
         style="color:black;"
+        onclick="signOut()"
       />
     ) : (
-      <img id="login" src="img/icon/user-x.svg" alt="Login" class="avatar" />
+      <img
+        id="login"
+        src="img/icon/user-x.svg"
+        alt="Login"
+        class="avatar"
+        onclick="signIn('github')"
+      />
     )
   }
 </div>

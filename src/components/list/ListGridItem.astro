@@ -1,0 +1,38 @@
+---
+import { PokeCardHandler } from "../../handlers/PokeCardHandler";
+import { PokeCardMini } from "../../models/PokeCardMini";
+import type { UserListCard } from "../../models/UserListCard";
+
+interface Props {
+  listCard: UserListCard | null;
+}
+
+console.log("HOLA");
+
+const { listCard } = Astro.props;
+
+const { card, error } = await PokeCardHandler.get({
+  cardId: listCard?.cardId,
+  language: listCard?.lang || "en",
+});
+
+console.log("LIST CARD", listCard);
+console.log("CARD", card);
+---
+
+<div class="card cardEffect">
+  <a href={`/card/${card?.id}`}>
+    <div>
+      <img
+        src={card && card.image.low != null
+          ? card.image.low
+          : "/img/card-not-found.jpg"}
+        alt={card ? card?.name : "Card not found"}
+        title={card ? card?.name : "Card not found"}
+        loading="lazy"
+        transition:name={`${card?.id}-image`}
+      />
+      <span>{listCard?.lang}</span>
+    </div>
+  </a>
+</div>

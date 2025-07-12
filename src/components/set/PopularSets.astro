@@ -2,54 +2,10 @@
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
 import SetGrid from "./SetGrid.astro";
 
-// import Link from "next/link";
-// import Image from "next/image";
-// import { Card, CardContent } from "./ui/card";
-
-// Sample data for popular sets
-// const popularSets = [
-//   {
-//     id: "base-set-unlimited",
-//     name: "Base Set Unlimited",
-//     image: "https://ext.same-assets.com/3897352764/907587978.webp",
-//     logoImage: "https://ext.same-assets.com/732696185/3633306326.webp",
-//     bgImage: "https://ext.same-assets.com/1090453301/1225050526.webp",
-//   },
-//   {
-//     id: "jungle",
-//     name: "Jungle",
-//     image: "https://ext.same-assets.com/2582912166/3139716049.webp",
-//     logoImage: "https://ext.same-assets.com/2582912166/3139716049.webp",
-//     bgImage: "https://ext.same-assets.com/3929352257/1039847648.webp",
-//   },
-//   {
-//     id: "evolving-skies",
-//     name: "Evolving Skies",
-//     image: "https://ext.same-assets.com/3834689006/1140895674.webp",
-//     logoImage: "https://ext.same-assets.com/3981808276/4150320722.webp",
-//     bgImage:
-//       "https://cdn.pokemonprice.com/sets/background/evolving-skies.webp?w=1200",
-//   },
-//   {
-//     id: "hidden-fates",
-//     name: "Hidden Fates",
-//     image: "https://ext.same-assets.com/2652055128/2435317165.webp",
-//     logoImage: "https://ext.same-assets.com/3851909488/2345085585.webp",
-//     bgImage: "https://ext.same-assets.com/2652055128/2435317165.webp",
-//   },
-//   {
-//     id: "paldean-fates",
-//     name: "Paldean Fates",
-//     image: "https://ext.same-assets.com/562160491/1629946271.webp",
-//     logoImage: "https://ext.same-assets.com/1761845301/2221364557.webp",
-//     bgImage: "https://ext.same-assets.com/320910323/3522561353.webp",
-//   },
-// ];
-
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
 
-const sets = await PokeSetHandler.getAll({ language });
+const { sets, error } = await PokeSetHandler.getAll({ language });
 
 sets?.reverse();
 ---

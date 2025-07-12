@@ -30,10 +30,10 @@ const { card } = Astro.props;
     </svg></span
   >
   <a
-    href={`/set/${card.set?.id}`}
+    href={`/set/${card?.set?.id}`}
     class="font-medium text-zinc-500 text-sm cursor-pointer hover:text-yellowish"
   >
-    {card.set?.name}
+    {card?.set?.name || "?"}
   </a>
   <span
     ><svg
@@ -54,6 +54,6 @@ const { card } = Astro.props;
     </svg></span
   >
   <span class="font-semibold text-white text-sm">
-    {card.localId} - {card.name}
+    {card?.localId || "?"} - {card?.name || "?"}
   </span>
 </div>

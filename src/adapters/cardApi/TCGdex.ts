@@ -3,9 +3,137 @@ import { PokeCardMini } from "../../models/PokeCardMini";
 import { PokeCard } from "../../models/PokeCard";
 import type { ApiInterface } from "./ApiInterface";
 import { PokeSetMini } from "../../models/PokeSetMini";
+import type { PokeSet } from "../../models/PokeSet";
+import { PokeSerie } from "../../models/PokeSerie";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TCGdexAdapter implements ApiInterface {
+
+	//#region SETS
+	async PokeSet_GetAll({
+		language = "en",
+		getSets = false,
+	}: {
+		language?: string;
+		getSets?: boolean;
+	}): Promise<{ sets: PokeSetMini[] | null, error: string | null }> {
+
+		try{
+			
+			const tcgdex = new TCGdex(language);
+			const sets = await tcgdex.fetch("sets"); // Obtener todas las series (SerieMini)
+
+			if (!sets) return { sets: [], error: "Sets NOT found" }
+
+			const pokeSets: Array<PokeSetMini> = [];
+
+			for (const set of sets) {
+
+				pokeSets.push(
+					new PokeSetMini(
+						set.id,
+						set.name,
+						set.logo ? `${set.logo}.webp` : "",
+						set.symbol ? `${set.symbol}.webp` : "",
+						set.cardCount,
+					),
+				);
+			}
+
+			return { sets: pokeSets, error: null }
+
+		} catch (e) {
+			console.error("Error fetching cards from TCGdex:", e);
+			return { sets: [], error: e.toString() };
+		}
+
+	}
+
+	async PokeSet_Get({
+		language = "en",
+		setId = "",
+	}: {
+		language?: string;
+		setId?: string;
+	}): Promise<{ set: PokeSetMini | null, error: string | null }> {
+		try {
+			const tcgdex = new TCGdex(language);
+			const set = await tcgdex.fetch("sets", setId);
+
+			console.log("SET", set);
+
+			if (set == null) return { set: null, error: "Set not found" };
+
+			return { set: new PokeSetMini(
+				set.id,
+				set.name,
+				set.logo ? `${set.logo}.webp` : "",
+				set.symbol ? `${set.symbol}.webp` : "",
+				set.cardCount,
+			), error: null };
+
+		} catch (e) {
+			console.error("Error fetching set from TCGdex:", e);
+			return { set: null, error: e.toString() };
+		}
+	}
+
+	//#endregion
+
+	//#region SERIES
+
+	async PokeSerie_GetAll({
+		language = "en",
+		getSets = false,
+	}: {
+		language?: string;
+		getSets?: boolean;
+	}): Promise<{ series: PokeSerie[] | null, error: string | null }> {
+		try {
+
+			const tcgdex = new TCGdex(language);
+			const series = await tcgdex.fetch("series"); // Obtener todas las series (SerieMini)
+
+			if (!series) return { series: [], error: "Series NOT found" }
+
+			const pokeSeries: PokeSerie[] = [];
+
+			for (const serie of series) {
+				const info = await tcgdex.fetch("series", serie.id); // Obtener información de la serie
+				const pokeSets: Array<PokeSetMini> = [];
+
+				if (info != null) {
+					for (const set of info.sets) {
+						pokeSets.push(
+							new PokeSetMini(
+								set.id,
+								set.name,
+								set.logo ? `${set.logo}.webp` : "",
+								set.symbol ? `${set.symbol}.webp` : "",
+								set.cardCount,
+							),
+						);
+					}
+				}
+
+				pokeSeries.push(
+					new PokeSerie(serie.id, serie.name, serie.logo, pokeSets),
+				);
+			}
+
+			return { series: pokeSeries, error: null };
+
+		} catch (e) {
+			console.error("Error fetching series from TCGdex:", e);
+			return { series: [], error: e.toString() };
+		}
+	}
+
+	//#endregion
+
+
+	//#region CARDS
+
 	async PokeCardMini_GetAll(
 		setId = "base1",
 		language = "en",
@@ -115,4 +243,6 @@ export class TCGdexAdapter implements ApiInterface {
 			return [];
 		}
 	}
+
+	//#endregion
 }

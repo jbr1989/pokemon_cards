@@ -1,10 +1,9 @@
-import { TCGdexAdapter } from "../adapters/cardApi/TCGdex";
 import type { PokeCard } from "../models/PokeCard";
 import type { PokeCardMini } from "../models/PokeCardMini";
+import { PokeHandler } from "./PokeHandler";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
-export class PokeCardHandler {
-	public static adapter = new TCGdexAdapter();
+export class PokeCardHandler extends PokeHandler {
 
 	static async getAll({
 		name = "",

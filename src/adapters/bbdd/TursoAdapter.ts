@@ -7,6 +7,9 @@ export const turso = createClient({
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TursoAdapter implements BBDDInterface {
+
+	//#region USER
+
 	async getIdUser(
 		provider: string,
 		providerAccountId: string,
@@ -49,4 +52,74 @@ export class TursoAdapter implements BBDDInterface {
 			return false;
 		}
 	}
+
+	//#endregion
+
+	//#region USER LIST
+
+	async getUserListAll(
+		userId: number,
+	): Promise<any> {
+		const result = await turso.execute({
+			sql: "SELECT * FROM lists WHERE user_id = ?",
+			args: [userId],
+		});
+
+		if (result.rows.length === 0) return null;
+
+		return result.rows;
+	}
+
+	async getUserList(
+		id: number,
+	): Promise<any> {
+		const result = await turso.execute({
+			sql: "SELECT * FROM lists WHERE id = ?",
+			args: [id],
+		});
+
+		if (result.rows.length === 0) return null;
+		if (result.rows[0].id == null) return null;
+
+		return result.rows[0];
+	}
+
+	async getUserListCards(
+		userListId: number,
+	): Promise<any> {
+		const result = await turso.execute({
+			sql: "SELECT * FROM lists_cards WHERE listId = ?",
+			args: [userListId],
+		});
+
+		console.log("GET USER LIST CARDS", result);
+
+		if (result.rows.length === 0) return null;
+
+		return result.rows;
+	}
+
+	async createUserList(
+		name: string,
+		userId: number,
+	): Promise<boolean> {
+		try {
+			const result = await turso.execute({
+				sql: "INSERT INTO lists (name, user_id) VALUES (?, ?)",
+				args: [
+					name,
+					userId
+				],
+			});
+
+			console.log(result);
+
+			return true;
+		} catch (error) {
+			console.log("Error al crear lista", error);
+			return false;
+		}
+	}
+
+	//#endregion
 }

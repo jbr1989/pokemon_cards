@@ -1,0 +1,32 @@
+---
+import { getSession } from "auth-astro/server";
+
+import Layout from "../layouts/Layout.astro";
+import { UserListHandler } from "../handlers/db/UserListHandler";
+import ListGridList from "../components/list/ListGridList.astro";
+
+const session = await getSession(Astro.request);
+
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
+
+console.log("LANGUAGE", language);
+
+const { lists, error } = await UserListHandler.getAll({
+  userId: parseInt(session?.user?.id?.toString() || "0"),
+});
+---
+
+<Layout title="Your Lists" description="Your Lists">
+  <main class="text-center">
+    <h2>Your Lists</h2>
+
+    {
+      session ? (
+        <ListGridList lists={lists} />
+      ) : (
+        <p>You need to be logged in to see this page</p>
+      )
+    }
+  </main>
+</Layout>

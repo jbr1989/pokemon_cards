@@ -8,7 +8,7 @@ import type { PokeSetMini } from "../models/PokeSetMini";
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
 
-const sets: PokeSetMini[] | null = await PokeSetHandler.getAll({ language });
+const { sets, error } = await PokeSetHandler.getAll({ language });
 ---
 
 <Layout title="All Sets" description="Browse the all Pokémon card sets.">

@@ -1,0 +1,82 @@
+---
+import type { UserList } from "../../models/UserList";
+
+const { lists } = Astro.props;
+---
+
+<div
+  class="set-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full"
+>
+  {
+    lists && lists.length > 0 ? (
+      lists.map((list: UserList) => (
+        <a href={`/list/${list.id}`}>
+          <div class="set grid grid-cols-1 relative group rounded-lg overflow-hidden">
+            {/* <div class="set-img-container"> */}
+            {/* <img
+              class="set-img rounded-lg w-full  max-w-full h-[150px] object-contain transition-transform duration-300 group-hover:scale-110"
+              src={list.logo || ""}
+              alt={set.name}
+              loading="lazy"
+            /> */}
+            {/* </div> */}
+
+            <div class="set-title w-full grid grid-cols-2 justify-center items-end gap-2">
+              {/* <img
+                class="w-auto max-h-8 inline-block"
+                src={set.symbol || ""}
+                alt="symbol"
+              /> */}
+              <h3 class="font-manrope font-bold text-sm text-white leading-8">
+                {list.name}
+              </h3>
+            </div>
+          </div>
+        </a>
+      ))
+    ) : (
+      <div class="col-span-full text-center py-8">
+        <h2 class="text-xl font-semibold text-white">No lists found</h2>
+        <p class="text-gray-400">Please try again later.</p>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .set-grid a {
+    align-self: stretch;
+  }
+  .set {
+    border: 2px solid #333;
+    grid-template-rows: auto 4em;
+    height: 100%;
+  }
+
+  .set > * {
+    align-self: stretch;
+  }
+
+  .set-img-container {
+    height: 100%;
+  }
+  .set-img {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 0;
+    color: transparent;
+  }
+
+  .set-title {
+    background-color: #222;
+    padding: 10px;
+    grid-template-columns: 40px 1fr;
+    align-content: center;
+    text-align: center;
+  }
+
+  .set h3 {
+    line-height: 1.2;
+  }
+</style>

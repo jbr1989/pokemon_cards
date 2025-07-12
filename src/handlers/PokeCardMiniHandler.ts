@@ -1,9 +1,8 @@
-import { TCGdexAdapter } from "../adapters/cardApi/TCGdex";
 import type { PokeCardMini } from "../models/PokeCardMini";
+import { PokeHandler } from "./PokeHandler";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
-export class PokeCardMiniHandler {
-	public static adapter = new TCGdexAdapter();
+export class PokeCardMiniHandler extends PokeHandler {
 
 	static async getAll({
 		setId = "base1",

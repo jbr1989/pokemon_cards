@@ -1,12 +1,12 @@
 export const onRequest = async (context, next) => {
-	console.log("MIDDLEWARE");
+	// console.log("MIDDLEWARE");
 
 	//const html = await response.text();
 	//const redactedHtml = html.replaceAll("PRIVATE INFO", "REDACTED");
 
 	const cookies = context.request.headers.get("cookie") || "";
 	const langCookie = cookies.match(/lang=([a-z]{2})/)?.[1];
-	console.log("LANG COOKIE", langCookie);
+	// console.log("LANG COOKIE", langCookie);
 
 	let preferredLanguage = "en";
 
@@ -19,7 +19,7 @@ export const onRequest = async (context, next) => {
 			context.request.headers.get("accept-language") || "en";
 		preferredLanguage = acceptLanguage.split(",")[0].split("-")[0]; // "es-ES" -> "es"
 
-		console.log("PREFERRED LANGUAGE", preferredLanguage);
+		// console.log("PREFERRED LANGUAGE", preferredLanguage);
 
 		// Como fallback, podemos usar el país detectado por Vercel
 		const country = context.request.headers.get("x-vercel-ip-country") || "US";
@@ -27,7 +27,7 @@ export const onRequest = async (context, next) => {
 		context.locals.lang = preferredLanguage;
 	}
 
-	console.log("LOCALs LANG", context.locals.lang);
+	// console.log("LOCALs LANG", context.locals.lang);
 
 	const response = await next();
 

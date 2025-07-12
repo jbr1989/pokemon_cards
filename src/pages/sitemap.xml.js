@@ -1,16 +1,6 @@
 // src/pages/sitemap.xml.js
 import { PokeSetHandler } from "../handlers/PokeSetHandler";
 
-// Simula una función que recupera IDs de una base de datos
-async function fetchDynamicIds() {
-	// En un escenario real, esta función haría una consulta a tu base de datos
-	return [
-		{ id: "1", lastModified: new Date("2024-03-01") },
-		{ id: "2", lastModified: new Date("2024-03-15") },
-		{ id: "3", lastModified: new Date("2024-03-20") },
-	];
-}
-
 function createUrl(
 	url,
 	lastModified = new Date().toISOString(),
@@ -28,8 +18,6 @@ function createUrl(
 export async function GET() {
 	try {
 		const dominio = "https://pokecards.jbr1989.es/";
-		// Recupera los IDs dinámicos
-		const dynamicIds = await fetchDynamicIds();
 
 		// Genera el contenido del sitemap
 		let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>

@@ -43,7 +43,7 @@ export class TCGdexAdapter implements ApiInterface {
 			const tcgdex = new TCGdex(language);
 			const card = await tcgdex.fetch("cards", cardId);
 
-			//console.log("CARD", card);
+			console.log("CARD", card);
 
 			if (!card) return null;
 

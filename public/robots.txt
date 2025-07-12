@@ -13,8 +13,8 @@ Allow: /
 # Disallow: /test/
 
 # Archivos específicos a no indexar
-Disallow: /*.json$
-Disallow: /*.xml$
+# Disallow: /*.json$
+# Disallow: /*.xml$
 Disallow: /404
 
 

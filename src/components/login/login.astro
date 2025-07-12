@@ -9,7 +9,13 @@ const session = await getSession(Astro.request);
 <div id="login-container">
   {
     session ? (
-      <img id="logout" src={session.user?.image} alt="Avatar" class="avatar" />
+      <img
+        id="logout"
+        src={session.user?.image}
+        alt={session.user?.name?.substring(0, 1).toUpperCase()}
+        class="avatar"
+        style="color:black;"
+      />
     ) : (
       <img id="login" src="img/icon/user-x.svg" alt="Login" class="avatar" />
     )

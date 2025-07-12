@@ -1,10 +1,21 @@
 ---
+import { getSession } from "auth-astro/server";
+
 import Layout from "../layouts/Layout.astro";
+
+const session = await getSession(Astro.request);
 ---
 
 <Layout title="Your Cards" description="Your Cards">
   <main class="text-center">
     <h2>Your Cards</h2>
-    <h3>In construction</h3>
+
+    {
+      session ? (
+        <p>You are logged in as {session.user?.name}</p>
+      ) : (
+        <p>You need to be logged in to see this page</p>
+      )
+    }
   </main>
 </Layout>

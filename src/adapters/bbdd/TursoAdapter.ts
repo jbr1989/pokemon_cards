@@ -88,7 +88,7 @@ export class TursoAdapter implements BBDDInterface {
 		userListId: number,
 	): Promise<any> {
 		const result = await turso.execute({
-			sql: "SELECT * FROM lists_cards WHERE listId = ?",
+			sql: "SELECT * FROM lists_cards_info WHERE listId = ? ORDER BY dexId ASC",
 			args: [userListId],
 		});
 

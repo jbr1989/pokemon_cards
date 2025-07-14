@@ -171,13 +171,14 @@ export class TCGdexAdapter implements ApiInterface {
 			const tcgdex = new TCGdex(language);
 			const card = await tcgdex.fetch("cards", cardId);
 
-			console.log("CARD", card);
+			//console.log("CARD", card);
 
 			if (!card) return null;
 
 			return new PokeCard(
 				card.id,
 				card.localId,
+				(card.dexId ? card.dexId[0] : null), // dexId is an array, we take the first element
 				card.name,
 				card.description || "",
 				{

@@ -3,6 +3,7 @@ import type { PokeSetMini } from "./PokeSetMini";
 export class PokeCard {
 	id: string;
 	localId: string;
+	dexId: number | null;
 	name: string;
 	description: string;
 	image: {
@@ -24,6 +25,7 @@ export class PokeCard {
 	constructor(
 		id: string,
 		localId: string,
+		dexId: number | null,
 		name: string,
 		description: string,
 		image: {
@@ -44,6 +46,7 @@ export class PokeCard {
 	) {
 		this.id = id;
 		this.localId = localId;
+		this.dexId = dexId;
 		this.name = name;
 		this.description = description;
 		this.image = {

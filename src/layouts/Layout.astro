@@ -6,10 +6,15 @@ import Footer from "./components/Footer.astro";
 
 interface Props {
   title: string | undefined;
-  description: string | undefined;
+  description?: string | undefined;
+  robots?: string | undefined;
 }
 
-const { title = "", description = "PokéCards" } = Astro.props;
+const {
+  title = "",
+  description = "PokéCards",
+  robots = "index, follow",
+} = Astro.props;
 
 let titulo = title?.toString();
 if (titulo?.length > 0) titulo += " - ";
@@ -32,7 +37,7 @@ titulo += "PokéCards";
 
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap.xml" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
 
     <ClientRouter />
   </head>

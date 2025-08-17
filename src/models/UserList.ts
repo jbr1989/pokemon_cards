@@ -4,7 +4,7 @@ export class UserList {
 	id: number;
     userId: number;
 	name: string;
-    cards: UserListCard[];
+    cards: UserListCard[] | null;
 
 	constructor(
 		id: number,

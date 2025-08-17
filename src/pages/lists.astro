@@ -3,14 +3,14 @@ import { getSession } from "auth-astro/server";
 
 import Layout from "../layouts/Layout.astro";
 import { UserListHandler } from "../handlers/db/UserListHandler";
-import ListGridList from "../components/list/ListGridList.astro";
+import ListGridList from "../components/list/ListListGrid.astro";
 
 const session = await getSession(Astro.request);
 
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
 
-console.log("LANGUAGE", language);
+// console.log("LANGUAGE", language);
 
 const { lists, error } = await UserListHandler.getAll({
   userId: parseInt(session?.user?.id?.toString() || "0"),

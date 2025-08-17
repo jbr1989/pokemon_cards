@@ -1,0 +1,149 @@
+---
+import type { UserListCard } from "../../models/UserListCard";
+import ErrorMessage from "../ErrorMessage.astro";
+import ListCardGridItem from "./ListCardGridItem.astro";
+
+interface Props {
+  cards: UserListCard[] | null;
+  error: string | null;
+  listId: string | null;
+}
+
+const { listId, cards, error } = Astro.props;
+---
+
+<div id="cards-div">
+  <ErrorMessage error={error} />
+
+  <div id="loading" class="loading hidden">Loading cards...</div>
+
+  <div class="cards-grid container">
+    {
+      cards && cards?.length > 0 ? (
+        cards.map((item) => <ListCardGridItem listCard={item} />)
+      ) : (
+        <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
+          <h2>No cards found</h2>
+          <p>Please select a different set.</p>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style is:inline>
+  #cards-div {
+    background: linear-gradient(
+      180deg,
+      var(--color-gradient-black-1) 0%,
+      var(--color-gradient-bg-purple-2) 100%
+    );
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .card {
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    aspect-ratio: 1 / 1.4;
+    image-rendering: optimizeQuality;
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".card-variant").forEach((variant) => {
+    variant.addEventListener("click", () => {
+      variant.classList.toggle("disabled");
+    });
+  });
+</script>
+
+<style>
+  .disabled {
+    filter: grayscale(100%) opacity(50%);
+  }
+
+  .card-image {
+    padding: 15px;
+    display: grid;
+    justify-content: center;
+  }
+
+  .card-variants {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .card-variants img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+  }
+
+  .holo-image {
+    position: relative;
+    border-radius: 50%; /* Opcional si la imagen no tiene fondo */
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+
+  .holo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 0, 128, 0.4),
+      rgba(255, 128, 0, 0.4),
+      rgba(255, 255, 0, 0.4),
+      rgba(128, 255, 0, 0.4),
+      rgba(0, 255, 128, 0.4),
+      rgba(0, 255, 255, 0.4),
+      rgba(0, 128, 255, 0.4),
+      rgba(128, 0, 255, 0.4),
+      rgba(255, 0, 128, 0.4)
+    );
+    background-size: 400% 400%;
+    /* animation: holo-move 3s infinite; */
+    mix-blend-mode: screen; /* Combina los colores con la imagen */
+    pointer-events: none; /* Evita que interfiera con clics */
+  }
+
+  @keyframes holo-move {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .reverse {
+    filter: invert(100%);
+  }
+</style>

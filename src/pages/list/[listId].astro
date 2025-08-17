@@ -1,9 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
-import ErrorMessage from "../../components/ErrorMessage.astro";
 import { UserListHandler } from "../../handlers/db/UserListHandler";
-import ListGridItem from "../../components/list/ListGridItem.astro";
+import ListCardGrid from "../../components/list/ListCardGrid.astro";
+import ListCardForm from "../../components/list/ListCardForm.astro";
 
 // Fetch all sets
 const { lang } = Astro.locals;
@@ -11,7 +11,7 @@ const language = lang.toString() || "en";
 
 const { listId } = Astro.params;
 
-console.log("USER LIST ID", listId);
+// console.log("USER LIST ID", listId);
 
 const { list, error } = await UserListHandler.get({
   userListId: parseInt(listId as string, 0),
@@ -24,142 +24,53 @@ console.log("LIST", list);
 ---
 
 <Layout title="" description="" robots="noindex, nofollow">
-  <main>
-    <h1>{list?.name}</h1>
+  <h1>{list?.name}</h1>
 
-    <ErrorMessage error={error} />
+  <div class="container">
+    <span>{list?.cards?.length} cards</span>
+    <button
+      onclick="openDialog()"
+      class="bg-blue-500 text-white p-2 rounded-md"
+      style="float:right;">Add Card</button
+    >
+  </div>
 
-    <div class="cards-grid container">
-      {
-        list?.cards && list?.cards?.length > 0 ? (
-          list.cards.map((item) => <ListGridItem listCard={item} />)
-        ) : (
-          <div
-            class="no-cards"
-            style="grid-column: 1 / -1; text-align: center;"
-          >
-            <h2>No cards found</h2>
-            <p>Please select a different set.</p>
-          </div>
-        )
-      }
-    </div>
-  </main>
+  <ListCardGrid
+    listId={listId || "0"}
+    cards={list?.cards || []}
+    error={error}
+  />
+
+  <ListCardForm listId={listId} />
 </Layout>
 
-<style is:inline>
-  #cards-div {
-    background: linear-gradient(
-      180deg,
-      var(--color-gradient-black-1) 0%,
-      var(--color-gradient-bg-purple-2) 100%
-    );
-  }
+<script is:inline>
+  let cardsDiv = null;
+  let loading = null;
 
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-
-  .card {
-    transition:
-      box-shadow 0.2s,
-      transform 0.2s;
-  }
-
-  .card:hover {
-    transform: scale(1.05);
-  }
-
-  .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    aspect-ratio: 1 / 1.4;
-    image-rendering: optimizeQuality;
-  }
-</style>
-
-<script>
-  document.querySelectorAll(".card-variant").forEach((variant) => {
-    variant.addEventListener("click", () => {
-      variant.classList.toggle("disabled");
-    });
+  document.addEventListener("astro:page-load", () => {
+    cardsDiv = document.querySelector("#cards-div");
+    loading = document.querySelector("#loading");
   });
+
+  async function loadCards(listId = null) {
+    console.log(cardsDiv, loading);
+
+    console.log("LOADING CARDS", listId);
+
+    if (!cardsDiv || !loading) return;
+
+    loading.classList.remove("hidden");
+    cardsDiv.classList.add("hidden");
+
+    try {
+      const response = await fetch(`/partials/ListGridPartial?list=${listId}`);
+      cardsDiv.innerHTML = await response.text();
+    } catch (error) {
+      console.error("Failed to load cards:", error);
+    } finally {
+      loading.classList.add("hidden");
+      cardsDiv.classList.remove("hidden");
+    }
+  }
 </script>
-
-<style>
-  .disabled {
-    filter: grayscale(100%) opacity(50%);
-  }
-
-  .card-image {
-    padding: 15px;
-    display: grid;
-    justify-content: center;
-  }
-
-  .card-variants {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .card-variants img {
-    display: block;
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-  }
-
-  .holo-image {
-    position: relative;
-    border-radius: 50%; /* Opcional si la imagen no tiene fondo */
-    overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-  }
-
-  .holo-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 0, 128, 0.4),
-      rgba(255, 128, 0, 0.4),
-      rgba(255, 255, 0, 0.4),
-      rgba(128, 255, 0, 0.4),
-      rgba(0, 255, 128, 0.4),
-      rgba(0, 255, 255, 0.4),
-      rgba(0, 128, 255, 0.4),
-      rgba(128, 0, 255, 0.4),
-      rgba(255, 0, 128, 0.4)
-    );
-    background-size: 400% 400%;
-    /* animation: holo-move 3s infinite; */
-    mix-blend-mode: screen; /* Combina los colores con la imagen */
-    pointer-events: none; /* Evita que interfiera con clics */
-  }
-
-  @keyframes holo-move {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .reverse {
-    filter: invert(100%);
-  }
-</style>

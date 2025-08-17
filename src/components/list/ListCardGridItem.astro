@@ -7,8 +7,6 @@ interface Props {
   listCard: UserListCard | null;
 }
 
-console.log("HOLA");
-
 const { listCard } = Astro.props;
 
 const { card, error } = await PokeCardHandler.get({
@@ -16,8 +14,8 @@ const { card, error } = await PokeCardHandler.get({
   language: listCard?.lang || "en",
 });
 
-console.log("LIST CARD", listCard);
-console.log("CARD", card);
+// console.log("LIST CARD", listCard);
+// console.log("CARD", card);
 ---
 
 <div class="card cardEffect">

@@ -12,7 +12,7 @@ export default defineConfig({
     callbacks: {
         async signIn({ user, account, profile }) {
 
-            console.log(user, account, profile);
+            //console.log(user, account, profile);
 
             if (account == null) return false;
 

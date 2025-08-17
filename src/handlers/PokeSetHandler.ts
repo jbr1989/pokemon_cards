@@ -12,11 +12,11 @@ export class PokeSetHandler extends PokeHandler {
 		language?: string;
 		getSets?: boolean;
 	}): Promise<{ sets: PokeSetMini[], error: string | null }> {
-		console.log("LANGUAGE", language);
+		// console.log("LANGUAGE", language);
 
 		const { sets, error } = await PokeSetHandler.adapter.PokeSet_GetAll({ language, getSets });
 
-		console.log("SETS", sets);
+		// console.log("SETS", sets);
 
 		if (error) {
 			console.error("Error fetching sets:", error);

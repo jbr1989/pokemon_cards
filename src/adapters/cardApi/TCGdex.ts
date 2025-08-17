@@ -60,7 +60,7 @@ export class TCGdexAdapter implements ApiInterface {
 			const tcgdex = new TCGdex(language);
 			const set = await tcgdex.fetch("sets", setId);
 
-			console.log("SET", set);
+			// console.log("SET", set);
 
 			if (set == null) return { set: null, error: "Set not found" };
 
@@ -219,7 +219,7 @@ export class TCGdexAdapter implements ApiInterface {
 			const response = await fetch(url);
 			const data = await response.json();
 
-			console.log("DATA", data);
+			// console.log("DATA", data);
 
 			// const tcgdex = new TCGdex(language);
 			// const selectedSet = await tcgdex.fetch("sets", setId);

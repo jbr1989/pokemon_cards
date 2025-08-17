@@ -11,14 +11,14 @@ const language = lang.toString() || "en";
 
 const { setId, cardId } = Astro.params;
 
-console.log(setId, cardId);
+// console.log(setId, cardId);
 
 const { card, error } = await PokeCardHandler.get({
   language: language,
   cardId: cardId,
 });
 
-console.log(card);
+// console.log(card);
 
 const description =
   card?.description || `${card?.name} - ${card?.set?.name} ${card?.localId} `;

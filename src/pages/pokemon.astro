@@ -20,8 +20,8 @@ async function fetchAndInsertPokemon() {
         args: [id, name],
       });
 
-      console.log(result);
-      console.log(`Insertado: ${id} - ${name}`);
+      // console.log(result);
+      // console.log(`Insertado: ${id} - ${name}`);
 
       await new Promise((resolve) => setTimeout(resolve, 250)); // Evitar abusar de la API
     } catch (err) {

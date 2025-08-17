@@ -20,14 +20,14 @@ export async function getStaticPaths() {
 
 const { setId } = Astro.params;
 
-console.log("SET ID", setId);
+// console.log("SET ID", setId);
 
 const { set } = await PokeSetHandler.get({
   language: language,
   setId: setId,
 });
 
-console.log("SET", set);
+// console.log("SET", set);
 
 const { cards, errorCards } = await PokeCardMiniHandler.getAll({
   setId: setId,

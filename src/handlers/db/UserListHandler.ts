@@ -17,7 +17,7 @@ export class UserListHandler {
 		try{
 			// FIND LISTS in DB
 			lists = await UserListHandler.db.getUserListAll(userId);
-			console.log("LISTS", lists);
+			// console.log("LISTS", lists);
 		}catch (e) {
 			error = e.toString();
 		}
@@ -36,11 +36,11 @@ export class UserListHandler {
 		try{
 			// FIND LIST in DB
 			list = await UserListHandler.db.getUserList(userListId);
-			console.log("LIST", list);
+			// console.log("LIST", list);
 
 			if (list!=null){
 				const cards = await UserListHandler.db.getUserListCards(userListId);
-				console.log("LIST CARDS", cards);
+				// console.log("LIST CARDS", cards);
 				if (cards!=null) list.cards = cards;
 			}
 		}catch (e) {

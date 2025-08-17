@@ -8,6 +8,31 @@ export const turso = createClient({
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TursoAdapter implements BBDDInterface {
 
+	//#region CARD
+
+	async addCard(
+		id: string,
+		card_name: string,
+		dexId: string | null,
+		pokemon_name: string | null
+	): Promise<boolean> {
+		try {
+			const result = await turso.execute({
+				sql: "INSERT OR REPLACE INTO cards (tcgId, card_name, dexId, pokemon_name) VALUES (?, ?, ?, ?)",
+				args: [id, card_name, dexId, pokemon_name],
+			});
+
+			// console.log(result);
+
+			return true;
+		} catch (error) {
+			console.log("Error al crear card", error);
+			return false;
+		}
+	}
+
+	//#endregion
+
 	//#region USER
 
 	async getIdUser(
@@ -44,7 +69,7 @@ export class TursoAdapter implements BBDDInterface {
 				],
 			});
 
-			console.log(result);
+			//console.log(result);
 
 			return true;
 		} catch (error) {
@@ -92,7 +117,7 @@ export class TursoAdapter implements BBDDInterface {
 			args: [userListId],
 		});
 
-		console.log("GET USER LIST CARDS", result);
+		//console.log("GET USER LIST CARDS", result);
 
 		if (result.rows.length === 0) return null;
 
@@ -112,11 +137,40 @@ export class TursoAdapter implements BBDDInterface {
 				],
 			});
 
-			console.log(result);
+			// console.log(result);
 
 			return true;
 		} catch (error) {
 			console.log("Error al crear lista", error);
+			return false;
+		}
+	}
+
+	//#endregion
+
+	//#region USER LIST CARD
+
+	async addUserListCard(
+		userListId: string,
+		cardId: string,
+		lang: string
+	): Promise<boolean> {
+		try {
+
+			const result = await turso.execute({
+				sql: "INSERT INTO lists_cards (listId, cardId, lang) VALUES (?, ?, ?)",
+				args: [
+					userListId,
+					cardId,
+					lang,
+				],
+			});
+
+			// console.log(result);
+
+			return true;
+		} catch (error) {
+			console.log("Error al guardar carta", error);
 			return false;
 		}
 	}

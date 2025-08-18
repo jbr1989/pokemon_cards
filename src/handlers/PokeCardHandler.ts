@@ -29,6 +29,8 @@ export class PokeCardHandler extends PokeHandler {
 		cardId?: string;
 		language?: string;
 	}): Promise<{ card: PokeCard | null; error: string | null }> {
+		if (cardId==null || cardId=="") return { card: null, error: "Card ID not found" };
+
 		let error = null;
 
 		let card = await PokeCardHandler.adapter.PokeCard_Get(cardId, language);

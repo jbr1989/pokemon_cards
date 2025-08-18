@@ -2,8 +2,9 @@
 import { getSession } from "auth-astro/server";
 
 import Layout from "../layouts/Layout.astro";
-import { UserListHandler } from "../handlers/db/UserListHandler";
+import { UserListHandler } from "../handlers/db/UserList/UserListHandler";
 import ListGridList from "../components/list/ListListGrid.astro";
+import ListForm from "../components/list/ListForm.astro";
 
 const session = await getSession(Astro.request);
 
@@ -21,6 +22,15 @@ const { lists, error } = await UserListHandler.getAll({
   <main class="text-center">
     <h2>Your Lists</h2>
 
+    <div class="container">
+      <span>{lists?.length} lists</span>
+      <button
+        onclick="openDialog()"
+        class="bg-blue-500 text-white p-2 rounded-md"
+        style="float:right;">Add List</button
+      >
+    </div>
+
     {
       session ? (
         <ListGridList lists={lists} />
@@ -28,5 +38,7 @@ const { lists, error } = await UserListHandler.getAll({
         <p>You need to be logged in to see this page</p>
       )
     }
+
+    <ListForm />
   </main>
 </Layout>

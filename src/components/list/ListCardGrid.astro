@@ -7,9 +7,10 @@ interface Props {
   cards: UserListCard[] | null;
   error: string | null;
   listId: string | null;
+  listType: string;
 }
 
-const { listId, cards, error } = Astro.props;
+const { listId, cards, error, listType } = Astro.props;
 ---
 
 <div id="cards-div">
@@ -20,7 +21,9 @@ const { listId, cards, error } = Astro.props;
   <div class="cards-grid container">
     {
       cards && cards?.length > 0 ? (
-        cards.map((item) => <ListCardGridItem listCard={item} />)
+        cards.map((item) => (
+          <ListCardGridItem listCard={item} listType={listType} />
+        ))
       ) : (
         <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
           <h2>No cards found</h2>

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { UserListCardHandler } from '../../../handlers/db/UserListCardHandler';
+import { UserListCardHandler } from '../../../handlers/db/UserList/UserListCardHandler';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
-import { UserListHandler } from "../../handlers/db/UserListHandler";
+import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import ListCardGrid from "../../components/list/ListCardGrid.astro";
 import ListCardForm from "../../components/list/ListCardForm.astro";
 
@@ -19,6 +19,8 @@ const { list, error } = await UserListHandler.get({
 
 console.log("LIST", list);
 
+const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
+
 // const description =
 //   card?.description || `${card?.name} - ${card?.set?.name} ${card?.localId} `;
 ---
@@ -27,7 +29,11 @@ console.log("LIST", list);
   <h1>{list?.name}</h1>
 
   <div class="container">
-    <span>{list?.cards?.length} cards</span>
+    <span
+      >{cardHaving} / {list?.cards?.length} cards ({
+        ((cardHaving / list?.cards?.length) * 100).toFixed(2)
+      }%)</span
+    >
     <button
       onclick="openDialog()"
       class="bg-blue-500 text-white p-2 rounded-md"
@@ -37,6 +43,7 @@ console.log("LIST", list);
 
   <ListCardGrid
     listId={listId || "0"}
+    listType={list?.type || "pokedex"}
     cards={list?.cards || []}
     error={error}
   />

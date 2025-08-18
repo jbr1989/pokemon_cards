@@ -5,9 +5,10 @@ import type { UserListCard } from "../../models/UserListCard";
 
 interface Props {
   listCard: UserListCard | null;
+  listType: string;
 }
 
-const { listCard } = Astro.props;
+const { listCard, listType } = Astro.props;
 
 const { card, error } = await PokeCardHandler.get({
   cardId: listCard?.cardId,
@@ -30,7 +31,10 @@ const { card, error } = await PokeCardHandler.get({
         loading="lazy"
         transition:name={`${card?.id}-image`}
       />
-      <span>{listCard?.lang}</span>
+      <span class="capitalize">
+        {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
+        {listCard?.pokemonName}
+      </span>
     </div>
   </a>
 </div>

@@ -1,4 +1,6 @@
 import { createClient } from "@libsql/client/web";
+import { UserListCard } from "../../models/UserListCard";
+import { Pokemon } from "../../models/Pokemon";
 
 export const turso = createClient({
 	url: import.meta.env.TURSO_DATABASE_URL,
@@ -7,6 +9,25 @@ export const turso = createClient({
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TursoAdapter implements BBDDInterface {
+
+	//#region POKEMON
+
+	async getAllPokemon(): Promise<Pokemon[]> {
+		try {
+			const result = await turso.execute({
+				sql: "SELECT * FROM pokemon", args: []
+			});
+
+			if (result.rows.length === 0) return [];
+
+			return result.rows.map((row) => new Pokemon(row.id, row.name));
+		} catch (error) {
+			console.error("Error fetching pokemon:", error);
+			return [];
+		}
+	}
+
+	//#endregion
 
 	//#region CARD
 
@@ -121,18 +142,34 @@ export class TursoAdapter implements BBDDInterface {
 
 		if (result.rows.length === 0) return null;
 
-		return result.rows;
+		let cards: UserListCard[] = [];
+
+		result.rows.forEach((row) => {
+			cards.push(new UserListCard(
+				row.id,
+				row.cardId,
+				row.lang,
+				row.listId,
+				row.card_name,
+				row.pokemon_name,
+				row.dexId
+			));
+		});
+
+		return cards;
 	}
 
 	async createUserList(
 		name: string,
+		type: string,
 		userId: number,
 	): Promise<boolean> {
 		try {
 			const result = await turso.execute({
-				sql: "INSERT INTO lists (name, user_id) VALUES (?, ?)",
+				sql: "INSERT INTO lists (name, type, user_id) VALUES (?, ?, ?)",
 				args: [
 					name,
+					type,
 					userId
 				],
 			});

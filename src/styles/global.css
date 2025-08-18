@@ -92,9 +92,47 @@ option:hover {
 	color: white;
 }
 
+dialog {
+	margin: auto;
+	background-color: #222;
+	color: #fff;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	border: 1px solid #333;
+}
+
 dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.5) !important;
 }
+
+.dialog-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.dialog-close-btn {
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 1.5rem;
+	cursor: pointer;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: background-color 0.2s;
+}
+
+.dialog-close-btn:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+
 
 .loading {
 	background-color:cadetblue;

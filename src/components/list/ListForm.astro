@@ -1,0 +1,121 @@
+---
+import { PokeCardHandler } from "../../handlers/PokeCardHandler";
+import { PokeSetHandler } from "../../handlers/PokeSetHandler";
+
+// Obtener el idioma de los parámetros de la URL o usar "en" por defecto
+const { lang } = Astro.locals;
+const language = lang.toString() || "en";
+
+const listId = 0;
+
+const { sets, error } = await PokeSetHandler.getAll({ language });
+// console.log("SETS", sets);
+
+const { cards, error: cardsError } = await PokeCardHandler.getAll({
+  name: sets[0].id,
+  language: language,
+});
+// console.log("CARDS", cards);
+---
+
+<div>
+  <dialog id="add-list-dialog">
+    <div class="dialog-header">
+      <h2>Add List</h2>
+      <button type="button" onclick="closeDialog()" class="dialog-close-btn"
+        >&times;</button
+      >
+    </div>
+
+    <div id="status-message" class="hidden"></div>
+
+    <form id="add-list-form" onsubmit="return handleSubmit(event)">
+      List: <span>{listId}</span>
+      Name: <input type="text" id="ListFormName" name="name" required />
+      Type:
+      <select id="ListFormType" name="type" required>
+        <option value="pokedex">Pokedex</option>
+        <option value="pokemon">Set</option>
+      </select>
+
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
+        >Add</button
+      >
+      <input type="hidden" id="ListFormListId" name="listId" value={listId} />
+    </form>
+  </dialog>
+</div>
+
+<style>
+  dialog h2 {
+    margin: 0;
+  }
+  dialog form {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0.5rem;
+  }
+</style>
+
+<script is:inline>
+  function openDialog() {
+    const dialog = document.getElementById("add-list-dialog");
+    if (dialog) {
+      dialog.showModal();
+    }
+  }
+
+  function closeDialog() {
+    const dialog = document.getElementById("add-list-dialog");
+    if (dialog) {
+      dialog.close();
+    }
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("Submit");
+
+    const listIdElement = document.getElementById("ListFormListId");
+    const nameElement = document.getElementById("ListFormName");
+    const typeElement = document.getElementById("ListFormType");
+
+    if (!listIdElement || !nameElement || !typeElement) {
+      return;
+    }
+
+    const listId = listIdElement.value;
+    const name = nameElement.value;
+    const type = typeElement.value;
+
+    const data = new URLSearchParams({
+      listId: listId,
+      name: name,
+      type: type,
+    });
+
+    console.log("DATA", data);
+
+    fetch(`/api/list/add-list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Data", data);
+        if (data.success) {
+          alert("List added successfully");
+          // loadCards(listId);
+        } else {
+          alert("Error adding list: " + data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding list:", error);
+      });
+    return false; // evita que el form intente recargarse solo
+  }
+</script>

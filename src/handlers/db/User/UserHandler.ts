@@ -1,4 +1,4 @@
-import { TursoAdapter } from "../../adapters/bbdd/TursoAdapter";
+import { TursoAdapter } from "../../../adapters/bbdd/TursoAdapter";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class UserHandler {

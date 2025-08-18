@@ -1,5 +1,5 @@
-import { TursoAdapter } from "../../adapters/bbdd/TursoAdapter";
-import { PokeHandler } from "../PokeHandler";
+import { TursoAdapter } from "../../../adapters/bbdd/TursoAdapter";
+import { PokeHandler } from "../../PokeHandler";
 
 export class UserListCardHandler extends PokeHandler {
 	static db = new TursoAdapter();

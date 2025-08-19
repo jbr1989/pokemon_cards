@@ -12,7 +12,7 @@ const { sets, error } = await PokeSetHandler.getAll({ language });
 // console.log("SETS", sets);
 
 const { cards, error: cardsError } = await PokeCardHandler.getAll({
-  name: sets[0].id,
+  name: sets[0]?.id || "",
   language: language,
 });
 // console.log("CARDS", cards);
@@ -22,7 +22,7 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   <dialog id="add-list-dialog">
     <div class="dialog-header">
       <h2>Add List</h2>
-      <button type="button" onclick="closeDialog()" class="dialog-close-btn"
+      <button type="button" onclick="closeListDialog()" class="dialog-close-btn"
         >&times;</button
       >
     </div>
@@ -41,7 +41,7 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
       <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
         >Add</button
       >
-      <input type="hidden" id="ListFormListId" name="listId" value={listId} />
+      <input type="hidden" id="ListFormListId" name="listId" value="0" />
     </form>
   </dialog>
 </div>
@@ -58,14 +58,14 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
 </style>
 
 <script is:inline>
-  function openDialog() {
+  function openListDialog() {
     const dialog = document.getElementById("add-list-dialog");
     if (dialog) {
       dialog.showModal();
     }
   }
 
-  function closeDialog() {
+  function closeListDialog() {
     const dialog = document.getElementById("add-list-dialog");
     if (dialog) {
       dialog.close();

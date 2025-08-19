@@ -21,7 +21,7 @@ export class UserListCardHandler extends PokeHandler {
             const card = await UserListCardHandler.adapter.PokeCard_Get(cardId.toString(), lang);
             console.log("CARD", card);
 
-            let pokemonName = card?.name?.toLowerCase().replace(/\s(?:ex|vmax)$/i, "");
+            let pokemonName = card?.name?.toLowerCase().replace(/(?:\s?)(ex|vmax)$/i, "");
 
             if(!await UserListCardHandler.db.addCard(cardId, card?.name?.toLowerCase() || "", card?.dexId?.toString() || null, pokemonName || null)) {
                 console.log("Card not added");

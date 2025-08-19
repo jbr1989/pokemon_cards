@@ -1,14 +1,17 @@
 ---
 import type { PokeCardMini } from "../../models/PokeCardMini";
+import ListCardActions from "../list/ListCardActions.astro";
 
 interface Props {
   card: PokeCardMini | null;
+  lang: string;
 }
 
-const { card } = Astro.props;
+const { card, lang } = Astro.props;
 ---
 
 <div class="card cardEffect">
+  <ListCardActions card={card} lang={lang} />
   <a href={`/card/${card?.id}`}>
     <img
       src={card && card.image.low != null
@@ -20,4 +23,7 @@ const { card } = Astro.props;
       transition:name={`${card?.id}-image`}
     />
   </a>
+  <span class="capitalize">
+    {card?.localId} - {card?.name}
+  </span>
 </div>

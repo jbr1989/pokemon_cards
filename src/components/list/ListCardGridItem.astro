@@ -2,6 +2,7 @@
 import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 import { PokeCardMini } from "../../models/PokeCardMini";
 import type { UserListCard } from "../../models/UserListCard";
+import ListCardActions from "./ListCardActions.astro";
 
 interface Props {
   listCard: UserListCard | null;
@@ -31,6 +32,7 @@ const { card, error } = await PokeCardHandler.get({
         loading="lazy"
         transition:name={`${card?.id}-image`}
       />
+
       <span class="capitalize">
         {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
         {listCard?.pokemonName}
@@ -38,3 +40,9 @@ const { card, error } = await PokeCardHandler.get({
     </div>
   </a>
 </div>
+
+<style>
+  .card {
+    position: relative;
+  }
+</style>

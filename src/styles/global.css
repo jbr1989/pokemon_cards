@@ -132,6 +132,11 @@ dialog::backdrop {
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
+dialog form {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0.5rem;
+  }
 
 
 .loading {

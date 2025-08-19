@@ -2,14 +2,16 @@
 import CardGridItem from "./CardGridItem.astro";
 import ErrorMessage from "../ErrorMessage.astro";
 import type { PokeCardMini } from "../../models/PokeCardMini";
+import ListCardForm from "../list/ListCardForm.astro";
 
 interface Props {
   cards: PokeCardMini[] | null;
   error: string | null;
   setId: string | null;
+  lang: string;
 }
 
-const { setId, cards, error } = Astro.props;
+const { setId, cards, error, lang } = Astro.props;
 ---
 
 <div id="cards-div">
@@ -18,7 +20,7 @@ const { setId, cards, error } = Astro.props;
   <div class="cards-grid container">
     {
       cards && cards?.length > 0 ? (
-        cards.map((item) => <CardGridItem card={item} />)
+        cards.map((item) => <CardGridItem card={item} lang={lang} />)
       ) : (
         <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
           <h2>No cards found</h2>
@@ -28,6 +30,8 @@ const { setId, cards, error } = Astro.props;
     }
   </div>
 </div>
+
+<ListCardForm />
 
 <style is:inline>
   #cards-div {

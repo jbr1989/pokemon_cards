@@ -7,10 +7,12 @@ export class UserListCardHandler extends PokeHandler {
     static async add({
         userListId = "0",
         cardId = "0",
+        cardName = "",
         lang = "en"
     }: {
         userListId: string,
         cardId: string,
+        cardName: string,
         lang: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
@@ -21,9 +23,12 @@ export class UserListCardHandler extends PokeHandler {
             const card = await UserListCardHandler.adapter.PokeCard_Get(cardId.toString(), lang);
             console.log("CARD", card);
 
-            let pokemonName = card?.name?.toLowerCase().replace(/(?:\s?)(ex|vmax)$/i, "");
+            let card_name = (card!=null ? card?.name : cardName).toString().toLowerCase();
+            console.log("CARD NAME", card_name);
+            let pokemonName = card_name.replace(/(?:\s?)(ex|v|vmax)$/i, "");
+            console.log("POKEMON NAME", pokemonName);
 
-            if(!await UserListCardHandler.db.addCard(cardId, card?.name?.toLowerCase() || "", card?.dexId?.toString() || null, pokemonName || null)) {
+            if(!await UserListCardHandler.db.addCard(cardId, card_name, card?.dexId?.toString() || null, pokemonName || null)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }

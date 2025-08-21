@@ -6,16 +6,16 @@ import { PokeHandler } from "./PokeHandler";
 export class PokeCardHandler extends PokeHandler {
 
 	static async getAll({
-		name = "",
+		setId = "",
 		language = "en",
 	}: {
-		name?: string;
+		setId?: string;
 		language?: string;
 	}): Promise<{ cards: PokeCardMini[] | null; error: string | null }> {
 		const error = null;
 
 		const cards = await PokeCardHandler.adapter.PokeCardMini_GetAll(
-			name,
+			setId,
 			language,
 		);
 

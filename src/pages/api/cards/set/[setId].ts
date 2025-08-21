@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { PokeCardHandler } from '../../../../handlers/PokeCardHandler';
+import { PokeCardMiniHandler } from '../../../../handlers/PokeCardMiniHandler';
 
 export const GET: APIRoute = async ({ params, url }) => {
   try {
@@ -15,15 +15,14 @@ export const GET: APIRoute = async ({ params, url }) => {
       });
     }
 
-    // Usar el PokeCardHandler para obtener las cartas del set
-    const { cards, error } = await PokeCardHandler.getAll({ 
-      name: setId, 
-      language: lang 
+    const { cards, error } = await PokeCardMiniHandler.getAll({
+      setId: setId,
+      language: lang,
     });
 
     if (error) {
       return new Response(JSON.stringify({ 
-        error: error 
+        error: error
       }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }

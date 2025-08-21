@@ -16,21 +16,33 @@ const { card, error } = await PokeCardHandler.get({
   language: listCard?.lang || "en",
 });
 
+let img = card?.image?.low;
+if (listCard != null && listCard?.id != 0) {
+  console.log("LIST CARD", listCard);
+  const setId = listCard?.cardId.split("-")[0];
+  const cardNum = listCard?.cardId.split("-")[1];
+
+  const indice = setId.search(/\d/); // Busca el primer número
+  const serieId = indice !== -1 ? setId.slice(0, indice) : setId; // Obtiene el texto anterior al primer número
+
+  // console.log(setId, cardNum, serieId);
+  img = `https://assets.tcgdex.net/${listCard?.lang}/${serieId}/${setId}/${cardNum}/low.webp`;
+}
+if (img == null) img = "/img/card-not-found.jpg";
+
 // console.log("LIST CARD", listCard);
 // console.log("CARD", card);
 ---
 
 <div class="card cardEffect">
-  <a href={`/card/${card?.id}`}>
+  <a href={`/card/${listCard?.cardId}`}>
     <div>
       <img
-        src={card && card.image.low != null
-          ? card.image.low
-          : "/img/card-not-found.jpg"}
+        src={img}
         alt={card ? card?.name : "Card not found"}
         title={card ? card?.name : "Card not found"}
         loading="lazy"
-        transition:name={`${card?.id}-image`}
+        transition:name={`${listCard?.cardId}-image`}
       />
 
       <span class="capitalize">

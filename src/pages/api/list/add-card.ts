@@ -6,6 +6,7 @@ export const POST: APIRoute = async ({ request }) => {
     const formData = await request.formData();
     const listId = formData.get('listId') as string;
     const cardId = formData.get('cardId') as string;
+    const cardName = formData.get('cardName') as string;
     const lang = formData.get('lang') as string;
 
     if (!listId || !cardId || !lang) {
@@ -22,6 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
     const { success, error } = await UserListCardHandler.add({
       userListId: listId,
       cardId: cardId,
+      cardName: cardName,
       lang: lang
     });
 

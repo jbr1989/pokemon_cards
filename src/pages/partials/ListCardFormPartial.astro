@@ -9,6 +9,7 @@ export const partial = true;
 const listId = Astro.url.searchParams.get("list") || "0";
 const language = Astro.url.searchParams.get("lang") || "en";
 const cardId = Astro.url.searchParams.get("card") || "base1";
+const cardName = Astro.url.searchParams.get("cardName") || "";
 
 const { card, error: cardError } = await PokeCardHandler.get({
   cardId: cardId,
@@ -25,12 +26,16 @@ const { lists, error: listsError } = await UserListHandler.getAll({
 const { sets, error: setsError } = await PokeSetHandler.getAll({ language });
 
 // FIND CARDs
+const setId = card?.set?.id || cardId.split("-")[0];
+console.log("SET ID", setId);
+
 const { cards, error: cardsError } = await PokeCardHandler.getAll({
-  name: card?.set?.name,
+  setId: setId,
   language: language,
 });
 
 console.log("CARDS", cards);
+console.log("CARD ID", cardId);
 ---
 
 <div id="status-message" class="hidden"></div>
@@ -64,21 +69,28 @@ console.log("CARDS", cards);
     {
       sets?.map((set) => (
         <option
-          value={set.id}
-          selected={
-            set.id.toString().toLowerCase() === card?.set?.id.toLowerCase()
-          }
+          value={set.id.toString().toLowerCase()}
+          selected={set.id.toString().toLowerCase() === setId.toLowerCase()}
         >
           {set.name} ({set.id})
         </option>
       ))
     }
   </select>
-  Card: <select id="dialogAddCardCardId" name="cardId" required>
+  Card: <select
+    id="dialogAddCardCardId"
+    name="cardId"
+    required
+    onchange="selectCard()"
+  >
     <option value="">Select a card first</option>
     {
       cards?.map((card) => (
-        <option value={card.id} selected={card.id.toString() === cardId}>
+        <option
+          value={card.id}
+          selected={card.id.toString() === cardId}
+          data-name={card.name}
+        >
           {card.localId ? `${card.localId} - ${card.name} ` : card.name}
         </option>
       ))
@@ -88,6 +100,12 @@ console.log("CARDS", cards);
   <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
     >Add</button
   >
+  <input
+    type="hidden"
+    id="dialogAddCardCardName"
+    name="cardName"
+    value={cardName}
+  />
 </form>
 
 <!-- <script is:inline>

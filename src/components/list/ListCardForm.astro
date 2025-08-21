@@ -1,25 +1,25 @@
 ---
-import { getSession } from "auth-astro/server";
-import { PokeCardHandler } from "../../handlers/PokeCardHandler";
-import { PokeSetHandler } from "../../handlers/PokeSetHandler";
-import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
+// import { getSession } from "auth-astro/server";
+// import { PokeCardHandler } from "../../handlers/PokeCardHandler";
+// import { PokeSetHandler } from "../../handlers/PokeSetHandler";
+// import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 
 // Obtener el idioma de los parámetros de la URL o usar "en" por defecto
-const { lang } = Astro.locals;
-const language = lang.toString() || "en";
+// const { lang } = Astro.locals;
+// const language = lang.toString() || "en";
 
-const session = await getSession(Astro.request);
-const { lists, error: listsError } = await UserListHandler.getAll({
-  userId: parseInt(session?.user?.id?.toString() || "0"),
-});
+// const session = await getSession(Astro.request);
+// const { lists, error: listsError } = await UserListHandler.getAll({
+//   userId: parseInt(session?.user?.id?.toString() || "0"),
+// });
 
-const { sets, error } = await PokeSetHandler.getAll({ language });
-// console.log("SETS", sets);
+// const { sets, error } = await PokeSetHandler.getAll({ language });
+// // console.log("SETS", sets);
 
-const { cards, error: cardsError } = await PokeCardHandler.getAll({
-  name: sets[0]?.id || "",
-  language: language,
-});
+// const { cards, error: cardsError } = await PokeCardHandler.getAll({
+//   name: sets[0]?.id || "",
+//   language: language,
+// });
 // console.log("CARDS", cards);
 ---
 
@@ -127,11 +127,11 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
     dialogDivAddCard = document.querySelector("#dialogDivAddCard");
   });
 
-  async function openListCardDialog(listId, cardId, lang) {
+  async function openListCardDialog(listId, cardId, cardName, lang) {
     // dialogAddCardListId.value = listId;
     // dialogAddCardCardId.value = cardId;
 
-    await loadListCardDialog(listId, cardId, lang);
+    await loadListCardDialog(listId, cardId, cardName, lang);
 
     if (dialogAddCard) dialogAddCard.showModal();
   }
@@ -170,6 +170,9 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   function loadSelectCards() {
     const dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
     const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
+    const dialogAddCardCardName = document.querySelector(
+      "#dialogAddCardCardName"
+    );
 
     console.log("LOAD CARDS");
     if (!dialogAddCardSetId) return;
@@ -197,13 +200,30 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
             : card.name;
           dialogAddCardCardId.appendChild(option);
         });
+
+        dialogAddCardCardName.value =
+          dialogAddCardCardId.options.length > 0
+            ? dialogAddCardCardId.options[0].dataset.name
+            : "";
       })
       .catch((error) => {
         console.error("Error loading cards:", error);
       });
   }
 
-  async function loadListCardDialog(listId, cardId, lang) {
+  function selectCard() {
+    const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
+    const dialogAddCardCardName = document.querySelector(
+      "#dialogAddCardCardName"
+    );
+
+    dialogAddCardCardName.value =
+      dialogAddCardCardId.options[
+        dialogAddCardCardId.selectedIndex
+      ].dataset.name;
+  }
+
+  async function loadListCardDialog(listId, cardId, cardName, lang) {
     console.log(dialogAddCard, dialogDivAddCard);
 
     console.log("LOADING FORM");
@@ -215,7 +235,7 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
 
     try {
       const response = await fetch(
-        `/partials/ListCardFormPartial?list=${listId}&card=${cardId}&lang=${lang}`
+        `/partials/ListCardFormPartial?list=${listId}&card=${cardId}&cardName=${cardName}&lang=${lang}`
       );
       dialogDivAddCard.innerHTML = await response.text();
     } catch (error) {
@@ -234,23 +254,29 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
     const dialogAddCardLang = document.querySelector("#dialogAddCardLang");
     const dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
     const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
+    const dialogAddCardCardName = document.querySelector(
+      "#dialogAddCardCardName"
+    );
 
     console.log(
       dialogAddCardListId,
       dialogAddCardLang,
       dialogAddCardSetId,
-      dialogAddCardCardId
+      dialogAddCardCardId,
+      dialogAddCardCardName
     );
 
     const listId = dialogAddCardListId.value;
     const setId = dialogAddCardSetId.value;
     const cardId = dialogAddCardCardId.value;
     const lang = dialogAddCardLang.value;
+    const cardName = dialogAddCardCardName.value;
 
     console.log("List ID", listId);
     console.log("Set ID", setId);
     console.log("Card ID", cardId);
     console.log("Lang", lang);
+    console.log("Card Name", cardName);
 
     fetch(`/api/list/add-card`, {
       method: "POST",
@@ -261,6 +287,7 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
         listId: listId,
         setId: setId,
         cardId: cardId,
+        cardName: cardName,
         lang: lang,
       }),
     })

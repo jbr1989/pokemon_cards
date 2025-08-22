@@ -10,52 +10,26 @@ interface Props {
 }
 
 const { listCard, listType } = Astro.props;
-
-const card = null;
-// const { card, error } = await PokeCardHandler.get({
-//   cardId: listCard?.cardId,
-//   language: listCard?.lang || "en",
-// });
-
-let img = null; // card?.image?.low;
-if (listCard != null && listCard?.id != 0) {
-  console.log("LIST CARD", listCard);
-  const setId = listCard?.cardId.split("-")[0];
-  const cardNum = listCard?.cardId.split("-")[1];
-
-  const indice = setId.search(/\d/); // Busca el primer número
-  const serieId = indice !== -1 ? setId.slice(0, indice) : setId; // Obtiene el texto anterior al primer número
-
-  // console.log(setId, cardNum, serieId);
-  img = `https://assets.tcgdex.net/${listCard?.lang}/${serieId}/${setId}/${cardNum}/low.webp`;
-}
-if (img == null) img = "/img/card-not-found.jpg";
-
-// console.log("LIST CARD", listCard);
-// console.log("CARD", card);
 ---
 
 <div class="card cardEffect">
-  <a href={`/card/${listCard?.cardId}`}>
-    <div>
-      <img
-        src={img}
-        alt={card ? card?.name : "Card not found"}
-        title={card ? card?.name : "Card not found"}
-        loading="lazy"
-        transition:name={`${listCard?.cardId}-image`}
-      />
-
-      <span class="capitalize">
-        {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
-        {listCard?.pokemonName}
-      </span>
-    </div>
-  </a>
-</div>
-
-<style>
-  .card {
-    position: relative;
+  {
+    listCard?.cardName != "" && (
+      <a class="absolute inset-0" href={`/card/${listCard?.cardId}`} />
+    )
   }
-</style>
+  <div>
+    <img
+      src={listCard?.image || "/img/card-not-found.jpg"}
+      alt={listCard?.cardName || "Card not found"}
+      title={listCard?.cardName || "Card not found"}
+      loading="lazy"
+      transition:name={`${listCard?.cardId}-image`}
+    />
+
+    <span class="capitalize">
+      {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
+      {listCard?.pokemonName}
+    </span>
+  </div>
+</div>

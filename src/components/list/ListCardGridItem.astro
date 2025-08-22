@@ -11,12 +11,13 @@ interface Props {
 
 const { listCard, listType } = Astro.props;
 
-const { card, error } = await PokeCardHandler.get({
-  cardId: listCard?.cardId,
-  language: listCard?.lang || "en",
-});
+const card = null;
+// const { card, error } = await PokeCardHandler.get({
+//   cardId: listCard?.cardId,
+//   language: listCard?.lang || "en",
+// });
 
-let img = card?.image?.low;
+let img = null; // card?.image?.low;
 if (listCard != null && listCard?.id != 0) {
   console.log("LIST CARD", listCard);
   const setId = listCard?.cardId.split("-")[0];

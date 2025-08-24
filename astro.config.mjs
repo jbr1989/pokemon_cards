@@ -1,9 +1,9 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
 import vercel from "@astrojs/vercel";
-
-import tailwindcss from "@tailwindcss/vite";
+import path from "path";
 
 import auth from "auth-astro";
 
@@ -19,5 +19,10 @@ export default defineConfig({
 	integrations: [auth()],
 	vite: {
 		plugins: [tailwindcss()],
+		resolve: {
+			alias: {
+				"@": path.resolve("./src"),
+			},
+		},
 	},
 });

@@ -1,11 +1,24 @@
 {
-  "name": "PokéCards",
+  "name": "PokéCards - Pokémon Trading Card Browser",
   "short_name": "PokéCards",
-  "description": "Pokémon Cards Browser",
+  "description": "Explore and discover Pokémon Trading Card Game cards. Browse sets, create lists, and build your collection.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4f39fa",
+  "background_color": "#1a1a1a",
+  "theme_color": "#fbbf24",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "entertainment",
+    "games",
+    "pokemon",
+    "tcg",
+    "cards",
+    "browser",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "/img/pwa-192x192.png",
@@ -16,24 +29,53 @@
     {
       "src": "/img/pwa-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "orientation": "portrait",
-  "lang": "es",
-  "dir": "ltr",
-  "categories": ["pokemon", "tcg", "cards", "browser"],
-  "iarc_rating_id": "",
-  "prefer_related_applications": false,
-  "related_applications": [],
   "shortcuts": [
     {
       "name": "Inicio",
+      "short_name": "Inicio",
+      "description": "Ir a la página principal",
       "url": "/"
     },
     {
       "name": "Explorar",
+      "short_name": "Explorar",
+      "description": "Explorar cartas de Pokémon",
       "url": "/explore"
+      ]
+    },
+    {
+      "name": "Sets",
+      "short_name": "Sets",
+      "description": "Ver colecciones de cartas",
+      "url": "/sets"
+    },
+    {
+      "name": "Mis Listas",
+      "short_name": "Listas",
+      "description": "Gestionar mis listas de cartas",
+      "url": "/lists"
+    },
+    {
+      "name": "Mis Cartas",
+      "short_name": "Cartas",
+      "description": "Ver mi colección personal",
+      "url": "/you"
     }
   ]
 }

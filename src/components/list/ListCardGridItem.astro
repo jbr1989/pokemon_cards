@@ -12,7 +12,7 @@ interface Props {
 const { listCard, listType } = Astro.props;
 ---
 
-<div class="card cardEffect">
+<div class="cardItem cardItemEffect">
   {
     listCard?.cardName != "" && (
       <a class="absolute inset-0" href={`/card/${listCard?.cardId}`} />
@@ -20,7 +20,7 @@ const { listCard, listType } = Astro.props;
   }
   <div>
     <img
-      class="card-image"
+      class="cardItem-image"
       src={listCard?.image || "/img/card-not-found.jpg"}
       alt={listCard?.cardName || "Card not found"}
       title={listCard?.cardName || "Card not found"}

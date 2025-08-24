@@ -10,10 +10,11 @@ interface Props {
 const { card, lang } = Astro.props;
 ---
 
-<div class="card cardEffect">
+<div class="cardItem cardItemEffect">
   <ListCardActions card={card} lang={lang} />
   <a href={`/card/${card?.id}`}>
     <img
+      class="cardItem-image"
       src={card && card.image.low != null
         ? card.image.low
         : "/img/card-not-found.jpg"}

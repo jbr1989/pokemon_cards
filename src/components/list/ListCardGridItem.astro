@@ -20,6 +20,7 @@ const { listCard, listType } = Astro.props;
   }
   <div>
     <img
+      class="card-image"
       src={listCard?.image || "/img/card-not-found.jpg"}
       alt={listCard?.cardName || "Card not found"}
       title={listCard?.cardName || "Card not found"}
@@ -27,9 +28,24 @@ const { listCard, listType } = Astro.props;
       transition:name={`${listCard?.cardId}-image`}
     />
 
-    <span class="capitalize">
-      {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
-      {listCard?.pokemonName}
-    </span>
+    <div
+      class="capitalize grid grid-cols-2 gap-2 items-start px-1"
+      style="grid-template-columns: 1fr 15px;"
+    >
+      <span>
+        {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
+        {listCard?.pokemonName}
+      </span>
+      {
+        listCard?.cardName != "" && (
+          <img
+            src={`/img/icon/language/${listCard?.lang}.webp`}
+            alt="Language"
+            loading="lazy"
+            class="w-[1rem] h-[1rem] mt-1"
+          />
+        )
+      }
+    </div>
   </div>
 </div>

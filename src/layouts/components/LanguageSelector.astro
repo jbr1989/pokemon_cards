@@ -1,33 +1,49 @@
 ---
+import { languages } from "@/constants/languages";
+
 const { lang } = Astro.locals;
 const language = lang.toString() || "es";
+
+const actualLanguage = languages.find(({ lang }) => lang === language);
+console.log("LANGUAGES", languages);
 ---
 
 <div class="relative inline-block dropdown">
-  <span class="bg-zinc-900 text-white px-4 py-2 rounded-md"
-    >{language.toUpperCase()}</span
-  >
+  <span title={actualLanguage ? actualLanguage.name : ""}>
+    {
+      actualLanguage ? (
+        <img
+          src={actualLanguage.flag}
+          alt={actualLanguage.name}
+          style="width: 25px; height: 25px;"
+        />
+      ) : (
+        <>actualLanguage?.name</>
+      )
+    }
+  </span>
   <ul
-    class="absolute hidden bg-zinc-800 text-white rounded-md mt-2 w-24 shadow-md"
+    class="absolute hidden bg-zinc-800 text-white w-72 rounded-md mt-0 shadow-md"
+    style="right:-17px;"
   >
-    <li>
-      <a
-        href="javascript:setLanguage('es')"
-        class="block px-4 py-2 hover:bg-zinc-700">Español</a
-      >
-    </li>
-    <li>
-      <a
-        href="javascript:setLanguage('en')"
-        class="block px-4 py-2 hover:bg-zinc-700">English</a
-      >
-    </li>
-    <li>
-      <a
-        href="javascript:setLanguage('ja')"
-        class="block px-4 py-2 hover:bg-zinc-700">日本語</a
-      >
-    </li>
+    {
+      languages.map(({ lang, name, flag }) => (
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-zinc-700 text-right"
+            onclick={`javascript:setLanguage('${lang}')`}
+          >
+            {name}
+            <img
+              src={flag}
+              alt={name}
+              style="width: 25px; height: 25px; display: inline-block;"
+            />
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </div>
 

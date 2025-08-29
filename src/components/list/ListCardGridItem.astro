@@ -22,7 +22,7 @@ const { listCard, listType } = Astro.props;
     <img
       class="cardItem-image"
       src={listCard?.image || "/img/card-not-found.jpg"}
-      alt={listCard?.cardName || "Card not found"}
+      alt={listCard?.cardId || "Card not found"}
       title={listCard?.cardName || "Card not found"}
       loading="lazy"
       transition:name={`${listCard?.cardId}-image`}

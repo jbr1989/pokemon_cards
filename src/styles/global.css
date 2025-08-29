@@ -58,6 +58,14 @@ main {
 	min-height: 100vh;
 }
 
+input, select {
+	background-color: #333;
+	color: white;
+	border: 1px solid white;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
 .container {
 	max-width: 1400px;
 	margin: 0 auto;

@@ -120,6 +120,13 @@
   let dialogAddCard = null;
   let dialogDivAddCard = null;
 
+  let dialogAddCardLang = null;
+  let dialogAddCardSetId = null;
+  let dialogAddCardCardId = null;
+  let dialogAddCardCardIdInput = null;
+  let dialogAddCardCardName = null;
+  let dialogAddCardListId = null;
+
   document.addEventListener("astro:page-load", () => {
     console.log("DOMContentLoaded");
 
@@ -140,9 +147,20 @@
     if (dialogAddCard) dialogAddCard.close();
   }
 
+  function findElements() {
+    dialogAddCardLang = document.querySelector("#dialogAddCardLang");
+    dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
+    dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
+    dialogAddCardCardIdInput = document.querySelector(
+      "#dialogAddCardCardIdInput"
+    );
+    dialogAddCardCardName = document.querySelector("#dialogAddCardCardName");
+
+    dialogAddCardListId = document.querySelector("#dialogAddCardListId");
+  }
+
   function loadSelectSets() {
-    const dialogAddCardLang = document.querySelector("#dialogAddCardLang");
-    const dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
+    findElements();
 
     const currentLang = dialogAddCardLang ? dialogAddCardLang.value : "en";
 
@@ -168,11 +186,7 @@
   }
 
   function loadSelectCards() {
-    const dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
-    const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
-    const dialogAddCardCardName = document.querySelector(
-      "#dialogAddCardCardName"
-    );
+    findElements();
 
     console.log("LOAD CARDS");
     if (!dialogAddCardSetId) return;
@@ -198,6 +212,7 @@
           option.textContent = card.localId
             ? `${card.localId} - ${card.name} `
             : card.name;
+          option.dataset.name = card.name;
           dialogAddCardCardId.appendChild(option);
         });
 
@@ -212,10 +227,7 @@
   }
 
   function selectCard() {
-    const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
-    const dialogAddCardCardName = document.querySelector(
-      "#dialogAddCardCardName"
-    );
+    findElements();
 
     dialogAddCardCardName.value =
       dialogAddCardCardId.options[
@@ -250,13 +262,7 @@
     event.preventDefault();
     console.log("Submit");
 
-    const dialogAddCardListId = document.querySelector("#dialogAddCardListId");
-    const dialogAddCardLang = document.querySelector("#dialogAddCardLang");
-    const dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
-    const dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
-    const dialogAddCardCardName = document.querySelector(
-      "#dialogAddCardCardName"
-    );
+    findElements();
 
     console.log(
       dialogAddCardListId,
@@ -267,10 +273,17 @@
     );
 
     const listId = dialogAddCardListId.value;
-    const setId = dialogAddCardSetId.value;
-    const cardId = dialogAddCardCardId.value;
+    let setId = dialogAddCardSetId.value;
+    let cardId = dialogAddCardCardId.value;
+    const cardIdInput = dialogAddCardCardIdInput.value;
     const lang = dialogAddCardLang.value;
     const cardName = dialogAddCardCardName.value;
+
+    if (cardIdInput != "") {
+      // Agregar carta personalizada
+      setId = "";
+      cardId = cardIdInput;
+    }
 
     console.log("List ID", listId);
     console.log("Set ID", setId);

@@ -96,16 +96,24 @@ console.log("CARD ID", cardId);
       ))
     }
   </select>
-
-  <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
-    >Add</button
-  >
+  <span>&nbsp;</span>
   <input
-    type="hidden"
+    type="text"
+    id="dialogAddCardCardIdInput"
+    name="cardIdInput"
+    value=""
+  />
+
+  Name: <input
+    type="text"
     id="dialogAddCardCardName"
     name="cardName"
     value={cardName}
   />
+
+  <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
+    >Add</button
+  >
 </form>
 
 <!-- <script is:inline>

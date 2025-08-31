@@ -1,14 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import SetSelector from "../components/SetSelector.astro";
-import CardGrid from "../components/card/CardGrid.astro";
 
 import PopularSets from "../components/set/PopularSets.astro";
-import FeaturedCards from "../components/FeaturedCards.astro";
 
 // Fetch all sets
 const { lang } = Astro.locals;
-const language = lang.toString() || "en";
+// const language = lang.toString() || "en";
 
 // Get the selected set from URL params or use the latest set
 

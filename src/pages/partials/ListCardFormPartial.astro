@@ -1,8 +1,10 @@
 ---
 import { getSession } from "auth-astro/server";
+import { languages } from "../../constants/languages";
 import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
+import { sequence } from "astro:middleware";
 
 export const partial = true;
 
@@ -57,9 +59,16 @@ console.log("CARD ID", cardId);
     required
     onchange="loadSelectSets()"
   >
-    <option value="en" selected={language === "en"}>English</option>
+    {
+      languages.map((lang) => (
+        <option value={lang.code} selected={lang.code === language}>
+          {lang.name}
+        </option>
+      ))
+    }
+    <!-- <option value="en" selected={language === "en"}>English</option>
     <option value="es" selected={language === "es"}>Spanish</option>
-    <option value="ja" selected={language === "ja"}>Japanese</option>
+    <option value="ja" selected={language === "ja"}>Japanese</option> -->
   </select>
   Set: <select
     id="dialogAddCardSetId"
@@ -77,12 +86,7 @@ console.log("CARD ID", cardId);
       ))
     }
   </select>
-  Card: <select
-    id="dialogAddCardCardId"
-    name="cardId"
-    required
-    onchange="selectCard()"
-  >
+  Card: <select id="dialogAddCardCardId" name="cardId" onchange="selectCard()">
     <option value="">Select a card first</option>
     {
       cards?.map((card) => (

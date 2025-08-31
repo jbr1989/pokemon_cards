@@ -1,26 +1,31 @@
 export const languages = [
   {
     lang: "es",
+    code: "es",
     name: "Español",
     flag: "/img/icon/language/es.webp",
   },
   {
     lang: "en",
+    code: "en",
     name: "English",
     flag: "/img/icon/language/en.webp",
   },
   {
     lang: "ja",
+    code: "ja",
     name: "日本語 (Japanese)",
     flag: "/img/icon/language/ja.webp",
   },
   {
     lang: "ko",
+    code: "ko",
     name: "한국어 (Korean)",
     flag: "/img/icon/language/ko.webp",
   },
   {
-    lang: "zh-tw",
+    lang: "zh",
+    code: "zh",
     name: "繁體中文 (Traditional Chinese)",
     flag: "/img/icon/language/zh.webp",
   },

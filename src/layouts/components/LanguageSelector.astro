@@ -4,8 +4,10 @@ import { languages } from "@/constants/languages";
 const { lang } = Astro.locals;
 const language = lang.toString() || "es";
 
+console.log("LANGUAGE", language);
+
 const actualLanguage = languages.find(({ lang }) => lang === language);
-// console.log("LANGUAGES", languages);
+console.log("SELECT LANG", actualLanguage);
 ---
 
 <div class="relative inline-block dropdown">
@@ -57,6 +59,10 @@ const actualLanguage = languages.find(({ lang }) => lang === language);
 <script is:inline>
   function setLanguage(lang = "es") {
     document.cookie = `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`;
-    document.location.reload();
+
+    // Agregar un pequeño delay para asegurar que la cookie se establezca
+    setTimeout(() => {
+      document.location.reload();
+    }, 500);
   }
 </script>

@@ -159,9 +159,54 @@ dialog form {
 	display: none;
 }
 
+
+
+
 .card {
     position: relative;
   }
+
+/* Card grid */
+
+#cards-div {
+    background: linear-gradient(
+      180deg,
+      var(--color-gradient-black-1) 0%,
+      var(--color-gradient-bg-purple-2) 100%
+    );
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .cardItem {
+	position: relative;
+    overflow: hidden;
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
+
+  .cardItem:hover {
+    transform: scale(1.05);
+  }
+
+  .cardItem-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    aspect-ratio: 1 / 1.4;
+    image-rendering: optimizeQuality;
+    text-align: center;
+    line-height: 150px;
+  }
+
+/* End card grid */
+
 
 /* Mobile optimizations */
 @media (max-width: 768px) {

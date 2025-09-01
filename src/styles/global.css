@@ -163,47 +163,61 @@ dialog form {
 
 
 .card {
-    position: relative;
-  }
+	position: relative;
+}
 
 /* Card grid */
 
 #cards-div {
-    background: linear-gradient(
-      180deg,
-      var(--color-gradient-black-1) 0%,
-      var(--color-gradient-bg-purple-2) 100%
-    );
-  }
+	background: linear-gradient(
+		180deg,
+		var(--color-gradient-black-1) 0%,
+		var(--color-gradient-bg-purple-2) 100%
+);
+}
 
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-  }
+.cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 1.5rem;
+	padding: 1rem;
+}
 
-  .cardItem {
+.cards-grid-header{
+	display: flex;
+	gap: calc(var(--spacing) * 2);
+	justify-content: space-between;
+	align-items: center;
+	background:black;
+	color:white;
+	padding:1rem;
+	position: sticky;
+	right: 0;
+	top: 64px;
+	z-index:10;
+}
+
+.cardItem {
 	position: relative;
-    overflow: hidden;
-    transition:
-      box-shadow 0.2s,
-      transform 0.2s;
-  }
+	overflow: hidden;
+	transition:
+		box-shadow 0.2s,
+		transform 0.2s;
+}
 
-  .cardItem:hover {
-    transform: scale(1.05);
-  }
+.cardItem:hover {
+	transform: scale(1.05);
+}
 
-  .cardItem-image {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    aspect-ratio: 1 / 1.4;
-    image-rendering: optimizeQuality;
-    text-align: center;
-    line-height: 150px;
-  }
+.cardItem-image {
+	width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+	aspect-ratio: 1 / 1.4;
+	image-rendering: optimizeQuality;
+	text-align: center;
+	line-height: 150px;
+}
 
 /* End card grid */
 

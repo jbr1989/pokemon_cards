@@ -1,28 +1,45 @@
 ---
+import type { UserList } from "@/models/UserList";
 import type { UserListCard } from "../../models/UserListCard";
 import ErrorMessage from "../ErrorMessage.astro";
 import ListCardGridItem from "./ListCardGridItem.astro";
 
 interface Props {
-  cards: UserListCard[] | null;
+  list: UserList | null;
   error: string | null;
-  listId: string | null;
-  listType: string;
 }
 
-const { listId, cards, error, listType } = Astro.props;
+const { list, error } = Astro.props;
+
+const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 ---
 
 <div id="cards-div">
+  <div class="cards-grid-header container">
+    <div>
+      <button
+        onclick={`openListCardDialog(${list?.id})`}
+        class="bg-blue-500 text-white px-2 rounded-md">+</button
+      >
+      <span
+        >{cardHaving} / {list?.cards?.length} cards ({
+          ((cardHaving / list?.cards?.length) * 100).toFixed(2)
+        }%)</span
+      >
+    </div>
+    <span>{""}</span>
+    <div>Buscar por:</div>
+  </div>
+
   <ErrorMessage error={error} />
 
   <div id="loading" class="loading hidden">Loading cards...</div>
 
   <div class="cards-grid container">
     {
-      cards && cards?.length > 0 ? (
-        cards.map((item) => (
-          <ListCardGridItem listCard={item} listType={listType} />
+      list?.cards && list?.cards?.length > 0 ? (
+        list?.cards?.map((item) => (
+          <ListCardGridItem listCard={item} listType={list?.type} />
         ))
       ) : (
         <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
@@ -41,6 +58,8 @@ const { listId, cards, error, listType } = Astro.props;
     });
   });
 </script>
+
+<script defer src="/scripts/cardItemEffect.js"></script>
 
 <style>
   .disabled {

@@ -4,10 +4,10 @@ import { languages } from "@/constants/languages";
 const { lang } = Astro.locals;
 const language = lang.toString() || "es";
 
-console.log("LANGUAGE", language);
+// console.log("LANGUAGE", language);
 
 const actualLanguage = languages.find(({ lang }) => lang === language);
-console.log("SELECT LANG", actualLanguage);
+// console.log("SELECT LANG", actualLanguage);
 ---
 
 <div class="relative inline-block dropdown">

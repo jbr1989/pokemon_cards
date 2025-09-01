@@ -17,7 +17,7 @@ const { list, error } = await UserListHandler.get({
   userListId: parseInt(listId as string, 0),
 });
 
-console.log("LIST", list);
+// console.log("LIST", list);
 
 const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 
@@ -28,25 +28,20 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 <Layout title="" description="" robots="noindex, nofollow">
   <h1>{list?.name}</h1>
 
-  <div class="container">
+  <!-- <div class="container">
     <span
       >{cardHaving} / {list?.cards?.length} cards ({
         ((cardHaving / list?.cards?.length) * 100).toFixed(2)
       }%)</span
     >
     <button
-      onclick="openListCardDialog()"
+      onclick={`openListCardDialog(${listId})`}
       class="bg-blue-500 text-white p-2 rounded-md"
       style="float:right;">Add Card</button
     >
-  </div>
+  </div> -->
 
-  <ListCardGrid
-    listId={listId || "0"}
-    listType={list?.type || "pokedex"}
-    cards={list?.cards || []}
-    error={error}
-  />
+  <ListCardGrid list={list} error={error} />
 
   <ListCardForm listId={listId} />
 </Layout>

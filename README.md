@@ -30,8 +30,6 @@ Construida con Astro, Tailwind CSS y Turso (libSQL).
 - **Ace Rare Spec**: [★ magenta](https://pokecards.jbr1989.es/img/icons/rarity-types/ace-rare-spec.png)
 - **Hype Rare**: [★★★ gold](https://pokecards.jbr1989.es/img/icons/rarity-types/hype-rare.png)
 
-
-
 ### Variantes
 - **Normal**: Versión sin brillo (muy común en comunes/infrecuentes).
 - **Reverse**: Patrones en la carta sin brillo.

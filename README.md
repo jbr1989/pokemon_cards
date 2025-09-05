@@ -20,15 +20,15 @@ Construida con Astro, Tailwind CSS y Turso (libSQL).
 ## TCG Pokemon
 
 ### Rarezas:
-- **Common**: ![●](https://pokecards.jbr1989.es/img/icons/rarity-types/common.png)
-- **Uncommon**: ![◆](https://pokecards.jbr1989.es/img/icons/rarity-types/uncommon.png)
-- **Rare**: ![★ black](https://pokecards.jbr1989.es/img/icons/rarity-types/rare.png)
-- **Double Rare**: ![★★ black](https://pokecards.jbr1989.es/img/icons/rarity-types/double-rare.png)
-- **Ultra Rare**: ![★★ grey](https://pokecards.jbr1989.es/img/icons/rarity-types/ultra-rare.png)
-- **Ilustration Rare**: ![★ gold](https://pokecards.jbr1989.es/img/icons/rarity-types/illustration-rare.png)
-- **Special Illustration Rare**: ![★★ gold](https://pokecards.jbr1989.es/img/icons/rarity-types/special-illustration-rare.png)
-- **Ace Rare Spec**: ![★ magenta](https://pokecards.jbr1989.es/img/icons/rarity-types/ace-rare-spec.png)
-- **Hype Rare**: ![★★★ gold](https://pokecards.jbr1989.es/img/icons/rarity-types/hype-rare.png)
+- **Common**: ![●](https://pokecards.jbr1989.es/img/icon/rarity-types/common.png)
+- **Uncommon**: ![◆](https://pokecards.jbr1989.es/img/icon/rarity-types/uncommon.png)
+- **Rare**: ![★ black](https://pokecards.jbr1989.es/img/icon/rarity-types/rare.png)
+- **Double Rare**: ![★★ black](https://pokecards.jbr1989.es/img/icon/rarity-types/double-rare.png)
+- **Ultra Rare**: ![★★ grey](https://pokecards.jbr1989.es/img/icon/rarity-types/ultra-rare.png)
+- **Ilustration Rare**: ![★ gold](https://pokecards.jbr1989.es/img/icon/rarity-types/illustration-rare.png)
+- **Special Illustration Rare**: ![★★ gold](https://pokecards.jbr1989.es/img/icon/rarity-types/special-illustration-rare.png)
+- **Ace Rare Spec**: ![★ magenta](https://pokecards.jbr1989.es/img/icon/rarity-types/ace-spec-rare.png)
+- **Hyper Rare**: ![★★★ gold](https://pokecards.jbr1989.es/img/icon/rarity-types/hyper-rare.png)
 
 ### Variantes
 - **Normal**: Versión sin brillo (muy común en comunes/infrecuentes).

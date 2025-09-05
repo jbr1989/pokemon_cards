@@ -15,7 +15,8 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   name: sets[0]?.id || "",
   language: language,
 });
-// console.log("CARDS", cards);
+
+console.log("ERROR", cardsError);
 ---
 
 <div>

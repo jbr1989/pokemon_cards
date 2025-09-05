@@ -262,34 +262,23 @@
     event.preventDefault();
     console.log("Submit");
 
-    findElements();
+    const form = document.querySelector("#add-card-form");
+    const formData = new FormData(form);
+    console.log("FORM DATA", formData);
 
-    console.log(
-      dialogAddCardListId,
-      dialogAddCardLang,
-      dialogAddCardSetId,
-      dialogAddCardCardId,
-      dialogAddCardCardName
-    );
-
-    const listId = dialogAddCardListId.value;
-    let setId = dialogAddCardSetId.value;
-    let cardId = dialogAddCardCardId.value;
-    const cardIdInput = dialogAddCardCardIdInput.value;
-    const lang = dialogAddCardLang.value;
-    const cardName = dialogAddCardCardName.value;
+    const listId = formData.get("listId");
+    let setId = formData.get("setId");
+    let cardId = formData.get("cardId");
+    const cardIdInput = formData.get("cardIdInput");
+    const lang = formData.get("lang");
+    const cardName = formData.get("cardName");
+    const cardVariant = formData.get("cardVariant");
 
     if (cardIdInput != "") {
       // Agregar carta personalizada
       setId = "";
       cardId = cardIdInput;
     }
-
-    console.log("List ID", listId);
-    console.log("Set ID", setId);
-    console.log("Card ID", cardId);
-    console.log("Lang", lang);
-    console.log("Card Name", cardName);
 
     fetch(`/api/list/add-card`, {
       method: "POST",
@@ -302,6 +291,7 @@
         cardId: cardId,
         cardName: cardName,
         lang: lang,
+        variant: cardVariant,
       }),
     })
       .then((response) => response.json())
@@ -320,4 +310,67 @@
       });
     return false; // evita que el form intente recargarse solo
   }
+
+  // function handleListCardDialogSubmit(event) {
+  //   event.preventDefault();
+  //   console.log("Submit");
+
+  //   findElements();
+
+  //   console.log(
+  //     dialogAddCardListId,
+  //     dialogAddCardLang,
+  //     dialogAddCardSetId,
+  //     dialogAddCardCardId,
+  //     dialogAddCardCardName
+  //   );
+
+  //   const listId = dialogAddCardListId.value;
+  //   let setId = dialogAddCardSetId.value;
+  //   let cardId = dialogAddCardCardId.value;
+  //   const cardIdInput = dialogAddCardCardIdInput.value;
+  //   const lang = dialogAddCardLang.value;
+  //   const cardName = dialogAddCardCardName.value;
+
+  //   if (cardIdInput != "") {
+  //     // Agregar carta personalizada
+  //     setId = "";
+  //     cardId = cardIdInput;
+  //   }
+
+  //   console.log("List ID", listId);
+  //   console.log("Set ID", setId);
+  //   console.log("Card ID", cardId);
+  //   console.log("Lang", lang);
+  //   console.log("Card Name", cardName);
+
+  //   fetch(`/api/list/add-card`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //     },
+  //     body: new URLSearchParams({
+  //       listId: listId,
+  //       setId: setId,
+  //       cardId: cardId,
+  //       cardName: cardName,
+  //       lang: lang,
+  //     }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("Data", data);
+  //       if (data.success) {
+  //         // alert("Card added successfully");
+  //         closeListCardDialog();
+  //         loadCards(listId);
+  //       } else {
+  //         alert("Error adding card: " + data.error);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding card:", error);
+  //     });
+  //   return false; // evita que el form intente recargarse solo
+  // }
 </script>

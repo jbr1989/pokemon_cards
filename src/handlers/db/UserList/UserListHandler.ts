@@ -44,7 +44,7 @@ export class UserListHandler {
 
 			if (list!=null){
 				const cards : UserListCard[] = await UserListHandler.db.getUserListCards(userListId);
-				// console.log("LIST CARDS", cards);
+				console.log("LIST CARDS", cards);
 				list.cards = cards || [];
 				if (list.type=="pokedex"){
 					list.cards = await completeUserList(list.cards);

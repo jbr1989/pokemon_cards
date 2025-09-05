@@ -102,6 +102,7 @@ option:hover {
 }
 
 dialog {
+	max-width: 95%;
 	margin: auto;
 	background-color: #222;
 	color: #fff;

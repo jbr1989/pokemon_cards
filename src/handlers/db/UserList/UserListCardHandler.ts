@@ -8,12 +8,14 @@ export class UserListCardHandler extends PokeHandler {
         userListId = "0",
         cardId = "0",
         cardName = "",
-        lang = "en"
+        lang = "en",
+        variant = ""
     }: {
         userListId: string,
         cardId: string,
         cardName: string,
-        lang: string
+        lang: string,
+        variant: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
         let error: string | null = null;
@@ -33,7 +35,7 @@ export class UserListCardHandler extends PokeHandler {
                 return { success: false, error: "Card not added" };
             }
 
-            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang)) {
+            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang, variant)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }

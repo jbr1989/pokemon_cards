@@ -1,6 +1,7 @@
 ---
 import { getSession } from "auth-astro/server";
 import { languages } from "../../constants/languages";
+import { variants } from "../../constants/variants";
 import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
@@ -36,8 +37,8 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   language: language,
 });
 
-console.log("CARDS", cards);
-console.log("CARD ID", cardId);
+// console.log("CARDS", cards);
+// console.log("CARD ID", cardId);
 ---
 
 <div id="status-message" class="hidden"></div>
@@ -114,6 +115,31 @@ console.log("CARD ID", cardId);
     name="cardName"
     value={cardName}
   />
+  Variant:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.map((variant) => (
+        <label
+          for={`dialogAddCardCardVariant-${variant.code}`}
+          class="mr-2 flex flex-row items-center"
+        >
+          <input
+            type="radio"
+            id={`dialogAddCardCardVariant-${variant.code}`}
+            name="cardVariant"
+            value={variant.code}
+            class="mr-2"
+          />
+          <img
+            src={variant.flag}
+            class="w-8 h-8"
+            alt={variant.name}
+            title={variant.name}
+          />
+        </label>
+      ))
+    }
+  </span>
 
   <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
     >Add</button

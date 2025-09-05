@@ -149,10 +149,12 @@ export class TursoAdapter implements BBDDInterface {
 				row.id,
 				row.cardId,
 				row.lang,
+				row.variant,
 				row.listId,
 				row.card_name,
 				row.pokemon_name,
-				row.dexId
+				row.dexId,
+				null
 			));
 		});
 
@@ -190,16 +192,18 @@ export class TursoAdapter implements BBDDInterface {
 	async addUserListCard(
 		userListId: string,
 		cardId: string,
-		lang: string
+		lang: string,
+		variant: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "INSERT INTO lists_cards (listId, cardId, lang) VALUES (?, ?, ?)",
+				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant) VALUES (?, ?, ?, ?)",
 				args: [
 					userListId,
 					cardId,
 					lang,
+					variant
 				],
 			});
 

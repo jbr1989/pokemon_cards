@@ -8,6 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
     const cardId = formData.get('cardId') as string;
     const cardName = formData.get('cardName') as string;
     const lang = formData.get('lang') as string;
+    const variant = formData.get('variant') as string;
 
     if (!listId || !cardId || !lang) {
       return new Response(JSON.stringify({ 
@@ -24,7 +25,8 @@ export const POST: APIRoute = async ({ request }) => {
       userListId: listId,
       cardId: cardId,
       cardName: cardName,
-      lang: lang
+      lang: lang,
+      variant: variant,
     });
 
     if (!success) {

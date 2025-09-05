@@ -1,26 +1,46 @@
 ---
-import type { PokeCardMini } from "../../models/PokeCardMini";
+import type { UserListCard } from "@/models/UserListCard";
 
 interface Props {
-  card: PokeCardMini | null;
-  lang: string;
+  listCard: UserListCard | null;
 }
 
-const { card, lang } = Astro.props;
+const { listCard } = Astro.props;
 ---
 
 <div class="card_actions">
   <button
-    class="bg-blue-500 text-white p-2 rounded-md"
-    onclick={`openListCardDialog("1", "${card?.id}", "${card?.name}", "${lang}")`}
-    >+</button
+    class="bg-red-500 text-white p-2 rounded-md"
+    onclick={`removeListCardDialog("${listCard?.id}")`}>-</button
   >
 </div>
 
-<style>
-  .card_actions {
-    position: absolute;
-    top: 3px;
-    right: 3px;
+<script is:inline>
+  function removeListCardDialog(listCardId) {
+    if (confirm("Are you sure you want to remove this card from the list?")) {
+      fetch(`/api/list/remove-card`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ listCardId: listCardId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Data", data);
+          if (data.success) {
+            // alert("Card added successfully");
+            // closeListCardDialog();
+            // loadCards(listId);
+            document.location.reload();
+          } else {
+            alert("Error removing card: " + data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error removing card:", error);
+        });
+    }
+    console.log("REMOVE LIST CARD DIALOG", id);
   }
-</style>
+</script>

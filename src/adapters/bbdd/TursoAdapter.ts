@@ -212,5 +212,23 @@ export class TursoAdapter implements BBDDInterface {
 		}
 	}
 
+	async removeUserListCard(
+		id: string
+	): Promise<boolean> {
+		try {
+
+			const result = await turso.execute({
+				sql: "DELETE FROM lists_cards WHERE id = ?",
+				args: [id],
+			});
+
+			return true;
+
+		} catch (error) {
+			console.log("Error al eliminar carta", error);
+			return false;
+		}
+	}
+
 	//#endregion
 }

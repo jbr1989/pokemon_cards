@@ -1,0 +1,18 @@
+---
+import type { PokeCardMini } from "../../models/PokeCardMini";
+
+interface Props {
+  card: PokeCardMini | null;
+  lang: string;
+}
+
+const { card, lang } = Astro.props;
+---
+
+<div class="card_actions">
+  <button
+    class="bg-blue-500 text-white p-2 rounded-md"
+    onclick={`openListCardDialog("1", "${card?.id}", "${card?.name}", "${lang}")`}
+    >+</button
+  >
+</div>

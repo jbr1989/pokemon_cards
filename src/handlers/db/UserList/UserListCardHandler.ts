@@ -25,7 +25,7 @@ export class UserListCardHandler extends PokeHandler {
 
             let card_name = (card!=null ? card?.name : cardName).toString().toLowerCase();
             console.log("CARD NAME", card_name);
-            let pokemonName = card_name.replace(/(?:\s?)(ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
+            let pokemonName = card_name.replace(/^(mega) /i, "").replace(/ (ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
             console.log("POKEMON NAME", pokemonName);
 
             if(!await UserListCardHandler.db.addCard(cardId, card_name, card?.dexId?.toString() || null, pokemonName || null)) {
@@ -44,6 +44,30 @@ export class UserListCardHandler extends PokeHandler {
         }
 
         return { success, error };
+    }
+
+    static async remove({
+        userListCardId = ""
+    }: {
+        userListCardId: string
+    }): Promise<{ success: boolean, error: string | null }> {
+        let success = false;
+        let error: string | null = null;
+
+        if(userListCardId=="") return { success: false, error: "User List Card ID not found" };
+
+        try{
+            if(!await UserListCardHandler.db.removeUserListCard(userListCardId)) {
+                console.log("Card not added");
+                return { success: false, error: "Card not added" };
+            }
+
+            success = true;
+        }catch (e) {
+            error = e.toString();
+        }
+
+        return { success, error };  
     }
 
 }

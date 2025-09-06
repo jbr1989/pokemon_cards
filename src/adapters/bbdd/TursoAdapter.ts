@@ -189,6 +189,37 @@ export class TursoAdapter implements BBDDInterface {
 
 	//#region USER LIST CARD
 
+	async getUserListCard(userListCardId: string): Promise<UserListCard | null> {
+		try {
+			//console.log("GET USER LIST CARD", userListCardId);
+
+			const result = await turso.execute({
+				sql: "SELECT * FROM lists_cards_info WHERE id = ?",
+				args: [userListCardId],
+			});
+
+			//console.log("RESULT", result);
+
+			if (result.length == 0) return null;
+
+			return new UserListCard(
+				result.rows[0].id,
+				result.rows[0].cardId,
+				result.rows[0].lang,
+				result.rows[0].variant,
+				result.rows[0].listId,
+				result.rows[0].card_name,
+				result.rows[0].pokemon_name,
+				result.rows[0].dexId,
+				null
+			);
+
+		} catch (error) {
+			console.log("Error al obtener cardlist", error);
+			return null;
+		}
+	}
+
 	async addUserListCard(
 		userListId: string,
 		cardId: string,

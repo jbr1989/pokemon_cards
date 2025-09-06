@@ -6,13 +6,31 @@ import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
 import { sequence } from "astro:middleware";
+import { UserListCardHandler } from "@/handlers/db/UserList/UserListCardHandler";
 
 export const partial = true;
 
-const listId = Astro.url.searchParams.get("list") || "0";
-const language = Astro.url.searchParams.get("lang") || "en";
-const cardId = Astro.url.searchParams.get("card") || "base1";
-const cardName = Astro.url.searchParams.get("cardName") || "";
+const listCardId = Astro.url.searchParams.get("listCard") || "0";
+let listId = Astro.url.searchParams.get("list") || "0";
+let language = Astro.url.searchParams.get("lang") || "en";
+let cardId = Astro.url.searchParams.get("card") || "base1";
+let cardName = Astro.url.searchParams.get("cardName") || "";
+
+console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
+
+if (listCardId != "0") {
+  const { listCard, error: listCardError } = await UserListCardHandler.get({
+    userListCardId: listCardId,
+  });
+
+  console.log("LIST CARD", listCard);
+
+  listId = listCard?.listId.toString() || "0";
+  language = listCard?.lang || "en";
+  // variant = listCard?.variant || "";
+  cardId = listCard?.cardId || "base1";
+  cardName = listCard?.cardName || "";
+}
 
 const { card, error: cardError } = await PokeCardHandler.get({
   cardId: cardId,
@@ -36,6 +54,8 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   setId: setId,
   language: language,
 });
+
+const action = listCardId == "0" ? "Add" : "Update";
 
 // console.log("CARDS", cards);
 // console.log("CARD ID", cardId);
@@ -142,8 +162,10 @@ const { cards, error: cardsError } = await PokeCardHandler.getAll({
   </span>
 
   <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
-    >Add</button
+    >{action}</button
   >
+
+  <input type="hidden" name="listCard" value={listCardId} />
 </form>
 
 <!-- <script is:inline>

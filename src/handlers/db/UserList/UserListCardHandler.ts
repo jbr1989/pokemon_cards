@@ -1,8 +1,29 @@
+import type { UserListCard } from "@/models/UserListCard";
 import { TursoAdapter } from "../../../adapters/bbdd/TursoAdapter";
 import { PokeHandler } from "../../PokeHandler";
 
 export class UserListCardHandler extends PokeHandler {
 	static db = new TursoAdapter();
+
+    static async get({
+        userListCardId = "0"
+    }: {
+        userListCardId: string
+    }): Promise<{ listCard: UserListCard | null, error: string | null }> {
+
+        if(userListCardId=="") return { listCard: null, error: "User List Card ID not found" };
+
+        let listCard: UserListCard | null = null;
+        let error: string | null = null;
+
+        try{
+            listCard = await UserListCardHandler.db.getUserListCard(userListCardId);
+        }catch (e) {
+            error = e.toString();
+        }
+
+        return { listCard, error };
+    }
 
     static async add({
         userListId = "0",

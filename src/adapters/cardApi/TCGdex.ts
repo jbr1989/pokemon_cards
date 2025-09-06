@@ -142,7 +142,7 @@ export class TCGdexAdapter implements ApiInterface {
 			const tcgdex = new TCGdex(language);
 			const selectedSet = await tcgdex.fetch("sets", setId);
 
-			console.log("SELECTED SET", selectedSet);
+			// console.log("SELECTED SET", selectedSet);
 
 			const cards: Array<PokeCardMini> = [];
 			if (!selectedSet) return cards;

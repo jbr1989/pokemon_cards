@@ -134,13 +134,19 @@
     dialogDivAddCard = document.querySelector("#dialogDivAddCard");
   });
 
-  async function openListCardDialog(listId, cardId, cardName, lang) {
-    // dialogAddCardListId.value = listId;
-    // dialogAddCardCardId.value = cardId;
-
-    await loadListCardDialog(listId, cardId, cardName, lang);
-
+  async function openListCardDialog(
+    listCardId,
+    listId = 0,
+    cardId = "",
+    cardName = "",
+    lang = ""
+  ) {
+    await loadListCardDialog(listCardId, listId, cardId, cardName, lang);
     if (dialogAddCard) dialogAddCard.showModal();
+  }
+
+  async function modListCardDialog(listCardId) {
+    await openListCardDialog(listCardId);
   }
 
   function closeListCardDialog() {
@@ -235,10 +241,16 @@
       ].dataset.name;
   }
 
-  async function loadListCardDialog(listId, cardId, cardName, lang) {
-    console.log(dialogAddCard, dialogDivAddCard);
+  async function loadListCardDialog(
+    listCardId,
+    listId = 0,
+    cardId = "",
+    cardName = "",
+    lang = ""
+  ) {
+    // console.log(dialogAddCard, dialogDivAddCard);
 
-    console.log("LOADING FORM");
+    // console.log("LOADING FORM", listCardId, listId, cardId, cardName, lang);
 
     // if (!cardsDiv || !loading) return;
 
@@ -247,7 +259,7 @@
 
     try {
       const response = await fetch(
-        `/partials/ListCardFormPartial?list=${listId}&card=${cardId}&cardName=${cardName}&lang=${lang}`
+        `/partials/ListCardFormPartial?listCard=${listCardId}&list=${listId}&card=${cardId}&cardName=${cardName}&lang=${lang}`
       );
       dialogDivAddCard.innerHTML = await response.text();
     } catch (error) {

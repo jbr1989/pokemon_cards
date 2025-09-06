@@ -7,14 +7,14 @@ export const variants = [
             dark: "/img/icon/variant/normal.png"
         }
     },
-    {
-        code: "reverse",
-        name: "Reverse",
-        flag: {
-            light: "/img/icon/variant/reverse.png",
-            dark: "/img/icon/variant/reverse-dark.png"
-        }
-    },
+    // {
+    //     code: "reverse",
+    //     name: "Reverse",
+    //     flag: {
+    //         light: "/img/icon/variant/reverse.png",
+    //         dark: "/img/icon/variant/reverse-dark.png"
+    //     }
+    // },
     {
         code: "holo",
         name: "Holo",

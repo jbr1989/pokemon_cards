@@ -147,6 +147,8 @@
   function loadSelectSets() {
     findElements();
 
+    console.log("LOAD SETS");
+
     const currentLang = dialogAddCardLang ? dialogAddCardLang.value : "en";
 
     fetch(`/api/sets?lang=${currentLang}`)
@@ -293,7 +295,7 @@
         if (data.success) {
           // alert("Card added successfully");
           closeListCardDialog();
-          loadCards(listId);
+          // loadCards(listId);
         } else {
           alert("Error adding card: " + data.error);
         }

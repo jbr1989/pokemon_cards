@@ -24,12 +24,11 @@ if (listCardId != "0") {
     userListCardId: listCardId,
   });
 
-  //console.log("LIST CARD", listCard);
+  console.log("LIST CARD", listCard);
 
   listId = listCard?.listId.toString() || "0";
   language = listCard?.lang || "en";
-  // variant = listCard?.variant || "";
-  cardId = listCard?.cardId || "base1";
+  cardId = listCard?.cardId || "";
   cardName = listCard?.cardName || "";
   cardVariant = listCard?.variant || "";
 }
@@ -128,7 +127,7 @@ const action = listCardId == "0" ? "Add" : "Update";
     type="text"
     id="dialogAddCardCardIdInput"
     name="cardIdInput"
-    value=""
+    value={cardId}
   />
 
   Name: <input

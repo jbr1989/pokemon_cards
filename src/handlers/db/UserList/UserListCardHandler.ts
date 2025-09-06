@@ -48,7 +48,11 @@ export class UserListCardHandler extends PokeHandler {
 
             let card_name = (card!=null ? card?.name : cardName).toString().toLowerCase();
             console.log("CARD NAME", card_name);
-            let pokemonName = card_name.replace(/^(mega) /i, "").replace(/ (ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
+            let pokemonName = card_name;
+            if (lang == "ja" || lang == "ko" || lang == "zh")
+                pokemonName = card_name.replace(/^(mega)/i, "").replace(/\s*(ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
+            else
+                pokemonName = card_name.replace(/^(mega) /i, "").replace(/ (ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
             console.log("POKEMON NAME", pokemonName);
 
             if(!await UserListCardHandler.db.addOrUpdateCard(cardId, card_name, card?.dexId?.toString() || null, pokemonName || null)) {

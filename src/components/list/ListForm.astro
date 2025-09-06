@@ -11,12 +11,12 @@ const listId = 0;
 const { sets, error } = await PokeSetHandler.getAll({ language });
 // console.log("SETS", sets);
 
-const { cards, error: cardsError } = await PokeCardHandler.getAll({
-  name: sets[0]?.id || "",
-  language: language,
-});
+// const { cards, error: cardsError } = await PokeCardHandler.getAll({
+//   name: sets[0]?.id || "",
+//   language: language,
+// });
 
-console.log("ERROR", cardsError);
+// console.log("ERROR", cardsError);
 ---
 
 <div>

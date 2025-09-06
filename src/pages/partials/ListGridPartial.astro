@@ -9,11 +9,8 @@ const listId = Astro.url.searchParams.get("list") || "0";
 const { list, error } = await UserListHandler.get({
   userListId: parseInt(listId as string, 0),
 });
+
+console.log("LIST", list);
 ---
 
-<ListCardGrid
-  listId={listId || "0"}
-  cards={list?.cards || []}
-  error={error}
-  listType={list?.type || ""}
-/>
+<ListCardGrid list={list} error={error} />

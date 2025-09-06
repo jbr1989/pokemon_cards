@@ -4,6 +4,7 @@ import { UserListCardHandler } from '../../../handlers/db/UserList/UserListCardH
 export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData();
+    const listCardId = formData.get('listCardId') as string;
     const listId = formData.get('listId') as string;
     const cardId = formData.get('cardId') as string;
     const cardName = formData.get('cardName') as string;
@@ -19,19 +20,44 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    console.log(`Adding card ${cardId} to list ${listId} with lang ${lang}`);
+    let successAction = false as boolean;
+    let errorAction = "" as string | null;
 
-    const { success, error } = await UserListCardHandler.add({
-      userListId: listId,
-      cardId: cardId,
-      cardName: cardName,
-      lang: lang,
-      variant: variant,
-    });
+    if (listCardId=="0") {
 
-    if (!success) {
+      console.log(`Adding card ${cardId} to list ${listId} with lang ${lang}`);
+
+      const { success, error } = await UserListCardHandler.add({
+        userListId: listId,
+        cardId: cardId,
+        cardName: cardName,
+        lang: lang,
+        variant: variant,
+      });
+
+      successAction = success;
+      errorAction = error;
+
+    }else{
+
+      console.log(`Updating card ${cardId} to list ${listId} with lang ${lang}`);
+
+      const { success, error } = await UserListCardHandler.update({
+        userListCardId: listCardId,
+        userListId: listId,
+        cardId: cardId,
+        cardName: cardName,
+        lang: lang,
+        variant: variant,
+      });
+
+      successAction = success;
+      errorAction = error;
+    }
+
+    if (!successAction) {
       return new Response(JSON.stringify({ 
-        error: error 
+        error: errorAction 
       }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }

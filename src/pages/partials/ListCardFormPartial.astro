@@ -15,21 +15,23 @@ let listId = Astro.url.searchParams.get("list") || "0";
 let language = Astro.url.searchParams.get("lang") || "en";
 let cardId = Astro.url.searchParams.get("card") || "base1";
 let cardName = Astro.url.searchParams.get("cardName") || "";
+let cardVariant = "";
 
-console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
+//console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
 
 if (listCardId != "0") {
   const { listCard, error: listCardError } = await UserListCardHandler.get({
     userListCardId: listCardId,
   });
 
-  console.log("LIST CARD", listCard);
+  //console.log("LIST CARD", listCard);
 
   listId = listCard?.listId.toString() || "0";
   language = listCard?.lang || "en";
   // variant = listCard?.variant || "";
   cardId = listCard?.cardId || "base1";
   cardName = listCard?.cardName || "";
+  cardVariant = listCard?.variant || "";
 }
 
 const { card, error: cardError } = await PokeCardHandler.get({
@@ -149,9 +151,10 @@ const action = listCardId == "0" ? "Add" : "Update";
             name="cardVariant"
             value={variant.code}
             class="mr-2"
+            checked={variant.code === cardVariant}
           />
           <img
-            src={variant.flag}
+            src={variant.flag.dark}
             class="w-8 h-8"
             alt={variant.name}
             title={variant.name}
@@ -165,143 +168,5 @@ const action = listCardId == "0" ? "Add" : "Update";
     >{action}</button
   >
 
-  <input type="hidden" name="listCard" value={listCardId} />
+  <input type="hidden" name="listCardId" value={listCardId} />
 </form>
-
-<!-- <script is:inline>
-  let dialogAddCard = null;
-  let dialogAddCardListId = null;
-  let dialogAddCardSetId = null;
-  let dialogAddCardCardId = null;
-
-  document.addEventListener("astro:page-load", () => {
-    console.log("DOMContentLoaded");
-
-    dialogAddCard = document.querySelector("#dialogAddCard");
-    dialogAddCardListId = document.querySelector("#dialogAddCardListId");
-    dialogAddCardSetId = document.querySelector("#dialogAddCardSetId");
-    dialogAddCardCardId = document.querySelector("#dialogAddCardCardId");
-  });
-
-  // function openListCardDialog(listId, cardId) {
-  //   dialogAddCardListId.value = listId;
-  //   dialogAddCardCardId.value = cardId;
-
-  //   if (dialogAddCard) dialogAddCard.showModal();
-  // }
-
-  // function closeListCardDialog() {
-  //   if (dialogAddCard) dialogAddCard.close();
-  // }
-
-  // function loadSelectSets() {
-  //   const langSelect = document.querySelector('select[name="lang"]');
-  //   const currentLang = langSelect ? langSelect.value : "en";
-
-  //   fetch(`/api/sets?lang=${currentLang}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("DATA", data);
-  //       const sets = data.sets || [];
-
-  //       if (!dialogAddCardSetId) return;
-
-  //       dialogAddCardSetId.innerHTML = "";
-  //       sets.forEach((set) => {
-  //         const option = document.createElement("option");
-  //         option.value = set.id;
-  //         option.textContent = `${set.name} (${set.id})`;
-  //         dialogAddCardSetId.appendChild(option);
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error loading sets:", error);
-  //     });
-  // }
-
-  // function loadSelectCards() {
-  //   console.log("LOAD CARDS");
-  //   if (!dialogAddCardSetId) return;
-
-  //   const setId = dialogAddCardSetId.value;
-  //   console.log("SET ID", setId);
-
-  //   // Obtener el idioma del select o usar "en" por defecto
-  //   const langSelect = document.querySelector('select[name="lang"]');
-  //   const currentLang = langSelect ? langSelect.value : "en";
-
-  //   fetch(`/api/cards/set/${setId}?lang=${currentLang}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("DATA", data);
-  //       const cards = data.cards || [];
-  //       if (!dialogAddCardCardId) return;
-
-  //       dialogAddCardCardId.innerHTML = "";
-  //       cards.forEach((card) => {
-  //         const option = document.createElement("option");
-  //         option.value = card.id;
-  //         option.textContent = card.localId
-  //           ? `${card.localId} - ${card.name} `
-  //           : card.name;
-  //         dialogAddCardCardId.appendChild(option);
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error loading cards:", error);
-  //     });
-  // }
-
-  //   function handleListCardDialogSubmit(event) {
-  //     event.preventDefault();
-  //     console.log("Submit");
-
-  //     const listIdElement = document.getElementById("listId");
-  //     const setIdElement = document.getElementById("setId");
-  //     const cardIdElement = document.getElementById("cardId");
-  //     const langElement = document.getElementById("lang");
-
-  //     console.log(listIdElement, setIdElement, cardIdElement, langElement);
-
-  //     if (!listIdElement || !setIdElement || !cardIdElement || !langElement) {
-  //       return;
-  //     }
-
-  //     const listId = listIdElement.value;
-  //     const setId = setIdElement.value;
-  //     const cardId = cardIdElement.value;
-  //     const lang = langElement.value;
-
-  //     console.log("List ID", listId);
-  //     console.log("Set ID", setId);
-  //     console.log("Card ID", cardId);
-  //     console.log("Lang", lang);
-
-  //     fetch(`/api/list/add-card`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/x-www-form-urlencoded",
-  //       },
-  //       body: new URLSearchParams({
-  //         listId: listId,
-  //         setId: setId,
-  //         cardId: cardId,
-  //         lang: lang,
-  //       }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log("Data", data);
-  //         if (data.success) {
-  //           alert("Card added successfully");
-  //           loadCards(listId);
-  //         } else {
-  //           alert("Error adding card: " + data.error);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error adding card:", error);
-  //       });
-  //     return false; // evita que el form intente recargarse solo
-  //   }
-</script> -->

@@ -1,13 +1,16 @@
 ---
 import type { UserListCard } from "../../models/UserListCard";
 import ListCardActions from "./ListCardActions.astro";
-
+import { languages } from "../../constants/languages";
+import { variants } from "../../constants/variants";
 interface Props {
   listCard: UserListCard | null;
   listType: string;
 }
 
 const { listCard, listType } = Astro.props;
+const language = languages.find(({ code }) => code === listCard?.lang);
+const variant = variants.find(({ code }) => code === listCard?.variant);
 ---
 
 <div class="cardItem cardItemEffect">
@@ -32,26 +35,26 @@ const { listCard, listType } = Astro.props;
           {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
           {listCard?.pokemonName}
         </span>
-        <span class="flex flex-nowrap gap-1">
+        <span class="flex flex-nowrap gap-1" style="justify-content: flex-end;">
           {
             listCard?.variant != "" && (
               <img
-                src={`/img/icon/variant/${listCard?.variant}.png`}
+                src={variant?.flag.dark}
                 alt="Variant"
                 loading="lazy"
-                class="w-[1rem] h-[1rem] mt-1"
-                title={listCard?.variant}
+                class="w-[1rem] h-[1rem] mt-1 inline"
+                title={variant?.name}
               />
             )
           }
           {
             (listCard?.cardName != "" || listCard?.lang != "") && (
               <img
-                src={`/img/icon/language/${listCard?.lang}.webp`}
+                src={language?.flag}
                 alt="Language"
                 loading="lazy"
-                class="w-[1rem] h-[1rem] mt-1"
-                title={listCard?.lang}
+                class="w-[1rem] h-[1rem] mt-1 inline"
+                title={language?.name}
               />
             )
           }

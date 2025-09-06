@@ -1,26 +1,5 @@
 ---
-// import { getSession } from "auth-astro/server";
-// import { PokeCardHandler } from "../../handlers/PokeCardHandler";
-// import { PokeSetHandler } from "../../handlers/PokeSetHandler";
-// import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 
-// Obtener el idioma de los parámetros de la URL o usar "en" por defecto
-// const { lang } = Astro.locals;
-// const language = lang.toString() || "en";
-
-// const session = await getSession(Astro.request);
-// const { lists, error: listsError } = await UserListHandler.getAll({
-//   userId: parseInt(session?.user?.id?.toString() || "0"),
-// });
-
-// const { sets, error } = await PokeSetHandler.getAll({ language });
-// // console.log("SETS", sets);
-
-// const { cards, error: cardsError } = await PokeCardHandler.getAll({
-//   name: sets[0]?.id || "",
-//   language: language,
-// });
-// console.log("CARDS", cards);
 ---
 
 <div>
@@ -278,6 +257,7 @@
     const formData = new FormData(form);
     console.log("FORM DATA", formData);
 
+    const listCardId = formData.get("listCardId");
     const listId = formData.get("listId");
     let setId = formData.get("setId");
     let cardId = formData.get("cardId");
@@ -298,6 +278,7 @@
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
+        listCardId: listCardId,
         listId: listId,
         setId: setId,
         cardId: cardId,
@@ -322,67 +303,4 @@
       });
     return false; // evita que el form intente recargarse solo
   }
-
-  // function handleListCardDialogSubmit(event) {
-  //   event.preventDefault();
-  //   console.log("Submit");
-
-  //   findElements();
-
-  //   console.log(
-  //     dialogAddCardListId,
-  //     dialogAddCardLang,
-  //     dialogAddCardSetId,
-  //     dialogAddCardCardId,
-  //     dialogAddCardCardName
-  //   );
-
-  //   const listId = dialogAddCardListId.value;
-  //   let setId = dialogAddCardSetId.value;
-  //   let cardId = dialogAddCardCardId.value;
-  //   const cardIdInput = dialogAddCardCardIdInput.value;
-  //   const lang = dialogAddCardLang.value;
-  //   const cardName = dialogAddCardCardName.value;
-
-  //   if (cardIdInput != "") {
-  //     // Agregar carta personalizada
-  //     setId = "";
-  //     cardId = cardIdInput;
-  //   }
-
-  //   console.log("List ID", listId);
-  //   console.log("Set ID", setId);
-  //   console.log("Card ID", cardId);
-  //   console.log("Lang", lang);
-  //   console.log("Card Name", cardName);
-
-  //   fetch(`/api/list/add-card`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/x-www-form-urlencoded",
-  //     },
-  //     body: new URLSearchParams({
-  //       listId: listId,
-  //       setId: setId,
-  //       cardId: cardId,
-  //       cardName: cardName,
-  //       lang: lang,
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("Data", data);
-  //       if (data.success) {
-  //         // alert("Card added successfully");
-  //         closeListCardDialog();
-  //         loadCards(listId);
-  //       } else {
-  //         alert("Error adding card: " + data.error);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error adding card:", error);
-  //     });
-  //   return false; // evita que el form intente recargarse solo
-  // }
 </script>

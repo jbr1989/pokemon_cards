@@ -31,7 +31,7 @@ export class TursoAdapter implements BBDDInterface {
 
 	//#region CARD
 
-	async addCard(
+	async addOrUpdateCard(
 		id: string,
 		card_name: string,
 		dexId: string | null,
@@ -243,6 +243,35 @@ export class TursoAdapter implements BBDDInterface {
 			return true;
 		} catch (error) {
 			console.log("Error al guardar carta", error);
+			return false;
+		}
+	}
+
+	async updateUserListCard(
+		userListCardId: string,
+		userListId: string,
+		cardId: string,
+		lang: string,
+		variant: string
+	): Promise<boolean> {
+		try {
+
+			const result = await turso.execute({
+				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ? WHERE id = ?",
+				args: [
+					userListId,
+					cardId,
+					lang,
+					variant,
+					userListCardId
+				],
+			});
+
+			// console.log(result);
+
+			return true;
+		} catch (error) {
+			console.log("Error al actualizar carta", error);
 			return false;
 		}
 	}

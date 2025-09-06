@@ -1,5 +1,7 @@
 ---
 import type { UserListCard } from "@/models/UserListCard";
+import ModIcon from "@/assets/mod.svg";
+import DelIcon from "@/assets/del.svg";
 
 interface Props {
   listCard: UserListCard | null;
@@ -10,9 +12,17 @@ const { listCard } = Astro.props;
 
 <div class="card_actions">
   <button
-    class="bg-red-500 text-white p-2 rounded-md"
-    onclick={`removeListCardDialog("${listCard?.id}")`}>-</button
+    class="bg-blue-500 text-white p-2 rounded-md"
+    onclick={`modListCardDialog("${listCard?.id}")`}
   >
+    <ModIcon />
+  </button>
+  <button
+    class="bg-red-500 text-white p-2 rounded-md"
+    onclick={`removeListCardDialog("${listCard?.id}")`}
+  >
+    <DelIcon />
+  </button>
 </div>
 
 <script is:inline>

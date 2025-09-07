@@ -21,7 +21,6 @@ const { card, lang } = Astro.props;
       alt={card ? card?.name : "Card not found"}
       title={card ? card?.name : "Card not found"}
       loading="lazy"
-      transition:name={`${card?.id}-image`}
     />
   </a>
   <span class="capitalize">

@@ -24,7 +24,6 @@ const variant = variants.find(({ code }) => code === listCard?.variant);
         alt={listCard?.cardId || "Card not found"}
         title={listCard?.cardName || "Card not found"}
         loading="lazy"
-        transition:name={`${listCard?.cardId}-image`}
       />
 
       <div

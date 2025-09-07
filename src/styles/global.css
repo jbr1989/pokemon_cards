@@ -41,6 +41,10 @@ html {
 	background: #13151a;
 	color: white !important;
 	overflow-x: hidden;
+	/* Performance optimizations */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 body {
@@ -48,6 +52,9 @@ body {
 	padding: 0;
 	min-height: 100vh;
 	overscroll-behavior-y: none;
+	/* GPU acceleration for smooth scrolling */
+	transform: translateZ(0);
+	will-change: scroll-position;
 }
 
 main {
@@ -56,6 +63,8 @@ main {
 	width: 100%;
 	max-width: 100%;
 	min-height: 100vh;
+	/* Contain layout for better performance */
+	contain: layout style;
 }
 
 input, select {
@@ -64,14 +73,26 @@ input, select {
 	border: 1px solid white;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
+	transition: border-color 0.15s ease-out;
+}
+
+input:focus, select:focus {
+	outline: none;
+	border-color: hsl(var(--pokemon-blue));
 }
 
 .container {
 	max-width: 1400px;
 	margin: 0 auto;
+	/* Performance optimization */
+	contain: layout;
 }
 
-h1, h2{ color:white;}
+h1, h2{ 
+	color: white;
+	/* Performance optimization */
+	contain: layout style;
+}
 
 h1 {
 	font-size: 2.5rem;
@@ -87,7 +108,10 @@ h2 {
 	text-align: center;
 }
 
-button { cursor: pointer;}
+button { 
+	cursor: pointer;
+	transition: all 0.15s ease-out;
+}
 
 option {
 	background-color: #333 !important;
@@ -109,10 +133,13 @@ dialog {
 	padding: 1rem;
 	border-radius: 0.5rem;
 	border: 1px solid #333;
+	/* Performance optimization */
+	contain: layout style paint;
 }
 
 dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.5) !important;
+	backdrop-filter: blur(2px);
 }
 
 .dialog-header {
@@ -136,6 +163,8 @@ dialog::backdrop {
 	justify-content: center;
 	border-radius: 50%;
 	transition: background-color 0.2s;
+	/* Performance optimization */
+	will-change: background-color;
 }
 
 .dialog-close-btn:hover {
@@ -154,10 +183,12 @@ dialog form {
 	text-align: center;
 	font-size: 1.2rem;
 	padding: 2rem;
+	/* Performance optimization */
+	contain: layout style;
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 
@@ -165,6 +196,8 @@ dialog form {
 
 .card {
 	position: relative;
+	/* Performance optimization */
+	contain: layout style;
 }
 
 /* Card grid */
@@ -175,6 +208,9 @@ dialog form {
 		var(--color-gradient-black-1) 0%,
 		var(--color-gradient-bg-purple-2) 100%
 );
+	/* Performance optimization */
+	contain: layout style paint;
+	will-change: transform;
 }
 
 .cards-grid {
@@ -182,6 +218,11 @@ dialog form {
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 1.5rem;
 	padding: 1rem;
+	/* Critical performance optimizations */
+	contain: layout style paint;
+	will-change: transform;
+	/* GPU acceleration for smooth scrolling */
+	transform: translateZ(0);
 }
 
 .cards-grid-header{
@@ -196,6 +237,9 @@ dialog form {
 	right: 0;
 	top: 64px;
 	z-index:10;
+	/* Performance optimization */
+	contain: layout style;
+	will-change: transform;
 }
 
 .cardItem {
@@ -204,26 +248,37 @@ dialog form {
 	transition:
 		box-shadow 0.2s,
 		transform 0.2s;
+	/* Critical performance optimizations */
+	contain: layout style paint;
+	will-change: transform;
+	/* GPU acceleration */
+	transform: translateZ(0);
 }
 
 .cardItem:hover {
-	transform: scale(1.05);
+	transform: scale(1.05) translateZ(0);
 }
 
 .cardItem-image {
 	width: 100%;
 	height: auto;
 	border-radius: 0.5rem;
-	aspect-ratio: 1 / 1.4;
+	aspect-ratio: 245 / 337;
 	image-rendering: optimizeQuality;
 	text-align: center;
 	line-height: 150px;
+	/* Performance optimization */
+	contain: layout style;
+	/* Smooth loading transition */
+	transition: opacity 0.3s ease;
 }
 
 .card_actions {
     position: absolute;
     top: 3px;
     right: 3px;
+    /* Performance optimization */
+    contain: layout style;
   }
 
 /* End card grid */
@@ -233,69 +288,69 @@ dialog form {
 @media (max-width: 768px) {
 	html {
 		-webkit-tap-highlight-color: transparent;
+		/* Better touch performance */
+		touch-action: manipulation;
 	}
 
 	select {
 		font-size: 16px !important; /* Prevents zoom on iOS */
 	}
+
+	.cards-grid {
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		gap: 1rem;
+		padding: 0.5rem;
+	}
+
+	.cardItem {
+		/* Reduce hover effects on mobile for better performance */
+		transition: transform 0.15s ease-out;
+	}
+
+	.cardItem:hover {
+		transform: scale(1.02) translateZ(0);
+	}
 }
 
-/* Custom card styling for Pokemon cards */
-.pokemon-card {
-	@apply relative overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800/30 transition-transform duration-300;
+
+/* Performance Optimizations - Additional */
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
 
-.pokemon-card:hover {
-	@apply transform scale-105 shadow-lg shadow-zinc-900/50;
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	.cardItem {
+		border: 2px solid white;
+	}
+	
+	.cardItem:hover {
+		border-color: hsl(var(--pokemon-yellow));
+	}
 }
 
-.card-price {
-	@apply mt-2 font-semibold text-yellow-500;
+/* Focus management for accessibility */
+.cardItem:focus-visible {
+	outline: 2px solid hsl(var(--pokemon-blue));
+	outline-offset: 2px;
 }
 
-/* Series buttons styling */
-.series-button {
-	@apply rounded-md py-1 px-3 text-sm font-medium transition-colors;
-}
-
-.series-button:hover {
-	@apply bg-zinc-800 text-white;
-}
-
-.series-button.active {
-	@apply bg-zinc-800 text-white;
-}
-
-/* Price badge styling */
-.price-badge {
-	@apply inline-flex items-center rounded-md px-2 py-1 text-xs font-medium;
-}
-
-.price-badge.low {
-	@apply bg-green-900/30 text-green-400;
-}
-
-.price-badge.fair {
-	@apply bg-blue-900/30 text-blue-400;
-}
-
-.price-badge.high {
-	@apply bg-red-900/30 text-red-400;
-}
-
-/* Background image for hero sections */
-.hero-bg {
-	@apply relative;
-}
-
-.hero-bg::before {
-	content: "";
-	@apply absolute inset-0 bg-cover bg-center opacity-20;
-	background-image: url("https://ext.same-assets.com/1494737340/2086781534.png");
-	z-index: -1;
-}
-
-.bg-zinc-800 {
-	--tw-bg-opacity: 1;
-	background-color: rgb(39 39 42 / var(--tw-bg-opacity, 1));
+/* Print styles */
+@media print {
+	.cards-grid {
+		display: block;
+	}
+	
+	.cardItem {
+		break-inside: avoid;
+		margin-bottom: 1rem;
+	}
 }

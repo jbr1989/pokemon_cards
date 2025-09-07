@@ -14,12 +14,14 @@ const { listCard } = Astro.props;
   <button
     class="bg-blue-500 text-white p-2 rounded-md"
     onclick={`modListCardDialog("${listCard?.id}")`}
+    role="button"
   >
     <ModIcon />
   </button>
   <button
     class="bg-red-500 text-white p-2 rounded-md"
     onclick={`removeListCardDialog("${listCard?.id}")`}
+    role="button"
   >
     <DelIcon />
   </button>

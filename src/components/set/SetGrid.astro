@@ -12,14 +12,12 @@ const { sets } = Astro.props;
       sets.map((set: PokeSet) => (
         <a href={`/set/${set.id}`}>
           <div class="set grid grid-cols-1 relative group rounded-lg overflow-hidden">
-            {/* <div class="set-img-container"> */}
             <img
               class="set-img rounded-lg w-full  max-w-full h-[150px] object-contain transition-transform duration-300 group-hover:scale-110"
               src={set.logo || ""}
               alt={set.name}
               loading="lazy"
             />
-            {/* </div> */}
 
             <div class="set-title w-full grid grid-cols-2 justify-center items-end gap-2">
               <img
@@ -32,32 +30,6 @@ const { sets } = Astro.props;
               </h3>
             </div>
           </div>
-
-          {/* <div
-            class="pokemon-card h-full bg-zinc-900 border-zinc-800 overflow-hidden"
-            style='background-image: url({set.logo || ""})'
-          >
-            <div class="w-full h-auto">
-              <img
-                src={set.logo || ""}
-                alt={set.name}
-                class="w-full h-auto max-w-full object-contain transition-transform hover:scale-110 duration-500"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
-            <img
-              src={set.symbol}
-              alt={`${set.name} Symbol`}
-              width={120}
-              height={60}
-              class="h-auto max-h-16 w-auto max-w-[120px] absolute top-1/2 left-1/2 size-32 object-contain transform -translate-x-1/2 -translate-y-1/2"
-            />
-            <div class="p-4">
-              <h3 class="text-center text-sm font-semibold text-white">
-                {set.name}
-              </h3>
-            </div>
-          </div> */}
         </a>
       ))
     ) : (

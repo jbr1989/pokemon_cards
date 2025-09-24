@@ -9,12 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^8.2.7",
+    "@astrojs/vercel": "^8.2.8",
     "@auth/core": "^0.37.4",
     "@libsql/client": "^0.14.0",
     "@tailwindcss/vite": "^4.1.13",
     "@tcgdex/sdk": "^2.7.1",
-    "astro": "^5.13.5",
+    "astro": "^5.13.10",
     "auth-astro": "^4.2.0",
     "cookie": "^1.0.2",
     "tailwindcss": "^4.1.13",

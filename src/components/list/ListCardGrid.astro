@@ -28,14 +28,21 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       >
     </div>
     <span>{""}</span>
-    <div>Buscar por:</div>
+    <div>
+      <input
+        type="search"
+        id="search-list-grid"
+        placeholder="Buscar..."
+        oninput="filtering(this.value, '#list-grid', '.cardItem')"
+      />
+    </div>
   </div>
 
   <ErrorMessage error={error} />
 
   <div id="loading" class="loading hidden">Loading cards...</div>
 
-  <div class="cards-grid container">
+  <div id="list-grid" class="cards-grid container">
     {
       list?.cards && list?.cards?.length > 0 ? (
         list?.cards?.map((item) => (
@@ -52,3 +59,32 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 </div>
 
 <script defer src="/scripts/cardItemEffect.js"></script>
+
+<script defer is:inline>
+  function normalize(text) {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+  }
+
+  function filtering(filter, listGridName, listItemName) {
+    console.log("FILTERING", filter);
+
+    const listGrid = document.querySelector(listGridName);
+    console.log(listGrid);
+    if (!listGrid) return;
+
+    const items = listGrid.querySelectorAll(listItemName);
+    console.log(items);
+
+    items.forEach(function (el) {
+      // Use all visible text within the card for matching
+      var text = normalize(el.textContent || "");
+      if (text.includes(filter)) el.classList.remove("hidden");
+      else el.classList.add("hidden");
+    });
+  }
+</script>
+
+<!-- <script defer src="/scripts/listFilter.js"></script> -->

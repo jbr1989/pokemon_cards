@@ -41,10 +41,10 @@ html {
 	background: #13151a;
 	color: white !important;
 	overflow-x: hidden;
-	/* Performance optimizations */
+	/* Performance optimizations 
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
+	text-rendering: optimizeLegibility;*/
 }
 
 body {
@@ -52,9 +52,9 @@ body {
 	padding: 0;
 	min-height: 100vh;
 	overscroll-behavior-y: none;
-	/* GPU acceleration for smooth scrolling */
+	/* GPU acceleration for smooth scrolling 
 	transform: translateZ(0);
-	will-change: scroll-position;
+	will-change: scroll-position;*/
 }
 
 main {
@@ -63,8 +63,8 @@ main {
 	width: 100%;
 	max-width: 100%;
 	min-height: 100vh;
-	/* Contain layout for better performance */
-	contain: layout style;
+	/* Contain layout for better performance 
+	contain: layout style;*/
 }
 
 input, select {
@@ -84,14 +84,14 @@ input:focus, select:focus {
 .container {
 	max-width: 1400px;
 	margin: 0 auto;
-	/* Performance optimization */
-	contain: layout;
+	/* Performance optimization 
+	contain: layout;*/
 }
 
 h1, h2{ 
 	color: white;
-	/* Performance optimization */
-	contain: layout style;
+	/* Performance optimization 
+	contain: layout style;*/
 }
 
 h1 {
@@ -133,8 +133,8 @@ dialog {
 	padding: 1rem;
 	border-radius: 0.5rem;
 	border: 1px solid #333;
-	/* Performance optimization */
-	contain: layout style paint;
+	/* Performance optimization 
+	contain: layout style paint;*/
 }
 
 dialog::backdrop {
@@ -163,8 +163,8 @@ dialog::backdrop {
 	justify-content: center;
 	border-radius: 50%;
 	transition: background-color 0.2s;
-	/* Performance optimization */
-	will-change: background-color;
+	/* Performance optimization 
+	will-change: background-color;*/
 }
 
 .dialog-close-btn:hover {
@@ -183,8 +183,8 @@ dialog form {
 	text-align: center;
 	font-size: 1.2rem;
 	padding: 2rem;
-	/* Performance optimization */
-	contain: layout style;
+	/* Performance optimization 
+	contain: layout style;*/
 }
 
 .hidden {
@@ -196,8 +196,8 @@ dialog form {
 
 .card {
 	position: relative;
-	/* Performance optimization */
-	contain: layout style;
+	/* Performance optimization 
+	contain: layout style;*/
 }
 
 /* Card grid */
@@ -208,9 +208,9 @@ dialog form {
 		var(--color-gradient-black-1) 0%,
 		var(--color-gradient-bg-purple-2) 100%
 );
-	/* Performance optimization */
+	/* Performance optimization 
 	contain: layout style paint;
-	will-change: transform;
+	will-change: transform;*/
 }
 
 .cards-grid {
@@ -218,11 +218,11 @@ dialog form {
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 1.5rem;
 	padding: 1rem;
-	/* Critical performance optimizations */
+	/* Critical performance optimizations 
 	contain: layout style paint;
-	will-change: transform;
-	/* GPU acceleration for smooth scrolling */
-	transform: translateZ(0);
+	will-change: transform;*/
+	/* GPU acceleration for smooth scrolling 
+	transform: translateZ(0);*/
 }
 
 .cards-grid-header{
@@ -237,9 +237,9 @@ dialog form {
 	right: 0;
 	top: 64px;
 	z-index:10;
-	/* Performance optimization */
+	/* Performance optimization 
 	contain: layout style;
-	will-change: transform;
+	will-change: transform;*/
 }
 
 .cardItem {
@@ -248,11 +248,11 @@ dialog form {
 	transition:
 		box-shadow 0.2s,
 		transform 0.2s;
-	/* Critical performance optimizations */
+	/* Critical performance optimizations 
 	contain: layout style paint;
-	will-change: transform;
-	/* GPU acceleration */
-	transform: translateZ(0);
+	will-change: transform;*/
+	/* GPU acceleration 
+	transform: translateZ(0);*/
 }
 
 .cardItem:hover {
@@ -264,21 +264,22 @@ dialog form {
 	height: auto;
 	border-radius: 0.5rem;
 	aspect-ratio: 245 / 337;
-	image-rendering: optimizeQuality;
+	/* image-rendering: optimizeQuality;*/
 	text-align: center;
 	line-height: 150px;
-	/* Performance optimization */
-	contain: layout style;
-	/* Smooth loading transition */
-	transition: opacity 0.3s ease;
+	/* Performance optimization 
+	contain: layout style;*/
+	/* Smooth loading transition 
+	transition: opacity 0.3s ease;*/
 }
 
 .card_actions {
     position: absolute;
     top: 3px;
     right: 3px;
-    /* Performance optimization */
-    contain: layout style;
+    /* Performance optimization 
+    contain: layout style;*/
+	z-index: 1;
   }
 
 /* End card grid */
@@ -353,4 +354,10 @@ dialog form {
 		break-inside: avoid;
 		margin-bottom: 1rem;
 	}
+}
+
+
+.dropdown:hover ul,
+.dropdown ul:hover {
+display: block !important;
 }

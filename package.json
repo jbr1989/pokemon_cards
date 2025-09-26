@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --port 4322",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -11,10 +11,10 @@
   "dependencies": {
     "@astrojs/vercel": "^8.2.8",
     "@auth/core": "^0.37.4",
-    "@libsql/client": "^0.14.0",
+    "@libsql/client": "^0.15.15",
     "@tailwindcss/vite": "^4.1.13",
     "@tcgdex/sdk": "^2.7.1",
-    "astro": "^5.13.10",
+    "astro": "^5.14.1",
     "auth-astro": "^4.2.0",
     "cookie": "^1.0.2",
     "tailwindcss": "^4.1.13",

@@ -49,13 +49,6 @@ const actualLanguage = languages.find(({ lang }) => lang === language);
   </ul>
 </div>
 
-<style>
-  .dropdown:hover ul,
-  .dropdown ul:hover {
-    display: block;
-  }
-</style>
-
 <script is:inline>
   function setLanguage(lang = "es") {
     document.cookie = `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`;

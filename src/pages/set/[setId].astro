@@ -8,15 +8,15 @@ import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
 
-export async function getStaticPaths() {
-  const sets = await PokeSetHandler.getAll({
-    language: language,
-  });
+// export async function getStaticPaths() {
+//   const sets = await PokeSetHandler.getAll({
+//     language: language,
+//   });
 
-  return sets?.map((set) => ({
-    params: { setId: set.id },
-  }));
-}
+//   return sets?.map((set) => ({
+//     params: { setId: set.id },
+//   }));
+// }
 
 const { setId } = Astro.params;
 

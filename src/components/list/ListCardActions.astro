@@ -27,7 +27,7 @@ const { listCard } = Astro.props;
   </button>
 </div>
 
-<script is:inline>
+<script>
   function removeListCardDialog(listCardId) {
     if (confirm("Are you sure you want to remove this card from the list?")) {
       fetch(`/api/list/remove-card`, {

@@ -1,10 +1,11 @@
-import TCGdex from "@tcgdex/sdk";
+// import TCGdex from "@tcgdex/sdk";
 import { PokeCardMini } from "../../models/PokeCardMini";
 import { PokeCard } from "../../models/PokeCard";
 import type { ApiInterface } from "./ApiInterface";
 import { PokeSetMini } from "../../models/PokeSetMini";
 import type { PokeSet } from "../../models/PokeSet";
 import { PokeSerie } from "../../models/PokeSerie";
+import { fetchWithCache } from "./ApiCache";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class TCGdexAdapter implements ApiInterface {
@@ -20,8 +21,10 @@ export class TCGdexAdapter implements ApiInterface {
 
 		try{
 			
-			const tcgdex = new TCGdex(language);
-			const sets = await tcgdex.fetch("sets"); // Obtener todas las series (SerieMini)
+			// const tcgdex = new TCGdex(language);
+			// const sets = await tcgdex.fetch("sets"); // Obtener todas las series (SerieMini)
+
+			const sets = await fetchWithCache(language, "sets");
 
 			if (!sets) return { sets: [], error: "Sets NOT found" }
 
@@ -57,8 +60,10 @@ export class TCGdexAdapter implements ApiInterface {
 		setId?: string;
 	}): Promise<{ set: PokeSetMini | null, error: string | null }> {
 		try {
-			const tcgdex = new TCGdex(language);
-			const set = await tcgdex.fetch("sets", setId);
+			// const tcgdex = new TCGdex(language);
+			// const set = await tcgdex.fetch("sets", setId);
+
+			const set = await fetchWithCache(language, "sets", setId);
 
 			// console.log("SET", set);
 
@@ -91,15 +96,18 @@ export class TCGdexAdapter implements ApiInterface {
 	}): Promise<{ series: PokeSerie[] | null, error: string | null }> {
 		try {
 
-			const tcgdex = new TCGdex(language);
-			const series = await tcgdex.fetch("series"); // Obtener todas las series (SerieMini)
+			// const tcgdex = new TCGdex(language);
+			// const series = await tcgdex.fetch("series"); // Obtener todas las series (SerieMini)
+
+			const series = await fetchWithCache(language, "series");
 
 			if (!series) return { series: [], error: "Series NOT found" }
 
 			const pokeSeries: PokeSerie[] = [];
 
 			for (const serie of series) {
-				const info = await tcgdex.fetch("series", serie.id); // Obtener información de la serie
+				// const info = await tcgdex.fetch("series", serie.id); // Obtener información de la serie
+				const info = await fetchWithCache(language, "series", serie.id);
 				const pokeSets: Array<PokeSetMini> = [];
 
 				if (info != null) {
@@ -139,8 +147,10 @@ export class TCGdexAdapter implements ApiInterface {
 		language = "en",
 	): Promise<Array<PokeCardMini> | null> {
 		try {
-			const tcgdex = new TCGdex(language);
-			const selectedSet = await tcgdex.fetch("sets", setId);
+			// const tcgdex = new TCGdex(language);
+			// const selectedSet = await tcgdex.fetch("sets", setId);
+
+			const selectedSet = await fetchWithCache(language, "sets", setId);
 
 			// console.log("SELECTED SET", selectedSet);
 
@@ -168,8 +178,10 @@ export class TCGdexAdapter implements ApiInterface {
 		language = "en",
 	): Promise<PokeCard | null> {
 		try {
-			const tcgdex = new TCGdex(language);
-			const card = await tcgdex.fetch("cards", cardId);
+			// const tcgdex = new TCGdex(language);
+			// const card = await tcgdex.fetch("cards", cardId);
+
+			const card = await fetchWithCache(language, "cards", cardId);
 
 			//console.log("CARD", card);
 

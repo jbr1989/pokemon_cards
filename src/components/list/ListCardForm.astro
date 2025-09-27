@@ -54,12 +54,10 @@
   let dialogAddCardCardName = null;
   let dialogAddCardListId = null;
 
-  document.addEventListener("astro:page-load", () => {
-    console.log("DOMContentLoaded");
-
+  function initListCardDialog() {
     dialogAddCard = document.querySelector("#dialogAddCard");
     dialogDivAddCard = document.querySelector("#dialogDivAddCard");
-  });
+  }
 
   async function openListCardDialog(
     listCardId,
@@ -177,6 +175,8 @@
     cardName = "",
     lang = ""
   ) {
+    initListCardDialog();
+
     // console.log(dialogAddCard, dialogDivAddCard);
 
     // console.log("LOADING FORM", listCardId, listId, cardId, cardName, lang);

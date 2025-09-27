@@ -18,11 +18,11 @@ export async function fetchWithCache(lang:string, type: string, value?: string):
   const key = (value ? `${lang}_${type}_${value}` : `${lang}_${type}`) as keyof CacheStore;
   const now = Date.now();
   
-    // console.log("Cache CHECK", key);
+  console.log("Cache", Buffer.byteLength(JSON.stringify(cache), "utf8"), Object.keys(cache));
 
   // Verificar si existe en caché y no ha expirado
   if (cache[key] && (now - cache[key].timestamp) < CACHE_DURATION) {
-	// console.log("Cache HIT", key);
+	  console.log("Cache HIT", key);
     return cache[key].data;
   }
 
@@ -35,7 +35,7 @@ export async function fetchWithCache(lang:string, type: string, value?: string):
     const tcgdex = new TCGdex(lang);
 
     console.log("FETCHING", key);
-    if (value == null) return await tcgdex.fetch(type);
+    if (value == null) data = await tcgdex.fetch(type);
     else data = await tcgdex.fetch(type, value);
     // console.log("DONE");
 
@@ -50,7 +50,5 @@ export async function fetchWithCache(lang:string, type: string, value?: string):
     if (cache[key]) return cache[key].data; // Si hay error, devolver datos de cache aunque esten caducados
   }
 
-  console.log("SIZE", Buffer.byteLength(JSON.stringify(cache), "utf8")); // bytes
-  
   return data;
 }

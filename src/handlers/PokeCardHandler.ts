@@ -1,3 +1,4 @@
+import { TCGioAdapter } from "@/adapters/cardApi/TCGio";
 import type { PokeCard } from "../models/PokeCard";
 import type { PokeCardMini } from "../models/PokeCardMini";
 import { PokeHandler } from "./PokeHandler";
@@ -43,6 +44,8 @@ export class PokeCardHandler extends PokeHandler {
 			if (card != null)
 				error = "No se encontro la carta. Cargando versión inglesa...";
 		}
+
+		if (card == null && error == null) error = "No se encontro la carta";
 
 		return { card, error };
 	}

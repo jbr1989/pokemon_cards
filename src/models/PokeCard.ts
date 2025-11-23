@@ -21,7 +21,7 @@ export class PokeCard {
 		wPromo: boolean | null;
 	};
 	set: PokeSetMini | null;
-
+	
 	constructor(
 		id: string,
 		localId: string,
@@ -57,11 +57,11 @@ export class PokeCard {
 		this.illustrator = illustrator || null;
 		this.rarity = rarity || null;
 		this.variants = {
-			normal: variants.normal || null,
-			reverse: variants.reverse || null,
-			holo: variants.holo || null,
-			firstEdition: variants.firstEdition || null,
-			wPromo: variants.wPromo || null,
+			normal: variants?.normal || null,
+			reverse: variants?.reverse || null,
+			holo: variants?.holo || null,
+			firstEdition: variants?.firstEdition || null,
+			wPromo: variants?.wPromo || null,
 		};
 		this.set = set || null;
 	}

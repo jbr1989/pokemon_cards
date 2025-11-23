@@ -4,105 +4,137 @@ import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 
 import PathBanner from "../../components/PathBanner.astro";
 import ErrorMessage from "../../components/ErrorMessage.astro";
+import { PokeCard } from "@/models/PokeCard";
 
 // Fetch all sets
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
 
-const { setId, cardId } = Astro.params;
+const { cardId } = Astro.params;
 
 // console.log(setId, cardId);
 
-const { card, error } = await PokeCardHandler.get({
+let { card, error } = await PokeCardHandler.get({
   language: language,
   cardId: cardId,
 });
 
-// console.log(card);
+const title =
+  card == null || card == undefined
+    ? "Carta desconocida"
+    : card?.localId
+      ? `${card?.localId} ${card?.name} - Set ${card?.set?.name}`
+      : card?.name;
+
+console.log(card);
+console.log(error);
 
 const description =
-  card?.description || `${card?.name} - ${card?.set?.name} ${card?.localId} `;
+  card == null || card == undefined
+    ? "Carta desconocida"
+    : card?.description ||
+      `${card?.name} - ${card?.set?.name} ${card?.localId} `;
+
+if (card == null || card == undefined) {
+  card = new PokeCard(
+    "base1-1",
+    "1",
+    1,
+    "Carta desconocida",
+    "Carta desconocida",
+    { low: "", high: "" },
+    null,
+    null,
+    null,
+    null,
+    null
+  );
+  card.name = "Carta desconocida";
+  card.description = "Carta desconocida";
+  card.image.high = "/img/card-not-found.jpg";
+}
 ---
 
-<Layout
-  title=`${card?.localId} ${card?.name} - Set ${card?.set?.name}`
-  description={description}
->
+<Layout title={title} description={description}>
   <main>
     <PathBanner card={card} />
 
-    <h1>{card?.name}</h1>
-
     <ErrorMessage error={error} />
 
-    <div class="card-variants">
-      {
-        card?.variants.normal && (
-          <div class="card-variant disabled">
-            <img
-              src="/img/icon/pokeball.svg"
-              alt="Normal"
-              title="Normal"
-              loading="lazy"
-            />
-            Normal
-          </div>
-        )
-      }
-      {
-        card?.variants.holo && (
-          <div class="card-variant disabled">
-            <div class="holo-image">
-              <img
-                src="/img/icon/pokeball.svg"
-                alt="Holo"
-                title="Holo"
-                loading="lazy"
-              />
-              <div class="holo-overlay" />
-            </div>
-            Holo
-          </div>
-        )
-      }
-      {
-        card?.variants.reverse && (
-          <div class="card-variant disabled">
-            <img
-              src="/img/icon/reverse.webp"
-              alt="Reverse"
-              title="Reverse"
-              class="reverse"
-              loading="lazy"
-            />
-            Reverse
-          </div>
-        )
-      }
-      {
-        card?.variants.firstEdition && (
-          <div class="card-variant disabled">
-            <img
-              src="/img/icon/1st.webp"
-              alt="First Edition"
-              title="First Edition"
-              loading="lazy"
-              style="background-color:white;"
-            />
-            1st
-          </div>
-        )
-      }
-      <!-- {card?.variants.wPromo && <img src="/img/w-promo.png" alt="W Promo" title="W Promo" loading="lazy" />} -->
-    </div>
+    <div id="card-info">
+      <div class="card-image">
+        <img
+          src={card?.image.high}
+          alt={card?.name}
+          title={card?.name}
+          loading="lazy"
+        />
+      </div>
 
-    <div class="card-image">
-      <img
-        src={card?.image.high}
-        alt={card?.name}
-        title={card?.name}
-        loading="lazy"
-      />
+      <div class="card-info-content">
+        <h1>{card?.name}</h1>
+
+        <div class="card-variants">
+          {
+            card?.variants?.normal && (
+              <div class="card-variant disabled">
+                <img
+                  src="/img/icon/pokeball.svg"
+                  alt="Normal"
+                  title="Normal"
+                  loading="lazy"
+                />
+                Normal
+              </div>
+            )
+          }
+          {
+            card?.variants?.holo && (
+              <div class="card-variant disabled">
+                <div class="holo-image">
+                  <img
+                    src="/img/icon/pokeball.svg"
+                    alt="Holo"
+                    title="Holo"
+                    loading="lazy"
+                  />
+                  <div class="holo-overlay" />
+                </div>
+                Holo
+              </div>
+            )
+          }
+          {
+            card?.variants?.reverse && (
+              <div class="card-variant disabled">
+                <img
+                  src="/img/icon/reverse.webp"
+                  alt="Reverse"
+                  title="Reverse"
+                  class="reverse"
+                  loading="lazy"
+                />
+                Reverse
+              </div>
+            )
+          }
+          {
+            card?.variants?.firstEdition && (
+              <div class="card-variant disabled">
+                <img
+                  src="/img/icon/1st.webp"
+                  alt="First Edition"
+                  title="First Edition"
+                  loading="lazy"
+                  style="background-color:white;"
+                />
+                1st
+              </div>
+            )
+          }
+          <!-- {card?.variants.wPromo && <img src="/img/w-promo.png" alt="W Promo" title="W Promo" loading="lazy" />} -->
+        </div>
+      </div>
     </div>
   </main>
 </Layout>
@@ -118,6 +150,13 @@ const description =
 <style>
   .disabled {
     filter: grayscale(100%) opacity(50%);
+  }
+
+  #card-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 3em;
   }
 
   .card-image {

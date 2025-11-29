@@ -106,7 +106,7 @@
         if (!dialogAddCardSetId) return;
 
         dialogAddCardSetId.innerHTML = "";
-        sets.forEach((set) => {
+        sets.reverse().forEach((set) => {
           const option = document.createElement("option");
           option.value = set.id;
           option.textContent = `${set.name} (${set.id})`;

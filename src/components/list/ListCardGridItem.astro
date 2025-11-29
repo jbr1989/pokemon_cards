@@ -28,6 +28,8 @@ const variant = variants.find(({ code }) => code === listCard?.variant);
         fetchpriority="low"
         sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
         style="background-color: #1f2937;"
+        data-lang={language?.lang}
+        onerror={listCard?.image ? "changeImageLang(this)" : undefined}
       />
 
       <div

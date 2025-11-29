@@ -98,7 +98,7 @@ const action = listCardId == "0" ? "Add" : "Update";
     onchange="loadSelectCards()"
   >
     {
-      sets?.map((set) => (
+      sets?.reverse().map((set) => (
         <option
           value={set.id.toString().toLowerCase()}
           selected={set.id.toString().toLowerCase() === setId.toLowerCase()}

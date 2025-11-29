@@ -55,6 +55,18 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     loading = document.querySelector("#loading");
   });
 
+  // document.querySelectorAll(".cardItem-image").forEach((image) => {
+  //   image.addEventListener("error", function () {
+  //     changeImageLang(this);
+  //   });
+  // });
+
+  // document
+  //   .getElementById("cardItem-image")
+  //   .addEventListener("error", function () {
+  //     changeImageLang(this);
+  //   });
+
   async function loadCards(listId = null) {
     console.log(cardsDiv, loading);
 
@@ -74,5 +86,31 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       loading.classList.add("hidden");
       cardsDiv.classList.remove("hidden");
     }
+  }
+
+  function changeImageLang(image) {
+    const langs = ["en", "ja", "es"];
+    const tested = image.dataset.lang.split(",");
+    if (image.dataset.lang && tested.length >= langs.length) return; // si no hay mas idiomas, no hacer nada
+
+    let newLangIndex = langs.find((el) => !tested.includes(el)) ?? null;
+
+    console.log("CHANGE IMAGE CARD", image.src, langs, tested, newLangIndex);
+
+    if (newLangIndex == null) return; // sin no hay mas idiomas, no hacer nada
+
+    tested.push(newLangIndex);
+    image.dataset.lang = tested.join(",");
+
+    const u = new URL(image.src);
+    // console.log("URL", u);
+    const partes = u.pathname.split("/");
+    // console.log("PARTES", partes);
+    partes[1] = newLangIndex;
+
+    let newSrc = u.origin + partes.join("/");
+    // console.log("NEW SRC", newSrc);
+
+    image.src = newSrc;
   }
 </script>

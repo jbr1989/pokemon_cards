@@ -1,4 +1,4 @@
-const CACHE_NAME = "pokecards-static-v2";
+const CACHE_NAME = "pokecards-static-v1";
 const PRECACHE_URLS = [
   "/",
   "/manifest.webmanifest",
@@ -49,8 +49,8 @@ self.addEventListener("fetch", (event) => {
         })
     );
   }
-  // Estrategia para recursos estáticos (CSS, JS, imágenes, etc.)
-  else if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2)$/)) {
+  // Estrategia para recursos estáticos (imágenes, etc.)
+  else if (url.pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|woff|woff2)$/)) {
     // Cache First para recursos estáticos
     event.respondWith(
       caches.match(request)

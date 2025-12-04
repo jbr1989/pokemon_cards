@@ -14,12 +14,16 @@ const actualLanguage = languages.find(({ lang }) => lang === language);
   <span title={actualLanguage ? actualLanguage.name : ""}>
     {
       actualLanguage ? (
-        <img
-          src={actualLanguage.flag}
-          alt={actualLanguage.name}
+        <div
+          class={`language-flag lang-${language}`}
           style="width: 25px; height: 25px;"
         />
       ) : (
+        // <img
+        //   src={actualLanguage.flag}
+        //   alt={actualLanguage.name}
+        //   style="width: 25px; height: 25px;"
+        // />
         <>actualLanguage?.name</>
       )
     }
@@ -37,11 +41,15 @@ const actualLanguage = languages.find(({ lang }) => lang === language);
             onclick={`javascript:setLanguage('${lang}')`}
           >
             {name}
-            <img
+            <div
+              class={`language-flag lang-${lang}`}
+              style="width: 25px; height: 25px;"
+            />
+            {/* <img
               src={flag}
               alt={name}
               style="width: 25px; height: 25px; display: inline-block;"
-            />
+            /> */}
           </a>
         </li>
       ))

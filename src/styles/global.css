@@ -31,9 +31,12 @@ body {
 } */
 
 :root {
-	--pokemon-yellow: 45 93% 47%; /* #f5d729 */
-	--pokemon-red: 5 65% 50%; /* #d35f50 */
-	--pokemon-blue: 200 60% 45%; /* #2d89b5 */
+	--pokemon-yellow: 45 93% 47%;
+	/* #f5d729 */
+	--pokemon-red: 5 65% 50%;
+	/* #d35f50 */
+	--pokemon-blue: 200 60% 45%;
+	/* #2d89b5 */
 }
 
 html {
@@ -67,7 +70,8 @@ main {
 	contain: layout style;*/
 }
 
-input, select {
+input,
+select {
 	background-color: #333;
 	color: white;
 	border: 1px solid white;
@@ -76,7 +80,8 @@ input, select {
 	transition: border-color 0.15s ease-out;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
 	outline: none;
 	border-color: hsl(var(--pokemon-blue));
 }
@@ -88,7 +93,8 @@ input:focus, select:focus {
 	contain: layout;*/
 }
 
-h1, h2{ 
+h1,
+h2 {
 	color: white;
 	/* Performance optimization 
 	contain: layout style;*/
@@ -108,18 +114,19 @@ h2 {
 	text-align: center;
 }
 
-button { 
+button {
 	cursor: pointer;
 	transition: all 0.15s ease-out;
 }
 
 option {
 	background-color: #333 !important;
-	border:0;
-	padding:0;
-	border-radius:0;
+	border: 0;
+	padding: 0;
+	border-radius: 0;
 	color: white;
 }
+
 option:hover {
 	background-color: #333;
 	color: white;
@@ -172,14 +179,14 @@ dialog::backdrop {
 }
 
 dialog form {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 0.5rem;
-  }
+	display: grid;
+	grid-template-columns: 100px 1fr;
+	gap: 0.5rem;
+}
 
 
 .loading {
-	background-color:cadetblue;
+	background-color: cadetblue;
 	text-align: center;
 	font-size: 1.2rem;
 	padding: 2rem;
@@ -203,11 +210,9 @@ dialog form {
 /* Card grid */
 
 #cards-div {
-	background: linear-gradient(
-		180deg,
-		var(--color-gradient-black-1) 0%,
-		var(--color-gradient-bg-purple-2) 100%
-);
+	background: linear-gradient(180deg,
+			var(--color-gradient-black-1) 0%,
+			var(--color-gradient-bg-purple-2) 100%);
 	/* Performance optimization 
 	contain: layout style paint;
 	will-change: transform;*/
@@ -225,18 +230,18 @@ dialog form {
 	transform: translateZ(0);*/
 }
 
-.cards-grid-header{
+.cards-grid-header {
 	display: flex;
 	gap: calc(var(--spacing) * 2);
 	justify-content: space-between;
 	align-items: center;
-	background:black;
-	color:white;
-	padding:1rem;
+	background: black;
+	color: white;
+	padding: 1rem;
 	position: sticky;
 	right: 0;
 	top: 64px;
-	z-index:10;
+	z-index: 10;
 	/* Performance optimization 
 	contain: layout style;
 	will-change: transform;*/
@@ -273,14 +278,25 @@ dialog form {
 	transition: opacity 0.3s ease;*/
 }
 
+.cardItem-not-found {
+	background-image: url("/img/card-not-found.jpg");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+
+	/* object-fit: contain;
+	background-color: #222;
+	border: 2px dashed #555; */
+}
+
 .card_actions {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    /* Performance optimization 
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	/* Performance optimization 
     contain: layout style;*/
 	z-index: 1;
-  }
+}
 
 /* End card grid */
 
@@ -294,7 +310,8 @@ dialog form {
 	}
 
 	select {
-		font-size: 16px !important; /* Prevents zoom on iOS */
+		font-size: 16px !important;
+		/* Prevents zoom on iOS */
 	}
 
 	.cards-grid {
@@ -317,6 +334,7 @@ dialog form {
 /* Performance Optimizations - Additional */
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
+
 	*,
 	*::before,
 	*::after {
@@ -332,7 +350,7 @@ dialog form {
 	.cardItem {
 		border: 2px solid white;
 	}
-	
+
 	.cardItem:hover {
 		border-color: hsl(var(--pokemon-yellow));
 	}
@@ -349,7 +367,7 @@ dialog form {
 	.cards-grid {
 		display: block;
 	}
-	
+
 	.cardItem {
 		break-inside: avoid;
 		margin-bottom: 1rem;
@@ -359,5 +377,65 @@ dialog form {
 
 .dropdown:hover ul,
 .dropdown ul:hover {
-display: block !important;
+	display: block !important;
+}
+
+.language-flag,
+.variant-flag {
+	display: inline-block;
+	width: 1rem;
+	/* 16 px */
+	height: 1rem;
+	/* 16 px */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.lang-es {
+	background-image: url('/img/icon/language/es.webp');
+}
+
+.lang-en {
+	background-image: url('/img/icon/language/en.webp');
+}
+
+.lang-ja {
+	background-image: url('/img/icon/language/ja.webp');
+}
+
+.lang-ko {
+	background-image: url('/img/icon/language/ko.webp');
+}
+
+.lang-zh {
+	background-image: url('/img/icon/language/zh.webp');
+}
+
+.variant-normal {
+	background-image: url('/img/icon/variant/normal.png');
+}
+
+.variant-holo {
+	background-image: url('/img/icon/variant/holo.png');
+}
+
+.variant-holo-reverse {
+	background-image: url('/img/icon/variant/holo-reverse.png');
+}
+
+.variant-holo-reverse-pokeball {
+	background-image: url('/img/icon/variant/holo-reverse-pokeball.png');
+}
+
+.variant-holo-reverse-masterball {
+	background-image: url('/img/icon/variant/holo-reverse-masterball.png');
+}
+
+.variant-1st {
+	background-image: url('/img/icon/variant/1st.png');
+}
+
+.variant-promo {
+	background-image: url('/img/icon/variant/promo.png');
 }

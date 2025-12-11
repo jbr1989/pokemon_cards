@@ -12,12 +12,12 @@
     "@astrojs/vercel": "^9.0.2",
     "@auth/core": "^0.37.4",
     "@libsql/client": "^0.15.15",
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@tcgdex/sdk": "^2.7.1",
-    "astro": "^5.16.4",
+    "astro": "^5.16.5",
     "auth-astro": "^4.2.0",
     "cookie": "^1.1.1",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "zod": "^3.25.76"
   },
   "devDependencies": {

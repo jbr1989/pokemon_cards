@@ -424,11 +424,11 @@ dialog form {
 	background-image: url('/img/icon/variant/holo-reverse.png');
 }
 
-.variant-holo-reverse-pokeball {
+.variant-pokeball {
 	background-image: url('/img/icon/variant/holo-reverse-pokeball.png');
 }
 
-.variant-holo-reverse-masterball {
+.variant-masterball {
 	background-image: url('/img/icon/variant/holo-reverse-masterball.png');
 }
 
@@ -438,4 +438,8 @@ dialog form {
 
 .variant-promo {
 	background-image: url('/img/icon/variant/promo.png');
+}
+
+.variant-full-art {
+	background-image: url('/img/icon/variant/full-art.png');
 }

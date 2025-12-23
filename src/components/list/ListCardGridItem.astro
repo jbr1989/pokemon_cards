@@ -10,7 +10,9 @@ interface Props {
 
 const { listCard, listType } = Astro.props;
 const language = languages.find(({ code }) => code === listCard?.lang);
-const variant = variants.find(({ code }) => code === listCard?.variant);
+const type = variants.type.find(({ code }) => code === listCard?.variant);
+const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
+const foil = variants.foil.find(({ code }) => code === listCard?.foil);
 ---
 
 <div class="cardItem cardItemEffect">
@@ -44,7 +46,7 @@ const variant = variants.find(({ code }) => code === listCard?.variant);
 
       <div
         class="capitalize grid grid-cols-2 gap-2 items-start px-1"
-        style="grid-template-columns: 1fr 35px;"
+        style="grid-template-columns: 1fr auto;"
       >
         <span>
           {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
@@ -52,10 +54,30 @@ const variant = variants.find(({ code }) => code === listCard?.variant);
         </span>
         <span class="flex flex-nowrap gap-1" style="justify-content: flex-end;">
           {
-            listCard?.variant != "" && (
+            listCard?.stamp != null && listCard?.stamp !== "" && (
               <div
-                class={`variant-flag variant-${variant?.code} w-[1rem] h-[1rem] mt-1 inline`}
-                title={variant?.name}
+                class={`variant-flag variant-${stamp?.code} w-[1rem] h-[1rem] mt-1 inline`}
+                title={stamp?.name}
+              >
+                &nbsp;
+              </div>
+            )
+          }
+          {
+            listCard?.foil != null && listCard?.foil != "" && (
+              <div
+                class={`variant-flag variant-${foil?.code} w-[1rem] h-[1rem] mt-1 inline`}
+                title={foil?.name}
+              >
+                &nbsp;
+              </div>
+            )
+          }
+          {
+            listCard?.variant != null && listCard?.variant != "" && (
+              <div
+                class={`variant-flag variant-${type?.code} w-[1rem] h-[1rem] mt-1 inline`}
+                title={type?.name}
               >
                 &nbsp;
               </div>

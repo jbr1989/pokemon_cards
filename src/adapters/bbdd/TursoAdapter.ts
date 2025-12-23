@@ -150,6 +150,8 @@ export class TursoAdapter implements BBDDInterface {
 				row.cardId,
 				row.lang,
 				row.variant,
+				row.stamp,
+				row.foil,
 				row.listId,
 				row.card_name,
 				row.pokemon_name,
@@ -207,6 +209,8 @@ export class TursoAdapter implements BBDDInterface {
 				result.rows[0].cardId,
 				result.rows[0].lang,
 				result.rows[0].variant,
+				result.rows[0].stamp,
+				result.rows[0].foil,
 				result.rows[0].listId,
 				result.rows[0].card_name,
 				result.rows[0].pokemon_name,
@@ -224,17 +228,21 @@ export class TursoAdapter implements BBDDInterface {
 		userListId: string,
 		cardId: string,
 		lang: string,
-		variant: string
+		variant: string,
+		stamp: string,
+		foil: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant) VALUES (?, ?, ?, ?)",
+				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant, stamp, foil) VALUES (?, ?, ?, ?, ?, ?)",
 				args: [
 					userListId,
 					cardId,
 					lang,
-					variant
+					variant,
+					stamp,
+					foil
 				],
 			});
 
@@ -252,17 +260,21 @@ export class TursoAdapter implements BBDDInterface {
 		userListId: string,
 		cardId: string,
 		lang: string,
-		variant: string
+		variant: string,
+		stamp: string,
+		foil: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ? WHERE id = ?",
+				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ?, stamp = ?, foil = ? WHERE id = ?",
 				args: [
 					userListId,
 					cardId,
 					lang,
 					variant,
+					stamp,
+					foil,
 					userListCardId
 				],
 			});

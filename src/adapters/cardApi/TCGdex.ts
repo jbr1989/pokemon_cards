@@ -183,7 +183,7 @@ export class TCGdexAdapter implements ApiInterface {
 
 			const card = await fetchWithCache(language, "cards", cardId);
 
-			//console.log("CARD", card);
+			console.log("CARD", card);
 
 			if (!card) return null;
 

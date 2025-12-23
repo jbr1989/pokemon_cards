@@ -18,7 +18,7 @@ export async function completeUserList(data: UserListCard, minId = 1, maxId = 10
         if (lookup[dexId]) {
             completed.push(lookup[dexId]);
         } else {
-            completed.push(new UserListCard(0, "", "", "", 0, "", pokemonLookup[dexId]?.name || "", dexId, null)); // objeto vacío
+            completed.push(new UserListCard(0, "", "", "", "", "", 0, "", pokemonLookup[dexId]?.name || "", dexId, null)); // objeto vacío
         }
     }
 

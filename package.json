@@ -14,7 +14,7 @@
     "@libsql/client": "^0.15.15",
     "@tailwindcss/vite": "^4.1.18",
     "@tcgdex/sdk": "^2.7.1",
-    "astro": "^5.16.5",
+    "astro": "^5.16.6",
     "auth-astro": "^4.2.0",
     "cookie": "^1.1.1",
     "tailwindcss": "^4.1.18",

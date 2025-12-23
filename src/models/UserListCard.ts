@@ -3,6 +3,8 @@ export class UserListCard {
     cardId: string;
     lang: string;
 	variant: string;
+	stamp: string | null;
+	foil: string | null;
 	listId: number;
 	cardName: string;
 	pokemonName: string;
@@ -15,6 +17,8 @@ export class UserListCard {
 		cardId: string,
         lang: string,
 		variant: string,
+		stamp: string | null,
+		foil: string | null,
 		listId: number,
 		cardName: string,
 		pokemonName: string,
@@ -25,6 +29,8 @@ export class UserListCard {
         this.cardId = cardId;
         this.lang = lang;
 		this.variant = variant;
+		this.stamp = stamp;
+		this.foil = foil;
 		this.listId = listId;
 		this.cardName = cardName;
 		this.pokemonName = pokemonName;

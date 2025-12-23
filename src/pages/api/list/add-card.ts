@@ -10,6 +10,8 @@ export const POST: APIRoute = async ({ request }) => {
     const cardName = formData.get('cardName') as string;
     const lang = formData.get('lang') as string;
     const variant = formData.get('variant') as string;
+    const stamp = formData.get('stamp') as string;
+    const foil = formData.get('foil') as string;
 
     if (!listId || !cardId || !lang) {
       return new Response(JSON.stringify({ 
@@ -33,6 +35,8 @@ export const POST: APIRoute = async ({ request }) => {
         cardName: cardName,
         lang: lang,
         variant: variant,
+        stamp: stamp,
+        foil: foil,
       });
 
       successAction = success;
@@ -49,6 +53,8 @@ export const POST: APIRoute = async ({ request }) => {
         cardName: cardName,
         lang: lang,
         variant: variant,
+        stamp: stamp,
+        foil: foil,
       });
 
       successAction = success;

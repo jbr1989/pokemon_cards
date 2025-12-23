@@ -2,6 +2,7 @@
 import { getSession } from "auth-astro/server";
 import { languages } from "../../constants/languages";
 import { variants } from "../../constants/variants";
+
 import { PokeCardHandler } from "../../handlers/PokeCardHandler";
 import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
@@ -16,6 +17,8 @@ let language = Astro.url.searchParams.get("lang") || "en";
 let cardId = Astro.url.searchParams.get("card") || "base1";
 let cardName = Astro.url.searchParams.get("cardName") || "";
 let cardVariant = "";
+let cardStamp = "";
+let cardFoil = "";
 
 //console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
 
@@ -31,6 +34,8 @@ if (listCardId != "0") {
   cardId = listCard?.cardId || "";
   cardName = listCard?.cardName || "";
   cardVariant = listCard?.variant || "";
+  cardStamp = listCard?.stamp || "";
+  cardFoil = listCard?.foil || "";
 }
 
 const { card, error: cardError } = await PokeCardHandler.get({
@@ -139,18 +144,70 @@ const action = listCardId == "0" ? "Add" : "Update";
   Variant:
   <span class="flex flex-row flex-wrap gap-2">
     {
-      variants.map((variant) => (
+      variants.type.map((variant) => (
         <label
-          for={`dialogAddCardCardVariant-${variant.code}`}
+          for={`dialogAddCardCardVariantType-${variant.code}`}
+          class="mr-2 flex flex-row items-center"
+        >
+          <input
+            type="radio"
+            id={`dialogAddCardCardVariantType-${variant.code}`}
+            name="cardVariantType"
+            value={variant.code}
+            class="mr-2"
+            checked={variant.code === cardVariant}
+          />
+          <img
+            src={variant.flag.dark}
+            class="w-8 h-8"
+            alt={variant.name}
+            title={variant.name}
+          />
+        </label>
+      ))
+    }
+  </span>
+  Stamp:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.stamp.map((variant) => (
+        <label
+          for={`dialogAddCardCardVariantStamp-${variant.code}`}
+          class="mr-2 flex flex-row items-center"
+        >
+          <input
+            type="radio"
+            id={`dialogAddCardCardVariantStamp-${variant.code}`}
+            name="cardVariantStamp"
+            value={variant.code}
+            class="mr-2"
+            checked={variant.code === cardStamp}
+          />
+          <img
+            src={variant.flag.dark}
+            class="w-8 h-8"
+            alt={variant.name}
+            title={variant.name}
+          />
+        </label>
+      ))
+    }
+  </span>
+  Foil:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.foil.map((variant) => (
+        <label
+          for={`dialogAddCardCardVariantFoil-${variant.code}`}
           class="mr-2 flex flex-row items-center"
         >
           <input
             type="radio"
             id={`dialogAddCardCardVariant-${variant.code}`}
-            name="cardVariant"
+            name="cardVariantFoil"
             value={variant.code}
             class="mr-2"
-            checked={variant.code === cardVariant}
+            checked={variant.code === cardFoil}
           />
           <img
             src={variant.flag.dark}

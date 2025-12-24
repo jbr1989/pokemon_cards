@@ -36,6 +36,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     </div>
     <h1 style="font-size:2em; margin:0;">{list?.name}</h1>
     <form id="searchForm" class="search-box">
+      <span id="ListCardFilterResult"></span>
       <input
         type="search"
         id="search-list-grid"
@@ -81,12 +82,16 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     let listItems = null;
     let searchForm = null;
     let ListCardFilterIcon = null;
+    let ListCardFilterResult = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       console.log("DOM listo!");
       listItems = document.querySelectorAll("#list-grid .cardItem");
-      searchForm = document.querySelector("#searchForm");
       ListCardFilterIcon = document.querySelector("#ListCardFilterIcon");
+      ListCardFilterResult = document.querySelector("#ListCardFilterResult");
+
+      searchForm = document.querySelector("#searchForm");
+      searchForm.reset();
     });
 
     function normalize(text) {
@@ -108,29 +113,32 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       const typeFilter = formData.get("cardVariantType")?.split(",") || [];
       const stampFilter = formData.get("cardVariantStamp")?.split(",") || [];
       const foilFilter = formData.get("cardVariantFoil")?.split(",") || [];
-      console.log("FILTERS", {
-        name: nameFilter,
-        lang: langFilter,
-        type: typeFilter,
-        stamp: stampFilter,
-        foil: foilFilter,
-      });
 
-      console.log(
-        "FILTERS ACTIVE",
-        typeFilter.length > 0 ||
-          stampFilter.length > 0 ||
-          foilFilter.length > 0 ||
-          langFilter.length > 0
-      );
-
-      ListCardFilterIcon.style.fill =
+      const hasFilters =
+        langFilter != "" ||
         typeFilter.length > 0 ||
         stampFilter.length > 0 ||
-        foilFilter.length > 0 ||
-        langFilter.length > 0
-          ? "#10B981"
-          : "currentColor";
+        foilFilter.length > 0;
+
+      // console.log("FILTERS", {
+      //   name: nameFilter,
+      //   lang: langFilter,
+      //   type: typeFilter,
+      //   stamp: stampFilter,
+      //   foil: foilFilter,
+      // });
+
+      // console.log(
+      //   "FILTERS ACTIVE",
+      //   typeFilter.length > 0 ||
+      //     stampFilter.length > 0 ||
+      //     foilFilter.length > 0 ||
+      //     langFilter.length > 0
+      // );
+
+      ListCardFilterIcon.style.fill = hasFilters ? "#10B981" : "currentColor";
+
+      let num = 0;
 
       listItems.forEach(function (el) {
         el.classList.add("hidden");
@@ -148,9 +156,13 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
         if (foilFilter.length > 0 && !foilFilter.includes(el.dataset.foil))
           return;
 
+        num += 1;
         // Use all visible text within the card for matching
         el.classList.remove("hidden");
       });
+
+      ListCardFilterResult.textContent =
+        nameFilter != "" || hasFilters ? `${num} results` : ``;
     }
   </script>
 

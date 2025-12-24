@@ -1,0 +1,99 @@
+---
+import { languages } from "@/constants/languages";
+import { variants } from "../../constants/variants";
+---
+
+<div
+  class="filter-tooltip form-grid-2col"
+  style="position:absolute; top: 36px; right:0; width:450px; padding:1em; background: #222; display:none;"
+>
+  Language: <select name="lang" required onchange="filtering()">
+    <option value="">-----</option>
+    {languages.map((lang) => <option value={lang.code}>{lang.name}</option>)}
+  </select>
+
+  Variant:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.type
+        .filter((x) => x.code != "")
+        .map((variant) => (
+          <label
+            for={`dialogAddCardCardVariantType-${variant.code}`}
+            class="mr-2 flex flex-row items-center"
+          >
+            <input
+              type="checkbox"
+              id={`dialogAddCardCardVariantType-${variant.code}`}
+              name="cardVariantType"
+              value={variant.code}
+              class="mr-2"
+              onchange="filtering()"
+            />
+            <img
+              src={variant.flag.dark}
+              class="w-8 h-8"
+              alt={variant.name}
+              title={variant.name}
+            />
+          </label>
+        ))
+    }
+  </span>
+  Stamp:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.stamp
+        .filter((x) => x.code != "")
+        .map((variant) => (
+          <label
+            for={`dialogAddCardCardVariantStamp-${variant.code}`}
+            class="mr-2 flex flex-row items-center"
+          >
+            <input
+              type="checkbox"
+              id={`dialogAddCardCardVariantStamp-${variant.code}`}
+              name="cardVariantStamp"
+              value={variant.code}
+              class="mr-2"
+              onchange="filtering()"
+            />
+            <img
+              src={variant.flag.dark}
+              class="w-8 h-8"
+              alt={variant.name}
+              title={variant.name}
+            />
+          </label>
+        ))
+    }
+  </span>
+  Foil:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.foil
+        .filter((x) => x.code != "")
+        .map((variant) => (
+          <label
+            for={`dialogAddCardCardVariantFoil-${variant.code}`}
+            class="mr-2 flex flex-row items-center"
+          >
+            <input
+              type="checkbox"
+              id={`dialogAddCardCardVariant-${variant.code}`}
+              name="cardVariantFoil"
+              value={variant.code}
+              class="mr-2"
+              onchange="filtering()"
+            />
+            <img
+              src={variant.flag.dark}
+              class="w-8 h-8"
+              alt={variant.name}
+              title={variant.name}
+            />
+          </label>
+        ))
+    }
+  </span>
+</div>

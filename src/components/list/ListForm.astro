@@ -30,7 +30,11 @@ const { sets, error } = await PokeSetHandler.getAll({ language });
 
     <div id="status-message" class="hidden"></div>
 
-    <form id="add-list-form" onsubmit="return handleSubmit(event)">
+    <form
+      id="add-list-form"
+      class="form-grid-2col"
+      onsubmit="return handleSubmit(event)"
+    >
       List: <span>{listId}</span>
       Name: <input type="text" id="ListFormName" name="name" required />
       Type:
@@ -50,11 +54,6 @@ const { sets, error } = await PokeSetHandler.getAll({ language });
 <style>
   dialog h2 {
     margin: 0;
-  }
-  dialog form {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 0.5rem;
   }
 </style>
 

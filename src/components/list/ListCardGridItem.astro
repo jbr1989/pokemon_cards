@@ -13,9 +13,18 @@ const language = languages.find(({ code }) => code === listCard?.lang);
 const type = variants.type.find(({ code }) => code === listCard?.variant);
 const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
 const foil = variants.foil.find(({ code }) => code === listCard?.foil);
+
+const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - ${listCard?.pokemonName}`;
 ---
 
-<div class="cardItem cardItemEffect">
+<div
+  class="cardItem cardItemEffect"
+  data-title={title}
+  data-lang={language?.lang}
+  data-type={type?.code}
+  data-stamp={stamp?.code}
+  data-foil={foil?.code}
+>
   <ListCardActions listCard={listCard} />
 
   <div>
@@ -48,10 +57,7 @@ const foil = variants.foil.find(({ code }) => code === listCard?.foil);
         class="capitalize grid grid-cols-2 gap-2 items-start px-1"
         style="grid-template-columns: 1fr auto;"
       >
-        <span>
-          {listType == "pokedex" ? listCard?.dexId : listCard?.cardId} -
-          {listCard?.pokemonName}
-        </span>
+        <span class="cardItem-title">{title}</span>
         <span class="flex flex-nowrap gap-1" style="justify-content: flex-end;">
           {
             listCard?.stamp != null && listCard?.stamp !== "" && (

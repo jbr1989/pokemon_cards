@@ -69,7 +69,11 @@ const action = listCardId == "0" ? "Add" : "Update";
 
 <div id="status-message" class="hidden"></div>
 
-<form id="add-card-form" onsubmit="return handleListCardDialogSubmit(event)">
+<form
+  id="add-card-form"
+  class="form-grid-2col"
+  onsubmit="return handleListCardDialogSubmit(event)"
+>
   List: <select id="dialogAddCardListId" name="listId" required>
     <option value="0">Select a list first</option>
     {

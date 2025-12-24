@@ -76,7 +76,7 @@ select {
 	color: white;
 	border: 1px solid white;
 	border-radius: 0.5rem;
-	padding: 0.5rem;
+	padding: 0.25rem;
 	transition: border-color 0.15s ease-out;
 }
 
@@ -178,7 +178,7 @@ dialog::backdrop {
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
-dialog form {
+.form-grid-2col {
 	display: grid;
 	grid-template-columns: 100px 1fr;
 	gap: 0.5rem;
@@ -237,7 +237,7 @@ dialog form {
 	align-items: center;
 	background: black;
 	color: white;
-	padding: 1rem;
+	padding-inline: 1rem;
 	position: sticky;
 	right: 0;
 	top: 64px;
@@ -245,6 +245,12 @@ dialog form {
 	/* Performance optimization 
 	contain: layout style;
 	will-change: transform;*/
+}
+
+.search-box {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .cardItem {

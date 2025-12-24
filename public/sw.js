@@ -1,4 +1,4 @@
-const CACHE_NAME = "pokecards-static-v1";
+const CACHE_NAME = "pokecards-static-v2";
 const PRECACHE_URLS = [
   "/",
   "/manifest.webmanifest",
@@ -69,26 +69,26 @@ self.addEventListener("fetch", (event) => {
         })
     );
   }
-  // Estrategia para páginas HTML
-  else {
-    // Stale While Revalidate para páginas
-    event.respondWith(
-      caches.match(request)
-        .then((cached) => {
-          const networkFetch = fetch(request)
-            .then((response) => {
-              if (response.ok) {
-                const responseClone = response.clone();
-                caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone)).catch(() => {});
-              }
-              return response;
-            })
-            .catch(() => cached);
+  // // Estrategia para páginas HTML
+  // else {
+  //   // Stale While Revalidate para páginas
+  //   event.respondWith(
+  //     caches.match(request)
+  //       .then((cached) => {
+  //         const networkFetch = fetch(request)
+  //           .then((response) => {
+  //             if (response.ok) {
+  //               const responseClone = response.clone();
+  //               caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone)).catch(() => {});
+  //             }
+  //             return response;
+  //           })
+  //           .catch(() => cached);
           
-          return cached || networkFetch;
-        })
-    );
-  }
+  //         return cached || networkFetch;
+  //       })
+  //   );
+  // }
 });
 
 

@@ -113,20 +113,23 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       const typeFilter = formData.get("cardVariantType")?.split(",") || [];
       const stampFilter = formData.get("cardVariantStamp")?.split(",") || [];
       const foilFilter = formData.get("cardVariantFoil")?.split(",") || [];
+      const haveitFilter = formData.get("haveIt")?.split(",") || "";
 
       const hasFilters =
-        langFilter != "" ||
+        langFilter.length > 0 ||
         typeFilter.length > 0 ||
         stampFilter.length > 0 ||
-        foilFilter.length > 0;
+        foilFilter.length > 0 ||
+        haveitFilter.length > 0;
 
-      // console.log("FILTERS", {
-      //   name: nameFilter,
-      //   lang: langFilter,
-      //   type: typeFilter,
-      //   stamp: stampFilter,
-      //   foil: foilFilter,
-      // });
+      console.log("FILTERS", {
+        name: nameFilter,
+        lang: langFilter,
+        type: typeFilter,
+        stamp: stampFilter,
+        foil: foilFilter,
+        haveit: haveitFilter,
+      });
 
       // console.log(
       //   "FILTERS ACTIVE",
@@ -154,6 +157,11 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
         if (stampFilter.length > 0 && !stampFilter.includes(el.dataset.stamp))
           return;
         if (foilFilter.length > 0 && !foilFilter.includes(el.dataset.foil))
+          return;
+        if (
+          haveitFilter.length > 0 &&
+          !haveitFilter.includes(el.dataset.haveit)
+        )
           return;
 
         num += 1;

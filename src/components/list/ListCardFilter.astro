@@ -94,4 +94,29 @@ import { variants } from "../../constants/variants";
         ))
     }
   </span>
+  Have it:
+  <span class="flex flex-row flex-wrap gap-2">
+    <label for="haveIt" class="mr-2 flex flex-row items-center">
+      <input
+        type="checkbox"
+        id="haveIt"
+        name="haveIt"
+        value="true"
+        class="mr-2"
+        onchange="filtering()"
+      />
+      Yes
+    </label>
+    <label for="notHaveIt" class="mr-2 flex flex-row items-center">
+      <input
+        type="checkbox"
+        id="notHaveIt"
+        name="haveIt"
+        value="false"
+        class="mr-2"
+        onchange="filtering()"
+      />
+      No
+    </label>
+  </span>
 </div>

@@ -13,12 +13,14 @@ const language = languages.find(({ code }) => code === listCard?.lang);
 const type = variants.type.find(({ code }) => code === listCard?.variant);
 const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
 const foil = variants.foil.find(({ code }) => code === listCard?.foil);
+const haveit = listCard?.image ? "true" : "false";
 
 const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - ${listCard?.pokemonName}`;
 ---
 
 <div
   class="cardItem cardItemEffect"
+  data-haveit={haveit}
   data-title={title}
   data-lang={language?.lang}
   data-type={type?.code}

@@ -8,9 +8,19 @@ interface Props {
 }
 
 const { card, lang } = Astro.props;
+
+const title = `${card?.localId} - ${card?.name}`;
 ---
 
-<div class="cardItem cardItemEffect">
+<div
+  class="cardItem cardItemEffect"
+  data-haveit=""
+  data-title={title}
+  data-lang=""
+  data-type=""
+  data-stamp=""
+  data-foil=""
+>
   <CardActions card={card} lang={lang} />
   <a href={`/card/${card?.id}`}>
     <img
@@ -28,6 +38,6 @@ const { card, lang } = Astro.props;
     />
   </a>
   <span class="capitalize">
-    {card?.localId} - {card?.name}
+    {title}
   </span>
 </div>

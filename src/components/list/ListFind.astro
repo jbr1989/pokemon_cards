@@ -1,86 +1,42 @@
 ---
-import type { UserList } from "@/models/UserList";
-import type { UserListCard } from "../../models/UserListCard";
-import ErrorMessage from "../ErrorMessage.astro";
-import ListCardGridItem from "./ListCardGridItem.astro";
-import ListFind from './ListFind.astro'
-import ListCardFilter from "./ListCardFilter.astro";
+import ListCardFilter from './ListCardFilter.astro';
 
-import AddIcon from "@/assets/ui/add.svg";
 import FilterIcon from "@/assets/ui/filter.svg";
 
 interface Props {
-  list: UserList | null;
-  error: string | null;
+  hasFilter: boolean | null;
 }
 
-const { list, error } = Astro.props;
+const { hasFilter } = Astro.props;
 
-const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
+console.log("HAS FILTER", hasFilter);
+
 ---
-
-<div id="cards-div">
-  <div class="cards-grid-header container">
-    <div>
-      <button
-        onclick={`openListCardDialog(${list?.id})`}
-        class="bg-green-500 text-white p-2 rounded-md"
-      >
-        <AddIcon width="16px" height="16px" />
-      </button>
-
-      <span>
-        {cardHaving} / {list?.cards?.length} cards ({
-          ((cardHaving / list?.cards?.length) * 100).toFixed(2)
-        }%)
-      </span>
-    </div>
-    <h1 style="font-size:2em; margin:0;">{list?.name}</h1>
-    <ListFind hasFilter={true} />
-    <!-- <form id="searchForm" class="search-box">
-      <span id="ListCardFilterResult"></span>
-      <input
+<form id="searchForm" class="search-box">
+    <span id="ListCardFilterResult"></span>
+    <input
         type="search"
         id="search-list-grid"
         placeholder="Buscar..."
         name="name"
         oninput="filtering()"
-      />
-      <div style="position:relative">
-        <FilterIcon
-          id="ListCardFilterIcon"
-          width="24px"
-          height="24px"
-          style="cursor:pointer;"
-          onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'none' ? '': 'none')"
-        />
-        <ListCardFilter />
-      </div>
-    </form> -->
-  </div>
-
-  <ErrorMessage error={error} />
-
-  <div id="loading" class="loading hidden">Loading cards...</div>
-
-  <div id="list-grid" class="cards-grid container">
-    {
-      list?.cards && list?.cards?.length > 0 ? (
-        list?.cards?.map((item) => (
-          <ListCardGridItem listCard={item} listType={list?.type} />
-        ))
-      ) : (
-        <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
-          <h2>No cards found</h2>
-          <p>Please select a different set.</p>
+    />
+    {hasFilter &&
+        <div style="position:relative">
+            <FilterIcon
+                id="ListCardFilterIcon"
+                width="24px"
+                height="24px"
+                style="cursor:pointer;"
+                onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'none' ? '': 'none')"
+            />
+            <ListCardFilter />
         </div>
-      )
     }
-  </div>
+</form>
 
-  <script defer src="/scripts/cardItemEffect.js"></script>
+<script defer is:inline>
 
-  <!-- <script defer is:inline>
     let listItems = null;
     let searchForm = null;
     let ListCardFilterIcon = null;
@@ -88,7 +44,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 
     document.addEventListener("DOMContentLoaded", () => {
       console.log("DOM listo!");
-      listItems = document.querySelectorAll("#list-grid .cardItem");
+      listItems = document.querySelectorAll(".cardItem");
       ListCardFilterIcon = document.querySelector("#ListCardFilterIcon");
       ListCardFilterResult = document.querySelector("#ListCardFilterResult");
 
@@ -141,7 +97,8 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       //     langFilter.length > 0
       // );
 
-      ListCardFilterIcon.style.fill = hasFilters ? "#10B981" : "currentColor";
+      if (ListCardFilterIcon!==null)
+        ListCardFilterIcon.style.fill = hasFilters ? "#10B981" : "currentColor";
 
       let num = 0;
 
@@ -174,7 +131,6 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       ListCardFilterResult.textContent =
         nameFilter != "" || hasFilters ? `${num} results` : ``;
     }
-  </script> -->
 
-  <!-- <script defer src="/scripts/listFilter.js"></script> -->
-</div>
+
+</script>

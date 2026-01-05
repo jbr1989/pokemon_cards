@@ -41,12 +41,12 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
   <img
     src={set?.logo}
     alt={set?.name}
-    style="max-width: 400px;margin:0 auto;color:transparent;"
+    style="max-width: 400px;margin:2rem auto;color:transparent;"
   />
-  <div class="flex justify-center items-center gap-2">
+  <!-- <div class="flex justify-center items-center gap-2">
     <h2>{set?.name}</h2>
     <img class="inline-block h-8" src={set?.symbol} alt={set?.name} />
-  </div>
+  </div> -->
 
   <CardGrid
     setId={set?.id || ""}

@@ -3,6 +3,7 @@ import CardGridItem from "./CardGridItem.astro";
 import ErrorMessage from "../ErrorMessage.astro";
 import type { PokeCardMini } from "../../models/PokeCardMini";
 import ListCardForm from "../list/ListCardForm.astro";
+import ListFind from "../list/ListFind.astro";
 
 interface Props {
   cards: PokeCardMini[] | null;
@@ -20,8 +21,9 @@ const { setId, cards, error, lang, title } = Astro.props;
     <div>
       <span> {cards?.length} Cards</span>
     </div>
-    <span>{title || ""}</span>
-    <div>Buscar por:</div>
+    <h1 style="font-size:2em; margin:0;">{title || ""}</h1>
+    <ListFind hasFilter={false} />
+    <!-- <div>Buscar por:</div> -->
   </div>
 
   <ErrorMessage error={error} />

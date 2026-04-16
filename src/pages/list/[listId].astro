@@ -47,6 +47,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 </Layout>
 
 <script is:inline>
+
   let cardsDiv = null;
   let loading = null;
 
@@ -88,51 +89,105 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     }
   }
 
+  const imageCards = {};
+
   function fixImageCard(image) {
-    const tested = image.dataset.lang.split(",");
+
+    const cardId = image.dataset.id;
+    imageCards[cardId] = [];
+    
+    let langs = ["en", "ja", "es"];
+    const langDefault = image.dataset.lang || "";
+
+    if (langDefault!="") langs = [langDefault, ...langs.filter(l => l !== langDefault)]; // poner el idioma actual al final para probarlo al inicio
 
     const u = new URL(image.src);
     // console.log("URL", u);
     const partes = u.pathname.split("/");
     // console.log("PARTES", partes);
-    partes[2] = partes[2].toUpperCase(); // SerieID en mayúscula
 
-    // SetID: Antes del numero en MAYUSCULAS, despues del numero en minusculas
-    const match = partes[3].match(/^([^0-9]*)(.*)$/);
-    partes[3] = match[1].toUpperCase() + match[2].toLowerCase(); 
+    for (const lang of langs) {
+
+      partes[1] = lang;
+
+      // SETID en MAYUSCULAS
+      partes[2] = partes[2].toUpperCase(); // SerieID en mayúscula
+
+      // SetID: Antes del numero en MAYUSCULAS, despues del numero en minusculas
+      const match = partes[3].match(/^([^0-9]*)(.*)$/);
+      partes[3] = match[1].toUpperCase() + match[2].toLowerCase(); 
+
+      imageCards[cardId].push(u.origin + partes.join("/"));
+
+      // TODO EN MAYUSCULAS
+      partes[2] = partes[2].toUpperCase(); // SerieID en minuscula
+      partes[3] = match[1].toUpperCase() + match[2].toUpperCase(); 
+
+      imageCards[cardId].push(u.origin + partes.join("/"));
+
+      // TODO EN MINUSCULAS
+      partes[2] = partes[2].toLowerCase(); // SerieID en minuscula
+      partes[3] = match[1].toLowerCase() + match[2].toLowerCase(); 
+
+      imageCards[cardId].push(u.origin + partes.join("/"));
+    }
+
+    // // console.log("PARTES", partes);
+    // partes[2] = partes[2].toUpperCase(); // SerieID en mayúscula
+
+    // // SetID: Antes del numero en MAYUSCULAS, despues del numero en minusculas
+    // const match = partes[3].match(/^([^0-9]*)(.*)$/);
+    // partes[3] = match[1].toUpperCase() + match[2].toLowerCase(); 
     
-    let newSrc = u.origin + partes.join("/");
-    // console.log("NEW SRC", newSrc);
+    // let newSrc = u.origin + partes.join("/");
+    // // console.log("NEW SRC", newSrc);
 
     image.onerror = function() {
-      changeImageLang(this);
+      changeImage(image);
     };
-    image.src = newSrc;
+
+    changeImage(image);
+    // image.src = newSrc;
   }
 
-  function changeImageLang(image) {
-    const langs = ["en", "ja", "es"];
-    const tested = image.dataset.lang.split(",");
-    if (image.dataset.lang && tested.length >= langs.length) return; // si no hay mas idiomas, no hacer nada
+  function changeImage(image) {
+    console.log("IMAGE CARDS", imageCards, image);
 
-    let newLangIndex = langs.find((el) => !tested.includes(el)) ?? null;
+    const cardId = image.dataset.id;
 
-    console.log("CHANGE IMAGE CARD", image.src, langs, tested, newLangIndex);
+    if (!imageCards[cardId] || imageCards[cardId].length === 0) {
+      //console.log("NO IMAGE SRC TO TRY");
+      return;
+    }
 
-    if (newLangIndex == null) return; // sin no hay mas idiomas, no hacer nada
-
-    tested.push(newLangIndex);
-    image.dataset.lang = tested.join(",");
-
-    const u = new URL(image.src);
-    // console.log("URL", u);
-    const partes = u.pathname.split("/");
-    // console.log("PARTES", partes);
-    partes[1] = newLangIndex;
-
-    let newSrc = u.origin + partes.join("/");
-    // console.log("NEW SRC", newSrc);
-
-    image.src = newSrc;
+    //console.log("TRYING IMAGE SRC", cardId, imageCards[cardId][0]);
+    // Asignar el primer src alternativo disponible
+    image.src = imageCards[cardId].shift();
   }
+
+  // function changeImageLang(image) {
+  //   const langs = ["en", "ja", "es"];
+  //   const tested = image.dataset.lang.split(",");
+  //   if (image.dataset.lang && tested.length >= langs.length) return; // si no hay mas idiomas, no hacer nada
+
+  //   let newLangIndex = langs.find((el) => !tested.includes(el)) ?? null;
+
+  //   console.log("CHANGE IMAGE CARD", image.src, langs, tested, newLangIndex);
+
+  //   if (newLangIndex == null) return; // sin no hay mas idiomas, no hacer nada
+
+  //   tested.push(newLangIndex);
+  //   image.dataset.lang = tested.join(",");
+
+  //   const u = new URL(image.src);
+  //   // console.log("URL", u);
+  //   const partes = u.pathname.split("/");
+  //   // console.log("PARTES", partes);
+  //   partes[1] = newLangIndex;
+
+  //   let newSrc = u.origin + partes.join("/");
+  //   // console.log("NEW SRC", newSrc);
+
+  //   image.src = newSrc;
+  // }
 </script>

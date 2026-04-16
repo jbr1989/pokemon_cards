@@ -157,6 +157,7 @@ export class TursoAdapter implements BBDDInterface {
 			cards.push(new UserListCard(
 				row.id,
 				row.cardId,
+				row.serieId,
 				row.setIdOther,
 				row.lang,
 				row.variant,

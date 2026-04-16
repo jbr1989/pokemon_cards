@@ -17,6 +17,7 @@ export class UserListCard {
 	constructor(
 		id: number,
 		cardId: string,
+		serieId: string,
 		setIdOther: string | null,
         lang: string,
 		variant: string,
@@ -47,8 +48,10 @@ export class UserListCard {
 			const setId = (setIdOther !== null && setIdOther !== "") ? setIdOther : cardIdParts[0]; // El setId que viene de la BBDD, que no es el mismo que el setId de tcgdex
 			const cardNum = cardIdParts[1];
 
-			const indice = setId.search(/\d/); // Busca el primer número
-			const serieId = indice !== -1 ? setId.slice(0, indice) : setId; // Obtiene el texto anterior al primer número
+			if (serieId == null || serieId == "") {
+				const indice = setId.search(/\d/); // Busca el primer número
+				serieId = indice !== -1 ? setId.slice(0, indice) : setId; // Obtiene el texto anterior al primer número
+			}
 
 			// console.log(setId, cardNum, serieId);
 			this.image = `https://assets.tcgdex.net/${this.lang}/${serieId}/${setId}/${cardNum}/low.webp`;

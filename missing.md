@@ -12,8 +12,9 @@
 
 + M1L: Mega Brave (No Existe) (Pendiente de fusionar: https://github.com/tcgdex/cards-database/pull/1328)
 + M1S: Mega Symphonia (Sin imagenes)
++ MC: Japanese Start Deck 
 + S8B: VMAX Climax (Exite, pero vacio)
-+ S10P: Space Juggler (Existe, pero vacio)
++ SGI: Inteleon VMAX High-Class Deck 
 
 
 ### Chino

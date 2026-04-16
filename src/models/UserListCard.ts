@@ -1,3 +1,5 @@
+import { set } from "astro:schema";
+
 export class UserListCard {
 	id: number;
     cardId: string;
@@ -15,6 +17,7 @@ export class UserListCard {
 	constructor(
 		id: number,
 		cardId: string,
+		setIdOther: string | null,
         lang: string,
 		variant: string,
 		stamp: string | null,
@@ -37,10 +40,11 @@ export class UserListCard {
 		this.dexId = dexId;
 		this.image = null;
 
+
 		if (this.cardId != "") {
 			//console.log("LIST CARD", listCard);
 			const cardIdParts = this.cardId.split("-");
-			const setId = cardIdParts[0];
+			const setId = (setIdOther !== null && setIdOther !== "") ? setIdOther : cardIdParts[0]; // El setId que viene de la BBDD, que no es el mismo que el setId de tcgdex
 			const cardNum = cardIdParts[1];
 
 			const indice = setId.search(/\d/); // Busca el primer número

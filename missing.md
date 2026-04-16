@@ -10,11 +10,14 @@
 
 ### Japones
 
-#### BUG: S9, S9a, S12, S12a, SV1a, SV1S, SV1V, SV2a, SV2D, SV2P, SV3, SV3a (https://github.com/tcgdex/cards-database/issues/736)
-
 + M1L: Mega Brave (No Existe) (Pendiente de fusionar: https://github.com/tcgdex/cards-database/pull/1328)
++ M1S: Mega Symphonia (Sin imagenes)
++ S8B: VMAX Climax (Exite, pero vacio)
 + S10P: Space Juggler (Existe, pero vacio)
+
 
 ### Chino
 
 + 151C: 151 (No existe)
++ CB22C: ??? (Eevee)
++ CS4BC:Nine Colors Gathering 

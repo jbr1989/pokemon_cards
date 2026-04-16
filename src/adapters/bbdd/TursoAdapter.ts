@@ -54,6 +54,15 @@ export class TursoAdapter implements BBDDInterface {
 
 	//#endregion
 
+	// #region SET
+
+
+	async getSetNames(): Promise<string[]> {
+		return [];
+	}
+
+	//#endregion
+
 	//#region USER
 
 	async getIdUser(
@@ -148,6 +157,7 @@ export class TursoAdapter implements BBDDInterface {
 			cards.push(new UserListCard(
 				row.id,
 				row.cardId,
+				row.setIdOther,
 				row.lang,
 				row.variant,
 				row.stamp,

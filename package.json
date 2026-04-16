@@ -9,19 +9,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^10.0.0",
+    "@astrojs/vercel": "^10.0.4",
     "@auth/core": "^0.37.4",
     "@libsql/client": "^0.15.15",
-    "@tailwindcss/vite": "^4.2.1",
-    "@tcgdex/sdk": "^2.7.1",
-    "astro": "^6.0.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tcgdex/sdk": "^2.8.0",
+    "astro": "^6.1.7",
     "auth-astro": "^4.2.0",
     "cookie": "^1.1.1",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.2.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1"
   }
 }

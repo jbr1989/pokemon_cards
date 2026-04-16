@@ -46,7 +46,7 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
             sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
             style="background-color: #1f2937;"
             data-lang={language?.lang}
-            onerror={listCard?.image ? "changeImageLang(this)" : undefined}
+            onerror={listCard?.image ? "fixImageCard(this)" : undefined}
           />
         ) : (
           <div class="cardItem-image cardItem-not-found" title="Normal">

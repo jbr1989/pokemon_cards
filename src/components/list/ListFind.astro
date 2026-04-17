@@ -72,13 +72,15 @@ console.log("HAS FILTER", hasFilter);
       const stampFilter = formData.get("cardVariantStamp")?.split(",") || [];
       const foilFilter = formData.get("cardVariantFoil")?.split(",") || [];
       const haveitFilter = formData.get("haveIt")?.split(",") || "";
+      const ImgErrorFilter = formData.get("ImgError") || "";
 
       const hasFilters =
         langFilter.length > 0 ||
         typeFilter.length > 0 ||
         stampFilter.length > 0 ||
         foilFilter.length > 0 ||
-        haveitFilter.length > 0;
+        haveitFilter.length > 0 ||
+        ImgErrorFilter.length > 0;
 
       console.log("FILTERS", {
         name: nameFilter,
@@ -87,6 +89,7 @@ console.log("HAS FILTER", hasFilter);
         stamp: stampFilter,
         foil: foilFilter,
         haveit: haveitFilter,
+        ImgError : ImgErrorFilter,
       });
 
       // console.log(
@@ -117,9 +120,16 @@ console.log("HAS FILTER", hasFilter);
           return;
         if (foilFilter.length > 0 && !foilFilter.includes(el.dataset.foil))
           return;
+
         if (
-          haveitFilter.length > 0 &&
+          haveitFilter.length > 0 && 
           !haveitFilter.includes(el.dataset.haveit)
+        )
+          return;
+
+        if (
+          ImgErrorFilter.length > 0 &&
+          !ImgErrorFilter.includes(el.dataset.imageError)
         )
           return;
 

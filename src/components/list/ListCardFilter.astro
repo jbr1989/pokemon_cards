@@ -119,4 +119,29 @@ import { variants } from "../../constants/variants";
       No
     </label>
   </span>
+  Image Error:
+  <span class="flex flex-row flex-wrap gap-2">
+    <label for="ImgError" class="mr-2 flex flex-row items-center">
+      <input
+        type="checkbox"
+        id="ImgError"
+        name="ImgError"
+        value="true"
+        class="mr-2"
+        onchange="filtering()"
+      />
+      Yes
+    </label>
+    <label for="notImgError" class="mr-2 flex flex-row items-center">
+      <input
+        type="checkbox"
+        id="notImgError"
+        name="ImgError"
+        value="false"
+        class="mr-2"
+        onchange="filtering()"
+      />
+      No
+    </label>
+  </span>
 </div>

@@ -157,6 +157,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 
     if (!imageCards[cardId] || imageCards[cardId].length === 0) {
       //console.log("NO IMAGE SRC TO TRY");
+      image.closest(".cardItem").dataset.imageError = "true"; // marcar como error en la imagen
       return;
     }
 

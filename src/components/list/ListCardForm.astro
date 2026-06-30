@@ -173,6 +173,32 @@
       ].dataset.name;
   }
 
+  function updateImageUrlFromCardInput() {
+    const cardInput = document.getElementById('dialogAddCardCardIdInput');
+    const langSelect = document.getElementById('dialogAddCardLang');
+    const urlInput = document.getElementById('dialogAddCardImageUrl');
+    const preview = document.getElementById('dialogAddCardImagePreview');
+    if (!cardInput || !urlInput) return;
+
+    const cardId = cardInput.value.trim();
+    const lang = langSelect ? langSelect.value : 'en';
+    const parts = cardId.split('-');
+    if (parts.length < 2) return;
+
+    let setId = parts[0];
+    const cardNum = parts[1];
+    let serieId = setId;
+    const idx = setId.search(/\d/);
+    if (idx !== -1) serieId = setId.slice(0, idx);
+
+    const url = `https://assets.tcgdex.net/${lang}/${serieId}/${setId}/${cardNum}/low.webp`;
+    urlInput.value = url;
+    if (preview) {
+      preview.src = url;
+      preview.parentElement.style.display = url ? 'flex' : 'none';
+    }
+  }
+
   async function loadListCardDialog(
     listCardId,
     listId = 0,

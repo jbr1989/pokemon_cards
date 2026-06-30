@@ -154,6 +154,7 @@ const action = listCardId == "0" ? "Add" : "Update";
     id="dialogAddCardCardIdInput"
     name="cardIdInput"
     value={cardId}
+    oninput="updateImageUrlFromCardInput()"
   />
 
   Name: <input

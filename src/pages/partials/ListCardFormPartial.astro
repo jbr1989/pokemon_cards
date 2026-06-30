@@ -45,6 +45,10 @@ const { card, error: cardError } = await PokeCardHandler.get({
   language: language,
 });
 
+if (imageUrl == "" && card?.image?.low) {
+  imageUrl = card.image.low;
+}
+
 // FIND LISTs
 const session = await getSession(Astro.request);
 const { lists, error: listsError } = await UserListHandler.getAll({
@@ -71,11 +75,22 @@ const action = listCardId == "0" ? "Add" : "Update";
 
 <div id="status-message" class="hidden"></div>
 
-<form
-  id="add-card-form"
-  class="form-grid-2col"
-  onsubmit="return handleListCardDialogSubmit(event)"
->
+<div id="dialogAddCardLayout" style="display:flex; gap:16px; align-items:stretch;">
+  <div id="dialogAddCardImageWrapper" class="order-last md:order-first"
+    style="flex:0 0 200px;">
+    <img id="dialogAddCardImagePreview"
+      src={imageUrl}
+      style="width:100%; height:100%; object-fit:contain; border-radius:8px;"
+      alt="Card preview"
+    />
+  </div>
+
+  <form
+    id="add-card-form"
+    class="form-grid-2col"
+    style="flex:1;"
+    onsubmit="return handleListCardDialogSubmit(event)"
+  >
   List: <select id="dialogAddCardListId" name="listId" required>
     <option value="0">Select a list first</option>
     {
@@ -147,14 +162,7 @@ const action = listCardId == "0" ? "Add" : "Update";
     name="cardName"
     value={cardName}
   />
-  Image URL: <input
-    type="text"
-    id="dialogAddCardImageUrl"
-    name="image"
-    value={imageUrl}
-    readonly
-    style="font-size:0.8rem; word-break:break-all;"
-  />
+  
   Variant:
   <span class="flex flex-row flex-wrap gap-2">
     {
@@ -233,6 +241,14 @@ const action = listCardId == "0" ? "Add" : "Update";
       ))
     }
   </span>
+  Image URL: <input
+    type="text"
+    id="dialogAddCardImageUrl"
+    name="image"
+    value={imageUrl}
+    style="font-size:0.8rem; word-break:break-all;"
+    oninput="document.getElementById('dialogAddCardImagePreview').src = this.value;"
+  />
 
   <button type="submit" class="bg-blue-500 text-white p-2 rounded-md"
     >{action}</button
@@ -240,3 +256,23 @@ const action = listCardId == "0" ? "Add" : "Update";
 
   <input type="hidden" name="listCardId" value={listCardId} />
 </form>
+</div>
+
+<style is:global>
+  @media (min-width: 768px) {
+    #dialogAddCardLayout {
+      flex-direction: row !important;
+    }
+    #dialogAddCardImageWrapper {
+      order: -1 !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #dialogAddCardImageWrapper {
+      order: 10 !important;
+    }
+  }
+  #dialogAddCardImagePreview[src=""] {
+    display: none;
+  }
+</style>

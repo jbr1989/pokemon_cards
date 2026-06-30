@@ -26,8 +26,11 @@ titulo += "PokéCards";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/img/icon/pokecards_icon.webp" />
     <meta name="theme-color" content="#13151a" />
+
+    <link rel="icon" href="/img/icon/pokecards_icon.webp" />
+    <link rel="canonical" href={Astro.url.href} />
+
     <title>{titulo}</title>
     <meta name="description" content={description} />
 
@@ -38,6 +41,28 @@ titulo += "PokéCards";
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap.xml" />
     <meta name="robots" content={robots} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content="/img/pwa-192x192.png" />
+    <meta property="og:site_name" content="PokéCards" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PokéCards",
+        "url": "https://pokecards.jbr1989.es",
+        "logo": "https://pokecards.jbr1989.es/img/pwa-192x192.png",
+        "description": "Explora y gestiona tu colección de cartas Pokémon TCG"
+      }
+    </script>
 
     <!-- <ClientRouter /> -->
 

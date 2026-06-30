@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import CardGrid from "../../components/card/CardGrid.astro";
 import { PokeSetHandler } from "../../handlers/PokeSetHandler";
 import { PokeCardMiniHandler } from "../../handlers/PokeCardMiniHandler";
+import PathBanner from "@/components/PathBanner.astro";
 
 const { lang } = Astro.locals;
 const language = lang.toString() || "en";
@@ -38,6 +39,7 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
 ---
 
 <Layout title=`Set ${set?.name}` description=`Set ${set?.name}`>
+
   <img
     src={set?.logo}
     alt={set?.name}
@@ -56,3 +58,44 @@ const { cards, error } = await PokeCardMiniHandler.getAll({
     title={set?.name || ""}
   />
 </Layout>
+
+{ 
+  set && (
+    <script type="application/ld+json" set:html={JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": `Set ${set.name}`,
+        "description": `Colección de cartas del set ${set.name} de Pokémon TCG`,
+        "url": `https://pokecards.jbr1989.es/set/${set.id}`
+      }
+    )}></script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://pokecards.jbr1989.es/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Sets",
+            "item": "https://pokecards.jbr1989.es/sets"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": `Set ${set.name}`,
+            "item": `https://pokecards.jbr1989.es/set/${set?.id}`
+          },
+        ]
+      }
+    )}></script>
+  )
+}

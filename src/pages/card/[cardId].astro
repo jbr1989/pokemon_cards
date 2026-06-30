@@ -26,8 +26,8 @@ const title =
       ? `${card?.localId} ${card?.name} - Set ${card?.set?.name}`
       : card?.name;
 
-console.log(card);
-console.log(error);
+// console.log(card);
+// console.log(error);
 
 const description =
   card == null || card == undefined
@@ -227,3 +227,21 @@ if (card == null || card == undefined) {
     filter: invert(100%);
   }
 </style>
+
+{ 
+  card && (
+    <script type="application/ld+json" set:html={JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `${card.name} - Set ${card.set?.name} ${card.localId}`,
+        "image": card.image.high,
+        "description": `Carta de Pokémon TCG: ${card.name} del set ${card.set?.name}, con número de colección ${card.localId}.`,
+        "brand": {
+          "@type": "Brand",
+          "name": "Pokémon"
+        }
+      }
+    )}></script>
+  )
+}

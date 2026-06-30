@@ -15,11 +15,8 @@ Allow: /
 # Archivos específicos a no indexar
 # Disallow: /*.json$
 # Disallow: /*.xml$
-Disallow: /404
+# Disallow: /404
 
-
-# Tiempo de espera entre solicitudes (en segundos)
-Crawl-delay: 10
 
 # Ubicación del sitemap
 Sitemap: https://pokecards.jbr1989.es/sitemap.xml

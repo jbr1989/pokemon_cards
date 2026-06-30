@@ -57,3 +57,40 @@ const { card } = Astro.props;
     {card?.localId || "?"} - {card?.name || "?"}
   </span>
 </div>
+
+{ 
+  card && (
+    <script type="application/ld+json" set:html={JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://pokecards.jbr1989.es/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Sets",
+            "item": "https://pokecards.jbr1989.es/sets"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": `Set ${card?.set?.name}`,
+            "item": `https://pokecards.jbr1989.es/set/${card?.set?.id}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": `${card?.localId} - ${card?.name}`,
+            "item": `https://pokecards.jbr1989.es/card/${card?.id}`
+          }
+        ]
+      }
+    )}></script>
+  ) 
+}

@@ -167,7 +167,7 @@ export class TursoAdapter implements BBDDInterface {
 				row.card_name,
 				row.pokemon_name,
 				row.dexId,
-				null
+				row.image_url
 			));
 		});
 
@@ -218,6 +218,8 @@ export class TursoAdapter implements BBDDInterface {
 			return new UserListCard(
 				result.rows[0].id,
 				result.rows[0].cardId,
+				result.rows[0].serieId,
+				result.rows[0].setIdOther,
 				result.rows[0].lang,
 				result.rows[0].variant,
 				result.rows[0].stamp,
@@ -226,7 +228,7 @@ export class TursoAdapter implements BBDDInterface {
 				result.rows[0].card_name,
 				result.rows[0].pokemon_name,
 				result.rows[0].dexId,
-				null
+				result.rows[0].image_url
 			);
 
 		} catch (error) {
@@ -241,19 +243,21 @@ export class TursoAdapter implements BBDDInterface {
 		lang: string,
 		variant: string,
 		stamp: string,
-		foil: string
+		foil: string,
+		image: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant, stamp, foil) VALUES (?, ?, ?, ?, ?, ?)",
+				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant, stamp, foil, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
 				args: [
 					userListId,
 					cardId,
 					lang,
 					variant,
 					stamp,
-					foil
+					foil,
+					image
 				],
 			});
 
@@ -273,12 +277,13 @@ export class TursoAdapter implements BBDDInterface {
 		lang: string,
 		variant: string,
 		stamp: string,
-		foil: string
+		foil: string,
+		image: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ?, stamp = ?, foil = ? WHERE id = ?",
+				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ?, stamp = ?, foil = ?, image_url = ? WHERE id = ?",
 				args: [
 					userListId,
 					cardId,
@@ -286,6 +291,7 @@ export class TursoAdapter implements BBDDInterface {
 					variant,
 					stamp,
 					foil,
+					image,
 					userListCardId
 				],
 			});

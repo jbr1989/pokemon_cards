@@ -217,6 +217,7 @@
     const cardVariantType = formData.get("cardVariantType");
     const cardVariantStamp = formData.get("cardVariantStamp");
     const cardVariantFoil = formData.get("cardVariantFoil");
+    const image = formData.get("image");
 
     if (cardIdInput != "") {
       // Agregar carta personalizada
@@ -239,6 +240,7 @@
         variant: cardVariantType,
         stamp: cardVariantStamp,
         foil: cardVariantFoil,
+        image: image,
       }),
     })
       .then((response) => response.json())

@@ -39,7 +39,7 @@ export class UserListCard {
 		this.cardName = cardName;
 		this.pokemonName = pokemonName;
 		this.dexId = dexId;
-		this.image = null;
+		this.image = image;
 
 
 		if (this.cardId != "") {
@@ -54,7 +54,9 @@ export class UserListCard {
 			}
 
 			// console.log(setId, cardNum, serieId);
-			this.image = `https://assets.tcgdex.net/${this.lang}/${serieId}/${setId}/${cardNum}/low.webp`;
+
+			if (this.image == null || this.image == "")
+				this.image = `https://assets.tcgdex.net/${this.lang}/${serieId}/${setId}/${cardNum}/low.webp`;
 		}
 	}
 }

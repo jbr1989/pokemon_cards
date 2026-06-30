@@ -32,7 +32,8 @@ export class UserListCardHandler extends PokeHandler {
         lang = "en",
         variant = "",
         stamp = "",
-        foil = ""
+        foil = "",
+        image = ""
     }: {
         userListId: string,
         cardId: string,
@@ -40,7 +41,8 @@ export class UserListCardHandler extends PokeHandler {
         lang: string,
         variant: string,
         stamp: string,
-        foil: string
+        foil: string,
+        image: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
         let error: string | null = null;
@@ -64,7 +66,7 @@ export class UserListCardHandler extends PokeHandler {
                 return { success: false, error: "Card not added" };
             }
 
-            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang, variant, stamp, foil)) {
+            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang, variant, stamp, foil, image)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }
@@ -85,7 +87,8 @@ export class UserListCardHandler extends PokeHandler {
         lang = "en",
         variant = "",
         stamp = "",
-        foil = ""
+        foil = "",
+        image = ""
     }: {
         userListCardId: string,
         userListId: string,
@@ -94,7 +97,8 @@ export class UserListCardHandler extends PokeHandler {
         lang: string,
         variant: string,
         stamp: string,
-        foil: string
+        foil: string,
+        image: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
         let error: string | null = null;
@@ -123,7 +127,7 @@ export class UserListCardHandler extends PokeHandler {
                 return { success: false, error: "Card not added" };
             }
 
-            if(!await UserListCardHandler.db.updateUserListCard(userListCardId, userListId, cardId, lang, variant, stamp, foil)) {
+            if(!await UserListCardHandler.db.updateUserListCard(userListCardId, userListId, cardId, lang, variant, stamp, foil, image)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }

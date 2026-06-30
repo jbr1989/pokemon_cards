@@ -19,6 +19,7 @@ let cardName = Astro.url.searchParams.get("cardName") || "";
 let cardVariant = "";
 let cardStamp = "";
 let cardFoil = "";
+let imageUrl = "";
 
 //console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
 
@@ -36,6 +37,7 @@ if (listCardId != "0") {
   cardVariant = listCard?.variant || "";
   cardStamp = listCard?.stamp || "";
   cardFoil = listCard?.foil || "";
+  imageUrl = listCard?.image || "";
 }
 
 const { card, error: cardError } = await PokeCardHandler.get({
@@ -144,6 +146,14 @@ const action = listCardId == "0" ? "Add" : "Update";
     id="dialogAddCardCardName"
     name="cardName"
     value={cardName}
+  />
+  Image URL: <input
+    type="text"
+    id="dialogAddCardImageUrl"
+    name="image"
+    value={imageUrl}
+    readonly
+    style="font-size:0.8rem; word-break:break-all;"
   />
   Variant:
   <span class="flex flex-row flex-wrap gap-2">

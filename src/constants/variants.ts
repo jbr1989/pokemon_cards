@@ -1,5 +1,5 @@
 export const variants = {
-    type: [
+    variant: [
         {
             code: "",
             name: "Normal",

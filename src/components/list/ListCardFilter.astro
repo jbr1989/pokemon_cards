@@ -15,15 +15,15 @@ import { variants } from "../../constants/variants";
   Variant:
   <span class="flex flex-row flex-wrap gap-2">
     {
-      variants.type.map((variant) => (
+      variants.variant.map((variant) => (
         <label
-          for={`cardVariantType-${variant.code}`}
+          for={`cardVariantVariant-${variant.code}`}
           class="mr-2 flex flex-row items-center"
         >
           <input
             type="checkbox"
-            id={`cardVariantType-${variant.code}`}
-            name="cardVariantType"
+            id={`cardVariantVariant-${variant.code}`}
+            name="cardVariantVariant"
             value={variant.code}
             class="mr-2"
             onchange="filtering()"

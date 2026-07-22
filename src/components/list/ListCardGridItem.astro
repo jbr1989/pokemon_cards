@@ -10,7 +10,7 @@ interface Props {
 
 const { listCard, listType } = Astro.props;
 const language = languages.find(({ code }) => code === listCard?.lang);
-const type = variants.type.find(({ code }) => code === listCard?.variant);
+const variant = variants.variant.find(({ code }) => code === listCard?.variant);
 const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
 const foil = variants.foil.find(({ code }) => code === listCard?.foil);
 const haveit = listCard?.image ? "true" : "false";
@@ -23,7 +23,7 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
   data-haveit={haveit}
   data-title={title}
   data-lang={language?.lang}
-  data-type={type?.code}
+  data-variant={variant?.code}
   data-stamp={stamp?.code}
   data-foil={foil?.code}
   data-image-error="false"
@@ -86,8 +86,8 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
           {
             listCard?.variant != null && listCard?.variant != "" && (
               <div
-                class={`variant-flag variant-${type?.code} w-[1rem] h-[1rem] mt-1 inline`}
-                title={type?.name}
+                class={`variant-flag variant-${variant?.code} w-[1rem] h-[1rem] mt-1 inline`}
+                title={variant?.name}
               >
                 &nbsp;
               </div>

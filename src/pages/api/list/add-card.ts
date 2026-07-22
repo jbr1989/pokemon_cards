@@ -12,6 +12,7 @@ export const POST: APIRoute = async ({ request }) => {
     const variant = formData.get('variant') as string;
     const stamp = formData.get('stamp') as string;
     const foil = formData.get('foil') as string;
+    const type = formData.get('type') as string;
     const image = formData.get('image') as string;
 
     if (!listId || !cardId || !lang) {
@@ -38,6 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
         variant: variant,
         stamp: stamp,
         foil: foil,
+        type: type,
         image: image
       });
 
@@ -57,6 +59,7 @@ export const POST: APIRoute = async ({ request }) => {
         variant: variant,
         stamp: stamp,
         foil: foil,
+        type: type,
         image: image
       });
 

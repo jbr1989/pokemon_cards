@@ -33,6 +33,7 @@ export class UserListCardHandler extends PokeHandler {
         variant = "",
         stamp = "",
         foil = "",
+        type = "",
         image = ""
     }: {
         userListId: string,
@@ -42,6 +43,7 @@ export class UserListCardHandler extends PokeHandler {
         variant: string,
         stamp: string,
         foil: string,
+        type: string,
         image: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
@@ -66,7 +68,7 @@ export class UserListCardHandler extends PokeHandler {
                 return { success: false, error: "Card not added" };
             }
 
-            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang, variant, stamp, foil, image)) {
+            if(!await UserListCardHandler.db.addUserListCard(userListId, cardId, lang, variant, stamp, foil, type, image)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }
@@ -88,6 +90,7 @@ export class UserListCardHandler extends PokeHandler {
         variant = "",
         stamp = "",
         foil = "",
+        type = "",
         image = ""
     }: {
         userListCardId: string,
@@ -98,6 +101,7 @@ export class UserListCardHandler extends PokeHandler {
         variant: string,
         stamp: string,
         foil: string,
+        type: string,
         image: string
     }): Promise<{ success: boolean, error: string | null }> {
         let success = false;
@@ -127,7 +131,7 @@ export class UserListCardHandler extends PokeHandler {
                 return { success: false, error: "Card not added" };
             }
 
-            if(!await UserListCardHandler.db.updateUserListCard(userListCardId, userListId, cardId, lang, variant, stamp, foil, image)) {
+            if(!await UserListCardHandler.db.updateUserListCard(userListCardId, userListId, cardId, lang, variant, stamp, foil, type, image)) {
                 console.log("Card not added");
                 return { success: false, error: "Card not added" };
             }

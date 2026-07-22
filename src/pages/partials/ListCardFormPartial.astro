@@ -19,6 +19,7 @@ let cardName = Astro.url.searchParams.get("cardName") || "";
 let cardVariant = "";
 let cardStamp = "";
 let cardFoil = "";
+let cardType = "";
 let imageUrl = "";
 
 //console.log("FORM PARAMS", listCardId, listId, cardId, cardName, language);
@@ -37,6 +38,7 @@ if (listCardId != "0") {
   cardVariant = listCard?.variant || "";
   cardStamp = listCard?.stamp || "";
   cardFoil = listCard?.foil || "";
+  cardType = listCard?.type || "";
   imageUrl = listCard?.image || "";
 }
 
@@ -185,6 +187,32 @@ const action = listCardId == "0" ? "Add" : "Update";
             class="w-8 h-8"
             alt={variant.name}
             title={variant.name}
+          />
+        </label>
+      ))
+    }
+  </span>
+  Type:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.type.map((cardTypeOption) => (
+        <label
+          for={`dialogAddCardCardType-${cardTypeOption.code}`}
+          class="mr-2 flex flex-row items-center"
+        >
+          <input
+            type="radio"
+            id={`dialogAddCardCardType-${cardTypeOption.code}`}
+            name="cardType"
+            value={cardTypeOption.code}
+            class="mr-2"
+            checked={cardTypeOption.code === cardType}
+          />
+          <img
+            src={cardTypeOption.flag.dark}
+            class="w-8"
+            alt={cardTypeOption.name}
+            title={cardTypeOption.name}
           />
         </label>
       ))

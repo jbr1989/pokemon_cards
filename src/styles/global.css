@@ -109,7 +109,7 @@ h1 {
 
 h2 {
 	color: white;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	font-weight: 700;
 	text-align: center;
 }
@@ -153,7 +153,7 @@ dialog::backdrop {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 .dialog-close-btn {
@@ -448,4 +448,28 @@ dialog::backdrop {
 
 .variant-full-art {
 	background-image: url('/img/icon/variant/full-art.png');
+}
+
+.type-v {
+	background-image: url('/img/icon/type/v.png');
+}
+
+.type-vmax {
+	background-image: url('/img/icon/type/vmax.png');
+}
+
+.type-vstar {
+	background-image: url('/img/icon/type/vstar.webp');
+}
+
+.type-ex {
+	background-image: url('/img/icon/type/ex.png');
+}
+
+.type-gx {
+	background-image: url('/img/icon/type/gx.png');
+}
+
+.type-mega {
+	background-image: url('/img/icon/type/mega.png');
 }

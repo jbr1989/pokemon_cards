@@ -38,6 +38,33 @@ import { variants } from "../../constants/variants";
       ))
     }
   </span>
+  Type:
+  <span class="flex flex-row flex-wrap gap-2">
+    {
+      variants.type
+        .map((cardTypeOption) => (
+          <label
+            for={`cardType-${cardTypeOption.code}`}
+            class="mr-2 flex flex-row items-center"
+          >
+            <input
+              type="checkbox"
+              id={`cardType-${cardTypeOption.code}`}
+              name="cardType"
+              value={cardTypeOption.code}
+              class="mr-2"
+              onchange="filtering()"
+            />
+            <img
+              src={cardTypeOption.flag.dark}
+              class="w-8"
+              alt={cardTypeOption.name}
+              title={cardTypeOption.name}
+            />
+          </label>
+        ))
+    }
+  </span>
   Stamp:
   <span class="flex flex-row flex-wrap gap-2">
     {

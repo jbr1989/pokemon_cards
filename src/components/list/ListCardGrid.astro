@@ -16,7 +16,7 @@ interface Props {
 
 const { list, error } = Astro.props;
 
-const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
+const cardHaving = list?.cards?.filter((card) => card.cardId != "").length;
 ---
 
 <div id="cards-div">
@@ -24,7 +24,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     <div>
       <button
         onclick={`openListCardDialog(${list?.id})`}
-        class="bg-green-500 text-white p-2 rounded-md"
+        class="bg-green-500 text-white p-2 rounded-md mr-2"
       >
         <AddIcon width="16px" height="16px" />
       </button>

@@ -163,6 +163,7 @@ export class TursoAdapter implements BBDDInterface {
 				row.variant,
 				row.stamp,
 				row.foil,
+				row.type || "",
 				row.listId,
 				row.card_name,
 				row.pokemon_name,
@@ -224,6 +225,7 @@ export class TursoAdapter implements BBDDInterface {
 				result.rows[0].variant,
 				result.rows[0].stamp,
 				result.rows[0].foil,
+				result.rows[0].type || "",
 				result.rows[0].listId,
 				result.rows[0].card_name,
 				result.rows[0].pokemon_name,
@@ -244,21 +246,23 @@ export class TursoAdapter implements BBDDInterface {
 		variant: string,
 		stamp: string,
 		foil: string,
+		type: string,
 		image: string
 	): Promise<boolean> {
 		try {
 
-			const result = await turso.execute({
-				sql: "INSERT INTO lists_cards (listId, cardId, lang, variant, stamp, foil, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
-				args: [
-					userListId,
-					cardId,
-					lang,
-					variant,
-					stamp,
-					foil,
-					image
-				],
+		const result = await turso.execute({
+			sql: "INSERT INTO lists_cards (listId, cardId, lang, variant, stamp, foil, type, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			args: [
+				userListId,
+				cardId,
+				lang,
+				variant,
+				stamp,
+				foil,
+				type,
+				image
+			],
 			});
 
 			// console.log(result);
@@ -278,22 +282,24 @@ export class TursoAdapter implements BBDDInterface {
 		variant: string,
 		stamp: string,
 		foil: string,
+		type: string,
 		image: string
 	): Promise<boolean> {
 		try {
 
 			const result = await turso.execute({
-				sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ?, stamp = ?, foil = ?, image_url = ? WHERE id = ?",
-				args: [
-					userListId,
-					cardId,
-					lang,
-					variant,
-					stamp,
-					foil,
-					image,
-					userListCardId
-				],
+			sql: "UPDATE lists_cards SET listId = ?, cardId = ?, lang = ?, variant = ?, stamp = ?, foil = ?, type = ?, image_url = ? WHERE id = ?",
+			args: [
+				userListId,
+				cardId,
+				lang,
+				variant,
+				stamp,
+				foil,
+				type,
+				image,
+				userListCardId
+			],
 			});
 
 			// console.log(result);

@@ -23,8 +23,8 @@
   }
 
   #dialogAddCard {
-    width: 90vw;
-    max-width: 800px;
+    width: 95vw;
+    max-width: 900px;
   }
 
   .hidden {
@@ -248,6 +248,7 @@
     const cardVariantType = formData.get("cardVariantType");
     const cardVariantStamp = formData.get("cardVariantStamp");
     const cardVariantFoil = formData.get("cardVariantFoil");
+    const cardType = formData.get("cardType");
     const image = formData.get("image");
 
     if (cardIdInput != "") {
@@ -271,6 +272,7 @@
         variant: cardVariantType,
         stamp: cardVariantStamp,
         foil: cardVariantFoil,
+        type: cardType,
         image: image,
       }),
     })

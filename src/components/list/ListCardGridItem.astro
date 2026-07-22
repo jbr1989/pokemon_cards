@@ -13,6 +13,7 @@ const language = languages.find(({ code }) => code === listCard?.lang);
 const variant = variants.variant.find(({ code }) => code === listCard?.variant);
 const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
 const foil = variants.foil.find(({ code }) => code === listCard?.foil);
+const cardType = variants.type.find(({ code }) => code === listCard?.type);
 const haveit = listCard?.image ? "true" : "false";
 
 const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - ${listCard?.pokemonName}`;
@@ -26,6 +27,7 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
   data-variant={variant?.code}
   data-stamp={stamp?.code}
   data-foil={foil?.code}
+  data-type={cardType?.code}
   data-image-error="false"
 >
   <ListCardActions listCard={listCard} />
@@ -88,6 +90,16 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
               <div
                 class={`variant-flag variant-${variant?.code} w-[1rem] h-[1rem] mt-1 inline`}
                 title={variant?.name}
+              >
+                &nbsp;
+              </div>
+            )
+          }
+          {
+            listCard?.type != null && listCard?.type != "" && (
+              <div
+                class={`variant-flag type-${cardType?.code} w-[1rem] h-[1rem] mt-1 inline`}
+                title={cardType?.name}
               >
                 &nbsp;
               </div>

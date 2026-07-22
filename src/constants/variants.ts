@@ -67,6 +67,64 @@ export const variants = {
             }
         }
     ],
+    type: [
+        {
+            code: "",
+            name: "Normal",
+            flag: {
+                light: "/img/icon/variant/normal.png",
+                dark: "/img/icon/variant/normal.png"
+            }
+        },
+        {
+            code: "v",
+            name: "V",
+            flag: {
+                light: "/img/icon/type/v.png",
+                dark: "/img/icon/type/v.png"
+            }
+        },
+        {
+            code: "vmax",
+            name: "VMAX",
+            flag: {
+                light: "/img/icon/type/vmax.png",
+                dark: "/img/icon/type/vmax.png"
+            }
+        },
+        {
+            code: "vstar",
+            name: "VSTAR",
+            flag: {
+                light: "/img/icon/type/vstar.webp",
+                dark: "/img/icon/type/vstar.webp"
+            }
+        },
+        {
+            code: "ex",
+            name: "ex",
+            flag: {
+                light: "/img/icon/type/ex.png",
+                dark: "/img/icon/type/ex.png"
+            }
+        },
+        {
+            code: "gx",
+            name: "GX",
+            flag: {
+                light: "/img/icon/type/gx.png",
+                dark: "/img/icon/type/gx.png"
+            }
+        },
+        {
+            code: "mega",
+            name: "Mega",
+            flag: {
+                light: "/img/icon/type/mega.png",
+                dark: "/img/icon/type/mega.png"
+            }
+        }
+    ],
     foil: [
         {
             code: "",

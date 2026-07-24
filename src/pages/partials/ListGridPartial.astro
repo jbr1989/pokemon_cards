@@ -10,7 +10,7 @@ const { list, error } = await UserListHandler.get({
   userListId: parseInt(listId as string, 0),
 });
 
-console.log("LIST", list);
+// console.log("LIST", list);
 ---
 
 <ListCardGrid list={list} error={error} />

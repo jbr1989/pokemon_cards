@@ -11,7 +11,8 @@ export class UserListHandler {
 
 
 	static async getAll({
-		userId = 0
+		userId = 0,
+		loadCards = false
 	}:{
 		userId: number
 	}): Promise<{ lists: UserList[]; error: string | null }> {
@@ -21,7 +22,11 @@ export class UserListHandler {
 		try{
 			// FIND LISTS in DB
 			lists = await UserListHandler.db.getUserListAll(userId);
-			// console.log("LISTS", lists);
+			if (loadCards){
+				for (const list of lists) {
+					list.cards = await UserListHandler.db.getUserListCards(list.id);
+				}
+			}
 		}catch (e) {
 			error = e.toString();
 		}

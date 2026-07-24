@@ -61,8 +61,8 @@ for (const row of result.rows) {
   });
   if (validUrl) ok++;
   else fail++;
-  console.log(`${row.cardId} [${row.lang}]: ${validUrl ? "OK" : "FAIL"}`);
+  // console.log(`${row.cardId} [${row.lang}]: ${validUrl ? "OK" : "FAIL"}`);
 }
 
-console.log(`\nDone: ${ok} OK, ${fail} FAIL (total ${total})`);
+// console.log(`\nDone: ${ok} OK, ${fail} FAIL (total ${total})`);
 turso.close();

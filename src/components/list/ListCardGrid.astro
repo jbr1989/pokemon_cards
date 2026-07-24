@@ -10,11 +10,12 @@ import AddIcon from "@/assets/ui/add.svg";
 import FilterIcon from "@/assets/ui/filter.svg";
 
 interface Props {
+  editable?: boolean | false;
   list: UserList | null;
   error: string | null;
 }
 
-const { list, error } = Astro.props;
+const { list, error, editable } = Astro.props;
 
 const cardHaving = list?.cards?.filter((card) => card.cardId != "").length;
 ---
@@ -35,28 +36,11 @@ const cardHaving = list?.cards?.filter((card) => card.cardId != "").length;
         }%)
       </span>
     </div>
+
     <h1 style="font-size:2em; margin:0;">{list?.name}</h1>
+
     <ListFind hasFilter={true} />
-    <!-- <form id="searchForm" class="search-box">
-      <span id="ListCardFilterResult"></span>
-      <input
-        type="search"
-        id="search-list-grid"
-        placeholder="Buscar..."
-        name="name"
-        oninput="filtering()"
-      />
-      <div style="position:relative">
-        <FilterIcon
-          id="ListCardFilterIcon"
-          width="24px"
-          height="24px"
-          style="cursor:pointer;"
-          onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'none' ? '': 'none')"
-        />
-        <ListCardFilter />
-      </div>
-    </form> -->
+
   </div>
 
   <ErrorMessage error={error} />
@@ -67,7 +51,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardId != "").length;
     {
       list?.cards && list?.cards?.length > 0 ? (
         list?.cards?.map((item) => (
-          <ListCardGridItem listCard={item} listType={list?.type} />
+          <ListCardGridItem listCard={item} listType={list?.type} editable={editable} />
         ))
       ) : (
         <div class="no-cards" style="grid-column: 1 / -1; text-align: center;">
@@ -78,103 +62,7 @@ const cardHaving = list?.cards?.filter((card) => card.cardId != "").length;
     }
   </div>
 
+  <script defer src="/scripts/fixCardItem.js"></script>
   <script defer src="/scripts/cardItemEffect.js"></script>
 
-  <!-- <script defer is:inline>
-    let listItems = null;
-    let searchForm = null;
-    let ListCardFilterIcon = null;
-    let ListCardFilterResult = null;
-
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("DOM listo!");
-      listItems = document.querySelectorAll("#list-grid .cardItem");
-      ListCardFilterIcon = document.querySelector("#ListCardFilterIcon");
-      ListCardFilterResult = document.querySelector("#ListCardFilterResult");
-
-      searchForm = document.querySelector("#searchForm");
-      searchForm.reset();
-    });
-
-    function normalize(text) {
-      return text
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
-    }
-
-    function filtering() {
-      console.log("FILTERING");
-
-      if (!listItems) return;
-      // console.log(listItems);
-
-      const formData = new FormData(searchForm);
-      const nameFilter = normalize(formData.get("name") || "");
-      const langFilter = formData.get("lang") || "";
-      const typeFilter = formData.get("cardVariantType")?.split(",") || [];
-      const stampFilter = formData.get("cardVariantStamp")?.split(",") || [];
-      const foilFilter = formData.get("cardVariantFoil")?.split(",") || [];
-      const haveitFilter = formData.get("haveIt")?.split(",") || "";
-
-      const hasFilters =
-        langFilter.length > 0 ||
-        typeFilter.length > 0 ||
-        stampFilter.length > 0 ||
-        foilFilter.length > 0 ||
-        haveitFilter.length > 0;
-
-      console.log("FILTERS", {
-        name: nameFilter,
-        lang: langFilter,
-        type: typeFilter,
-        stamp: stampFilter,
-        foil: foilFilter,
-        haveit: haveitFilter,
-      });
-
-      // console.log(
-      //   "FILTERS ACTIVE",
-      //   typeFilter.length > 0 ||
-      //     stampFilter.length > 0 ||
-      //     foilFilter.length > 0 ||
-      //     langFilter.length > 0
-      // );
-
-      ListCardFilterIcon.style.fill = hasFilters ? "#10B981" : "currentColor";
-
-      let num = 0;
-
-      listItems.forEach(function (el) {
-        el.classList.add("hidden");
-
-        if (nameFilter != "") {
-          let title = normalize(el.dataset.title || "");
-          if (!normalize(title).includes(nameFilter)) return;
-        }
-
-        if (langFilter.length > 0 && el.dataset.lang !== langFilter) return;
-        if (typeFilter.length > 0 && !typeFilter.includes(el.dataset.type))
-          return;
-        if (stampFilter.length > 0 && !stampFilter.includes(el.dataset.stamp))
-          return;
-        if (foilFilter.length > 0 && !foilFilter.includes(el.dataset.foil))
-          return;
-        if (
-          haveitFilter.length > 0 &&
-          !haveitFilter.includes(el.dataset.haveit)
-        )
-          return;
-
-        num += 1;
-        // Use all visible text within the card for matching
-        el.classList.remove("hidden");
-      });
-
-      ListCardFilterResult.textContent =
-        nameFilter != "" || hasFilters ? `${num} results` : ``;
-    }
-  </script> -->
-
-  <!-- <script defer src="/scripts/listFilter.js"></script> -->
 </div>

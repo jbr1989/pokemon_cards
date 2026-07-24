@@ -10,7 +10,7 @@ export async function completeUserList(data: UserListCard, minId = 1, maxId = 10
 
     // indexamos los que ya existen
     const lookup = Object.fromEntries(data.map(d => [d.dexId, d])); // { '1': UserListCard, ...}
-    console.log("LOOKUP", lookup);
+    // console.log("LOOKUP", lookup);
 
     // construimos la lista completa
     const completed = [];

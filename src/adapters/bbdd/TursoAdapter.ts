@@ -141,7 +141,7 @@ export class TursoAdapter implements BBDDInterface {
 
 	async getUserListCards(
 		userListId: number,
-	): Promise<any> {
+	): Promise<UserListCard[]> {
 		const result = await turso.execute({
 			sql: "SELECT * FROM lists_cards_info WHERE listId = ? ORDER BY dexId ASC",
 			args: [userListId],
@@ -149,7 +149,7 @@ export class TursoAdapter implements BBDDInterface {
 
 		//console.log("GET USER LIST CARDS", result);
 
-		if (result.rows.length === 0) return null;
+		if (result.rows.length === 0) return [];
 
 		let cards: UserListCard[] = [];
 

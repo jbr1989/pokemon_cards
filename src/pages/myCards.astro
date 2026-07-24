@@ -1,0 +1,47 @@
+---
+import { getSession } from "auth-astro/server";
+
+import Layout from "../layouts/Layout.astro";
+import { UserListHandler } from "../handlers/db/UserList/UserListHandler";
+import ListCardGrid from "../components/list/ListCardGrid.astro";
+import { UserList } from "@/models/UserList";
+import { UserListCard } from "@/models/UserListCard";
+
+const session = await getSession(Astro.request);
+
+let allList = null;
+let error = null;
+
+if (session) {
+  const { lists, error } = await UserListHandler.getAll({
+    userId: parseInt(session.user?.id as string, 0),
+    loadCards: true
+  });
+
+  // console.log("USER LISTS", lists[0].cards?.length, error);
+
+  allList = new UserList(
+    0,
+    parseInt(session.user?.id as string, 0),
+    "My cards",
+    "",
+    lists?.map((list) => list.cards as UserListCard[]).flat() || []
+  );
+
+  console.log("ALL LIST", allList.cards?.length, error);
+}
+
+---
+
+<Layout title="My Cards" description="My Cards" robots="noindex, nofollow">
+
+  {
+      session ? (
+        <ListCardGrid list={allList} error={error} editable={false} />
+      ) : (
+        <h2>My Cards</h2>
+        <p>You need to be logged in to see this page</p>
+      )
+    }
+
+</Layout>

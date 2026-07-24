@@ -52,16 +52,16 @@ export class UserListCardHandler extends PokeHandler {
         try{
 
             const card = await UserListCardHandler.adapter.PokeCard_Get(cardId.toString(), lang);
-            console.log("CARD", card);
+            // console.log("CARD", card);
 
             let card_name = (card!=null ? card?.name : cardName).toString().toLowerCase();
-            console.log("CARD NAME", card_name);
+            // console.log("CARD NAME", card_name);
             let pokemonName = card_name;
             if (lang == "ja" || lang == "ko" || lang == "zh")
                 pokemonName = card_name.replace(/^(mega)/i, "").replace(/\s*(ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
             else
                 pokemonName = card_name.replace(/^(mega) /i, "").replace(/ (ex|v|vmax|v-max|vstar|v-star|v-astro)$/i, "");
-            console.log("POKEMON NAME", pokemonName);
+            // console.log("POKEMON NAME", pokemonName);
 
             if(!await UserListCardHandler.db.addOrUpdateCard(cardId, card_name, card?.dexId?.toString() || null, pokemonName || null)) {
                 console.log("Card not added");

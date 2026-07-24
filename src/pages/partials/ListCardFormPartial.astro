@@ -29,7 +29,7 @@ if (listCardId != "0") {
     userListCardId: listCardId,
   });
 
-  console.log("LIST CARD", listCard);
+  // console.log("LIST CARD", listCard);
 
   listId = listCard?.listId.toString() || "0";
   language = listCard?.lang || "en";
@@ -62,7 +62,7 @@ const { sets, error: setsError } = await PokeSetHandler.getAll({ language });
 
 // FIND CARDs
 const setId = card?.set?.id || cardId.split("-")[0];
-console.log("SET ID", setId);
+// console.log("SET ID", setId);
 
 const { cards, error: cardsError } = await PokeCardHandler.getAll({
   setId: setId,

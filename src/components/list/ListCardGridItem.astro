@@ -3,18 +3,21 @@ import type { UserListCard } from "../../models/UserListCard";
 import ListCardActions from "./ListCardActions.astro";
 import { languages } from "../../constants/languages";
 import { variants } from "../../constants/variants";
+
 interface Props {
   listCard: UserListCard | null;
   listType: string;
+  editable?: boolean | false;
 }
 
-const { listCard, listType } = Astro.props;
+const { listCard, listType, editable } = Astro.props;
 const language = languages.find(({ code }) => code === listCard?.lang);
 const variant = variants.variant.find(({ code }) => code === listCard?.variant);
 const stamp = variants.stamp.find(({ code }) => code === listCard?.stamp);
 const foil = variants.foil.find(({ code }) => code === listCard?.foil);
 const cardType = variants.type.find(({ code }) => code === listCard?.type);
 const haveit = listCard?.image ? "true" : "false";
+
 
 const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - ${listCard?.pokemonName}`;
 ---
@@ -30,7 +33,8 @@ const title = `${listType == "pokedex" ? listCard?.dexId : listCard?.cardId} - $
   data-type={cardType?.code}
   data-image-error="false"
 >
-  <ListCardActions listCard={listCard} />
+
+  { editable && <ListCardActions listCard={listCard} /> }
 
   <!-- <div> -->
     <a href={`/card/${listCard?.cardId}`}>

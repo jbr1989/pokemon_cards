@@ -5,9 +5,9 @@ import { UserListHandler } from "../../handlers/db/UserList/UserListHandler";
 import ListCardGrid from "../../components/list/ListCardGrid.astro";
 import ListCardForm from "../../components/list/ListCardForm.astro";
 
-// Fetch all sets
-const { lang } = Astro.locals;
-const language = lang.toString() || "en";
+// // Fetch all sets
+// const { lang } = Astro.locals;
+// const language = lang.toString() || "en";
 
 const { listId } = Astro.params;
 
@@ -26,24 +26,11 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
 ---
 
 <Layout title="" description="" robots="noindex, nofollow">
-  <!-- <h1>{list?.name}</h1> -->
 
-  <!-- <div class="container">
-    <span
-      >{cardHaving} / {list?.cards?.length} cards ({
-        ((cardHaving / list?.cards?.length) * 100).toFixed(2)
-      }%)</span
-    >
-    <button
-      onclick={`openListCardDialog(${listId})`}
-      class="bg-blue-500 text-white p-2 rounded-md"
-      style="float:right;">Add Card</button
-    >
-  </div> -->
-
-  <ListCardGrid list={list} error={error} />
+  <ListCardGrid list={list} error={error} editable={true} />
 
   <ListCardForm listId={listId} />
+
 </Layout>
 
 <script is:inline>
@@ -55,18 +42,6 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
     cardsDiv = document.querySelector("#cards-div");
     loading = document.querySelector("#loading");
   });
-
-  // document.querySelectorAll(".cardItem-image").forEach((image) => {
-  //   image.addEventListener("error", function () {
-  //     changeImageLang(this);
-  //   });
-  // });
-
-  // document
-  //   .getElementById("cardItem-image")
-  //   .addEventListener("error", function () {
-  //     changeImageLang(this);
-  //   });
 
   async function loadCards(listId = null) {
     console.log(cardsDiv, loading);
@@ -87,83 +62,6 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
       loading.classList.add("hidden");
       cardsDiv.classList.remove("hidden");
     }
-  }
-
-  const imageCards = {};
-
-  function fixImageCard(image) {
-
-    const cardId = image.dataset.id;
-    imageCards[cardId] = [];
-    
-    let langs = ["en", "ja", "es"];
-    const langDefault = image.dataset.lang || "";
-
-    if (langDefault!="") langs = [langDefault, ...langs.filter(l => l !== langDefault)]; // poner el idioma actual al final para probarlo al inicio
-
-    const u = new URL(image.src);
-    // console.log("URL", u);
-    const partes = u.pathname.split("/");
-    // console.log("PARTES", partes);
-
-    for (const lang of langs) {
-
-      partes[1] = lang;
-
-      // SETID en MAYUSCULAS
-      partes[2] = partes[2].toUpperCase(); // SerieID en mayúscula
-
-      // SetID: Antes del numero en MAYUSCULAS, despues del numero en minusculas
-      const match = partes[3].match(/^([^0-9]*)(.*)$/);
-      partes[3] = match[1].toUpperCase() + match[2].toLowerCase(); 
-
-      imageCards[cardId].push(u.origin + partes.join("/"));
-
-      // TODO EN MAYUSCULAS
-      partes[2] = partes[2].toUpperCase(); // SerieID en minuscula
-      partes[3] = match[1].toUpperCase() + match[2].toUpperCase(); 
-
-      imageCards[cardId].push(u.origin + partes.join("/"));
-
-      // TODO EN MINUSCULAS
-      partes[2] = partes[2].toLowerCase(); // SerieID en minuscula
-      partes[3] = match[1].toLowerCase() + match[2].toLowerCase(); 
-
-      imageCards[cardId].push(u.origin + partes.join("/"));
-    }
-
-    // // console.log("PARTES", partes);
-    // partes[2] = partes[2].toUpperCase(); // SerieID en mayúscula
-
-    // // SetID: Antes del numero en MAYUSCULAS, despues del numero en minusculas
-    // const match = partes[3].match(/^([^0-9]*)(.*)$/);
-    // partes[3] = match[1].toUpperCase() + match[2].toLowerCase(); 
-    
-    // let newSrc = u.origin + partes.join("/");
-    // // console.log("NEW SRC", newSrc);
-
-    image.onerror = function() {
-      changeImage(image);
-    };
-
-    changeImage(image);
-    // image.src = newSrc;
-  }
-
-  function changeImage(image) {
-    console.log("IMAGE CARDS", imageCards, image);
-
-    const cardId = image.dataset.id;
-
-    if (!imageCards[cardId] || imageCards[cardId].length === 0) {
-      //console.log("NO IMAGE SRC TO TRY");
-      image.closest(".cardItem").dataset.imageError = "true"; // marcar como error en la imagen
-      return;
-    }
-
-    //console.log("TRYING IMAGE SRC", cardId, imageCards[cardId][0]);
-    // Asignar el primer src alternativo disponible
-    image.src = imageCards[cardId].shift();
   }
 
   // function changeImageLang(image) {
@@ -192,3 +90,5 @@ const cardHaving = list?.cards?.filter((card) => card.cardName != "").length;
   //   image.src = newSrc;
   // }
 </script>
+
+

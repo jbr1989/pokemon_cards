@@ -41,7 +41,7 @@ async function insertPokemon() {
   const elements = JSON.parse(data);
 
   for (const element of elements) {
-    console.log(element);
+    // console.log(element);
     const name = element["name"];
     const id = element["id"];
 
@@ -54,7 +54,7 @@ async function insertPokemon() {
       });
 
       // console.log(result);
-      console.log(`Insertado: ${element["id"]} - ${element["name"]}`);
+      // console.log(`Insertado: ${element["id"]} - ${element["name"]}`);
 
       await new Promise((resolve) => setTimeout(resolve, 250)); // Evitar abusar de la API
     } catch (err) {
